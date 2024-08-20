@@ -170,27 +170,26 @@ async function llllqua() {
   }
 }
 async function web3data() {
-  if (!lianjeshow.value){
-    return
-  }
   try {
     const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
     const address = localStorage.getItem('address');
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const timestamp = today.getTime() / 1000;//今日时间戳
+    const timestamp =( today.getTime() / 1000).toFixed(0);//今日时间戳
+    console.log(timestamp)
+    let time = await contract1.methods.getStartOfDayTimestamp(timestamp).call({from: address})
     let aaaa = await contract1.methods.getUserCanMintDBTCAmount(localStorage.getItem('address')).call({from: address});//今日可领取算力
     let bbbb = await contract1.methods._mintDBTCEveryDayAmount().call({from: address});//每日DBTC产出
-    let cccc = await contract1.methods.getTotalNCPowerFromEveryDay(timestamp).call({from: address});//全网总算力
-    let dddd = await contract1.methods.getHashFactorForEveryDay(timestamp).call({from: address});//今日算力因子
+    let cccc = await contract1.methods.getTotalNCPowerFromEveryDay(time).call({from: address});//全网总算力
+    let dddd = await contract1.methods.getHashFactorForEveryDay(time).call({from: address});//今日算力因子
     let eeee = await contract1.methods.getUserNCPower(address).call({from: address});//用户总算力
     let ffff = await contract1.methods.getReferPower(address).call({from: address});//用户推荐算力
     qwwww.value = AllfromWei2(cccc)
-    jryyyyz.value = AllfromWei(dddd)
-    yhall.value = AllfromWei(eeee)
+    jryyyyz.value = dddd
+    yhall.value = AllfromWei2(eeee)
     jrdbtc.value = AllfromWei(bbbb)
-    youmoren.value = AllfromWei(aaaa)
-    tjdbtc.value = AllfromWei(ffff)
+    youmoren.value = Number(AllfromWei(aaaa)).toFixed(2)
+    tjdbtc.value = AllfromWei2(ffff)
+
   } catch (error) {
     console.log(error);
   }

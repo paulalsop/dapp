@@ -379,7 +379,7 @@ async function deposit() {
     if (gommm.value === 0) {
       let bbbb = await contract1.methods.stakingCoins(bontarr.value[gommm.value].address, isnum).send({
         from: localStorage.getItem('address'),
-        value: toWei(allamount.value),
+        value: isnum,
         gasPrice: 3100000000
       });
       allshow.value = false
@@ -417,20 +417,25 @@ async function web3data() {
     const timestamp = today.getTime() / 1000;
     rout.value = 45 + 1.8 * ((Grosspurchase.value / 67200) * 100).toFixed(4)
     //获取代币储存的总算力
-    if (lianjeshow.value){
+
       const address = localStorage.getItem('address');
       for (let i = 0; i < bontarr.value.length; i++) {
         bontarr.value[i].checked = await contract1.methods.isTokenFlagSet(bontarr.value[i].address).call({from: address});
       }
       for (let i = 0; i < bontarr.value.length; i++) {
-        const contract2 = new web3.value.eth.Contract(bontarr.value[i].api, bontarr.value[i].address)
-        bontarr.value[i].morenum = await contract2.methods.balanceOf(address).call({from: address});
+        if (i == 0){
+          const contract2 = await new web3.value.eth.getBalance(address);
+          bontarr.value[i].morenum = contract2;
+        }else {
+          const contract2 = new web3.value.eth.Contract(bontarr.value[i].api, bontarr.value[i].address)
+          bontarr.value[i].morenum = await contract2.methods.balanceOf(address).call({from: address});
+        }
       }
+      console.log(bontarr.value)
       let aaaa = await contract1.methods.getTotalNCPowerFromEveryDay(timestamp).call({from: address});
       Finaleffort.value = AllfromWei2(aaaa)
       let bbbb = await contract1.methods.getTotalMintDBTC().call({from: address});
       Grosspurchase.value = AllfromWei(bbbb)
-    }
     // let arr = []
     // let arr2 = []
     // //获取代币储存的总算力
@@ -676,6 +681,7 @@ function toWei(value) {//toWei
 }
 
 .homepage {
+
   .kkjieed {
     margin: 20px auto;
     width: calc(100% - 40PX);

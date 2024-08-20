@@ -363,7 +363,7 @@ function isrouter(i) {
   background-color: #121212;
   min-height: 100vh;
   position: relative;
-
+  overflow: hidden;
   .tuas {
     position: absolute;
     background-image: url('@/assets/homeimg/bgzs.png');
