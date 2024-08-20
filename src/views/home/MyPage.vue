@@ -12,7 +12,7 @@
       </div>
       <div class="bonfas">
         <div class="scais cccopa" data-clipboard-action="copy"
-             @click="copy(`http://192.168.2.223:8080/#/Home/HomePage?address=${affff}`, 'cccopa')">
+             @click="copy(`https://dapp.dogpet.world/#/Home/HomePage?address=${affff}`, 'cccopa')">
           <img src="@/assets/my/Frame2.png" alt="">{{ $t('my.my5') }}
         </div>
       </div>
