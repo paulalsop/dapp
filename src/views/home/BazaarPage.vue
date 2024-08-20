@@ -1,0 +1,399 @@
+<template>
+  <div class="bazaar">
+    <div class="allwang">
+      <div>
+        <div class="wwasda"><img src="@/assets/bazaar/addsa.png" alt="">{{ $t('bazaar.bazaar1') }}</div>
+        <div class="text2">${{ allamount }}</div>
+      </div>
+      <div class="tuutut"></div>
+    </div>
+    <div class="alltitle"><img src="@/assets/bazaar/sdaall.png" alt="">{{ $t('bazaar.bazaar2') }}</div>
+    <div class="atable" v-for="i in bontarr" :key="i.id">
+      <div class="asttop">
+        <div class="asttop-l">
+          <div class="zzcc">{{ $t('bazaar.bazaar3') }}</div>
+          <div class="asttoplr">
+            <img :src="getImage(i.prc)" alt="">
+            <div>
+              <div>{{ i.name }}</div>
+              <div>${{ i.money }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="asttop-r">
+          <!--                    <div>{{$t('bazaar.bazaar4')}} {{ i.deposit }}BNB</div>-->
+          <div>{{ $t('bazaar.bazaar5') }} {{ i.probability }}%</div>
+          <div class="jdnitao">
+            <div class="jdtbbjj">
+              <div class="sittt" :style="{ left: `${i.probability - 100}%` }"></div>
+            </div>
+          </div>
+          <!--                    <div>{{$t('bazaar.bazaar6')}} {{ i.mobility }}BNB</div>-->
+        </div>
+      </div>
+      <!--            <div class="asttbont">-->
+      <!--                <div><span>{{$t('bazaar.bazaar7')}}</span>{{ i.rate }}%</div>-->
+      <!--                <div><span>{{$t('bazaar.bazaar8')}}</span> {{ i.pledge }}%</div>-->
+      <!--            </div>-->
+    </div>
+    <div class="alltitle"><img src="@/assets/bazaar/paimin.png" alt="">{{ $t('bazaar.bazaar9') }}</div>
+    <div class="allfor ">
+      <div class="isforsad" v-for="i in paiarr" :key="i.id">
+        <div class="pai">{{ i.id }}</div>
+        <img :src="getImage(i.prc)" alt="">
+        <div class="jijdadsr">
+          <div>{{ i.name }}</div>
+          <div class="sacxaxc">
+            <div class="wsaca" :style="{ left: `${i.probability - 100}%` }"></div>
+          </div>
+        </div>
+        <div class="bfb">
+          {{ i.probability }}%
+        </div>
+      </div>
+    </div>
+    <div class="imgatutu">
+      <div class="kkan">{{ $t('bazaar.bazaar10') }}</div>
+      <div class="asft">{{ $t('bazaar.bazaar11') }}</div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import {onMounted, ref,computed} from "vue"
+import {useWeb3} from '@/web3/index.js';
+import {MintdbtcAPI} from "@/components/MintDBTC_API";
+import {useStore} from "vuex";
+
+const store = useStore();
+const MintDBTC = store.state.MintDBTC; // MintDBTC地址
+const wbnb = store.state.wbnb; // wbnb地址
+const DP = store.state.DP; // DP地址
+const DBTCoinNew = store.state.DBTCoinNew; // DBTCoinNew地址
+const USDT = store.state.USDT; // USDT地址
+const getImage = (pic) => {
+  return require(`@/assets/homepage/${pic}.png`);
+}
+let allamount = ref(0)
+let bontarr = ref([{
+  id: 1,//id
+  prc: 'bin',//图片位置
+  money: 0,//金额
+  name: 'BNB',//名字
+  deposit: 231,
+  probability: 0,//存款概率
+  mobility: 232,
+  rate: 2,
+  pledge: 3.65,
+  address: wbnb//地址
+}, {
+  id: 2,
+  prc: 'dp',
+  money: 0,
+  name: 'DP',
+  deposit: 231,
+  probability: 0,
+  mobility: 232,
+  rate: 2,
+  pledge: 3.65,
+  address: DP//地址
+}, {
+  id: 3,
+  prc: 'DBCT',
+  money: 0,
+  name: 'DBTC',
+  deposit: 231,
+  probability: 0,
+  mobility: 232,
+  rate: 2,
+  pledge: 3.65,
+  address: DBTCoinNew//地址
+}, {
+  id: 4,
+  prc: 'usdt',
+  money: 0,
+  name: 'USDT',
+  deposit: 231,
+  probability: 0,
+  mobility: 232,
+  rate: 2,
+  pledge: 3.65,
+  address: USDT//地址
+}
+// , {
+//     id: 5,
+//     prc: 'DBCT',
+//     money: 0,
+//     name: 'DBCT',
+//     deposit: 231,
+//     probability: 20,
+//     mobility: 232,
+//     rate: 2,
+//     pledge: 3.65,
+//   address:DBTCoinNew//地址
+// }
+])
+let paiarr = computed(() => {
+  return bontarr.value.slice().sort((a, b) => b.probability - a.probability);
+});
+onMounted(async () => {
+  web3.value = await useWeb3();
+  web3data()
+})
+
+async function web3data() {
+  try {
+    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
+    const address = localStorage.getItem('address');
+    let aaaa = await contract1.methods.get_allPrice().call({from: address});
+    allamount.value = AllfromWei2(aaaa)
+    for (let i = 0; i < bontarr.value.length; i++) {
+      let aaa = await contract1.methods.getTokenPower(bontarr.value[i].address).call({from: address});
+      bontarr.value[i].money = AllfromWei2(aaa)
+      bontarr.value[i].probability = await contract1.methods.getTokenPowerByAllPowerPercent(bontarr.value[i].address).call({from: address});
+
+    }
+    console.log(bontarr.value)
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function AllfromWei2(i) {//fromWei
+  if (web3.value) {
+    return (Number(web3.value.utils.fromWei(i, 'tether')) / 1000000).toFixed(2);
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.bazaar {
+  margin: 0 24px;
+
+  .imgatutu {
+    margin: 20px 0px;
+    padding-bottom: 27%;
+    background-image: url('@/assets/homepage/Frame.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    position: relative;
+    font-size: 12px;
+    color: white;
+
+    .kkan {
+      position: absolute;
+      top: 40%;
+      right: 10px;
+      transform: translateY(-50%);
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: linear-gradient(95deg, #9010FD 0%, #4049FC 29%, #D8AEF8 69%, #FC5C90 100%);
+    }
+
+    .asft {
+      position: absolute;
+      bottom: 15px;
+      left: 18px;
+    }
+  }
+
+  .allfor {
+    .isforsad {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      color: white;
+      background: #121212;
+      box-shadow: 0px 30px 60px 0px rgba(6, 8, 18, 0.05);
+      border-radius: 16px 16px 16px 16px;
+      border: 1px solid #292929;
+      margin-bottom: 16px;
+
+      .jijdadsr {
+        width: 150px;
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 25px;
+
+        .sacxaxc {
+          width: 100%;
+          height: 8px;
+          border-radius: 999px;
+          overflow: hidden;
+          background: #292929;
+          position: relative;
+
+          .wsaca {
+            position: absolute;
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #ECFF82 0%, #CDF202 100%);
+          }
+        }
+      }
+
+      .pai {
+        font-weight: 600;
+        font-size: 20px;
+      }
+
+      .bfb {
+        font-weight: 500;
+        font-size: 16px;
+      }
+
+      > img {
+        width: 38px;
+        height: 38px;
+      }
+    }
+  }
+
+  .atable {
+    background-color: #1b1b1d;
+    box-shadow: 0px 40px 60px 0px rgba(7, 7, 29, 0.08);
+    border-radius: 16px 16px 16px 16px;
+    margin-bottom: 10px;
+    position: relative;
+    color: white;
+
+    .asttbont {
+      padding: 14px 12px;
+      display: flex;
+
+      > div {
+        flex-grow: 1;
+        flex-basis: 0;
+        font-weight: 600;
+
+        span {
+          font-weight: 400;
+          color: #7A7A7A;
+          margin-right: 5px;
+        }
+      }
+    }
+
+    .asttop {
+      padding: 14px;
+      display: flex;
+      font-size: 12px;
+      //border-bottom: 1px solid rgba(233, 237, 244, 0.15);
+      align-items: center;
+
+      > div {
+        flex-grow: 1;
+        flex-basis: 0;
+      }
+
+      .asttop-r {
+        > div {
+          height: 22px;
+          line-height: 22px;
+          font-weight: 600;
+        }
+
+        .jdnitao {
+          display: flex;
+          align-items: center;
+
+          .jdtbbjj {
+            width: 90%;
+            height: 6px;
+            border-radius: 999px;
+            overflow: hidden;
+            background: #292929;
+            position: relative;
+
+            .sittt {
+              position: absolute;
+              width: 100%;
+              height: 6px;
+              border-radius: 999px;
+              background: linear-gradient(90deg, #ECFF82 0%, #CDF202 100%);
+            }
+          }
+        }
+      }
+
+      .asttop-l {
+        .zzcc {
+          color: #7A7A7A;
+          line-height: 30px;
+        }
+
+        .asttoplr {
+          display: flex;
+          align-items: center;
+          line-height: 18px;
+
+          img {
+            width: 38px;
+            height: 38px;
+            margin-right: 6px;
+          }
+        }
+      }
+    }
+  }
+
+  .alltitle {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 16px;
+    color: #FFFFFF;
+    margin: 20px 0;
+
+    img {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+    }
+  }
+
+  .allwang {
+    margin: 20px 0;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 16px 16px 16px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 13px 27px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    .wwasda {
+      font-size: 14px;
+      color: #A6A6A6;
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+
+      img {
+        width: 14px;
+        height: 14px;
+        margin-right: 5px;
+      }
+    }
+
+    .text2 {
+      font-weight: 600;
+      font-size: 32px;
+      color: #CDF202;
+    }
+
+    .tuutut {
+      width: 93px;
+      height: 116px;
+      background-image: url('@/assets/bazaar/imag1.png');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
+  }
+}
+</style>
