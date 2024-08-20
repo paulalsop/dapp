@@ -22,11 +22,11 @@
         <div class="text1ac">
             <div>
                 <div class="title">{{$t('record.record2')}}$DBTC</div>
-                <div class="num">1</div>
+                <div class="num">0</div>
             </div>
             <div>
                 <div class="title">{{$t('record.record3')}}</div>
-                <div class="num">5</div>
+                <div class="num">0</div>
             </div>
         </div>
     </div>
@@ -46,14 +46,13 @@ let ismark = ref([
     {
         color: '#FF4040',
         date: [
-            `2024/08/17`,
+
         ],
     },
     {
         color: '#C2FF40',
         date: [
-            `2024/08/18`,
-            `2024/08/19`,
+
         ],
     }
 ])
