@@ -111,7 +111,7 @@ let bontarr = ref([{
 }, {
   id: 4,
   prc: 'usdt',
-  money: 0,
+  money:1,
   name: 'USDT',
   deposit: 231,
   probability: 0,
@@ -148,8 +148,12 @@ async function web3data() {
     let aaaa = await contract1.methods.get_allPrice().call({from: address});
     allamount.value = AllfromWei2(aaaa)
     for (let i = 0; i < bontarr.value.length; i++) {
-      let aaa = await contract1.methods.getTokenPower(bontarr.value[i].address).call({from: address});
-      bontarr.value[i].money = AllfromWei2(aaa)
+      let aaa = await contract1.methods.getPrice(bontarr.value[i].address).call({from: address});
+      if (i !== 3){
+        bontarr.value[i].money = Number(AllfromWei(aaa)).toFixed(2)
+      }else {
+        bontarr.value[i].money = 1
+      }
       bontarr.value[i].probability = await contract1.methods.getTokenPowerByAllPowerPercent(bontarr.value[i].address).call({from: address});
 
     }
@@ -158,7 +162,11 @@ async function web3data() {
     console.log(error);
   }
 }
-
+function AllfromWei(i) {//fromWei
+  if (web3.value) {
+    return web3.value.utils.fromWei(i, 'ether');
+  }
+}
 function AllfromWei2(i) {//fromWei
   if (web3.value) {
     return (Number(web3.value.utils.fromWei(i, 'tether')) / 1000000).toFixed(2);

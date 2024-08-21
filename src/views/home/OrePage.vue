@@ -1,36 +1,64 @@
 <template>
+  <van-overlay :show="allshow" z-index="10000">
+    <div style="display: flex;width: 100%;height: 100%;justify-content: center;align-items: center">
+      <van-loading color="#CDF202"/>
+    </div>
+  </van-overlay>
   <div class="ore">
     <div class="text1ac">
       <div>
         <div class="title">{{ $t('ore.ore1') }}</div>
-        <!--                <div class="num"><van-rolling-text :start-num="0" :target-num="11123.23" :height="24"/></div>-->
-        <div class="num">{{qwwww}}</div>
+        <div class="num">
+          <van-rolling-text :start-num="0" :target-num="qwwwwa" :height="24"/>
+          .
+          <van-rolling-text :start-num="0" :target-num="qwwwwb" :height="24"/>
+        </div>
+        <!--        <div class="num">{{qwwww}}</div>-->
       </div>
       <div>
         <div class="title">{{ $t('ore.ore2') }}</div>
-        <div class="num">{{jrdbtc}}</div>
+        <!--        <div class="num">{{jrdbtc}}</div>-->
+        <div class="num">
+          <van-rolling-text :start-num="0" :target-num="10" :height="24"/>
+        </div>
       </div>
       <div>
         <div class="title">{{ $t('ore.ore25') }}</div>
-        <div class="num">{{jryyyyz}}</div>
+        <!--        <div class="num">{{jryyyyz}}</div>-->
+        <div class="num">
+          <van-rolling-text :start-num="0" :target-num="jryyyyz" :height="24"/>
+        </div>
       </div>
       <div>
         <div class="title">{{ $t('ore.ore4') }}</div>
-        <div class="num">{{ jrdbtc }}</div>
+        <!--        <div class="num">{{ jrdbtc }}</div>-->
+        <div class="num">
+          <van-rolling-text :start-num="0" :target-num="jrdbtc" :height="24"/>
+        </div>
       </div>
     </div>
     <div class="text1ac" style="margin-bottom: 25px;">
-<!--      <div>-->
-<!--        <div class="title title2">{{ $t('ore.ore5') }}$DBTC</div>-->
-<!--        <div class="num">12</div>-->
-<!--      </div>-->
+      <!--      <div>-->
+      <!--        <div class="title title2">{{ $t('ore.ore5') }}$DBTC</div>-->
+      <!--        <div class="num">12</div>-->
+      <!--      </div>-->
       <div>
         <div class="title title2">{{ $t('ore.ore6') }}</div>
-        <div class="num">{{ yhall }}</div>
+        <!--        <div class="num">{{ yhall }}</div>-->
+        <div class="num">
+          <van-rolling-text :start-num="0" :target-num="yhalla" :height="24"/>
+          .
+          <van-rolling-text :start-num="0" :target-num="yhallb" :height="24"/>
+        </div>
       </div>
       <div>
         <div class="title title2">{{ $t('ore.ore23') }}</div>
-        <div class="num">{{tjdbtc}}</div>
+        <!--        <div class="num">{{tjdbtc}}</div>-->
+        <div class="num">
+          <van-rolling-text :start-num="0" :target-num="tjdbtca" :height="24"/>
+          .
+          <van-rolling-text :start-num="0" :target-num="tjdbtcb" :height="24"/>
+        </div>
       </div>
     </div>
 
@@ -50,76 +78,76 @@
         </router-link>
       </div>
     </div>
-<!--    <div class="istype">-->
-<!--      <div :class="type ? '' : 'isdac'" @click="type = 0">{{ $t('ore.ore11') }}</div>-->
-<!--      <div :class="type ? 'isdac' : ''" @click="type = 1">{{ $t('ore.ore12') }}</div>-->
-<!--    </div>-->
-<!--    <div :class="type ? 'type0' : ''">-->
-<!--      <div class="text1ac">-->
-<!--        <div>-->
-<!--          <div class="title3"><img src="@/assets/bazaar/addsa.png" alt="">{{ $t('ore.ore13') }}</div>-->
-<!--          <div class="num2"><span>5</span>$DBTC</div>-->
-<!--        </div>-->
-<!--        <div></div>-->
-<!--        <div>-->
-<!--          <div class="title3"><img src="@/assets/bazaar/addsa.png" alt="">{{ $t('ore.ore14') }}</div>-->
-<!--          <div class="num2"><span>5</span>$DBTC</div>-->
-<!--        </div>-->
-<!--        <div class="lllqq">-->
-<!--          <div class="butten" :class="isFrameasw ? '' : 'isarame'" @click="isFrameasw = false"><img-->
-<!--            src="@/assets/ore/Frame.png" alt="">{{ isFrameasw ? $t('ore.ore9') : $t('ore.ore10') }}-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="textzhus">-->
-<!--        *{{ $t('ore.ore15') }}-->
-<!--      </div>-->
-<!--      <table cellspacing="10">-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--          <th>{{ $t('ore.ore16') }}</th>-->
-<!--          <th>{{ $t('ore.ore17') }}</th>-->
-<!--          <th>{{ $t('ore.ore18') }}</th>-->
-<!--          <th>{{ $t('ore.ore19') }}</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr v-for=" i in 5" :key="i">-->
-<!--          <td>#1</td>-->
-<!--          <td>0x0000......0000</td>-->
-<!--          <td>109</td>-->
-<!--          <td>2</td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--      </table>-->
-<!--    </div>-->
-<!--    <div :class="type ? '' : 'type0'">-->
-<!--      <div class="fexlianjie">-->
-<!--        <img src="@/assets/ore/Framex.png" alt="">-->
-<!--        <div>-->
-<!--          {{ $t('ore.ore20') }}-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="textzhus">-->
-<!--        *排行榜前10名有机会获得手续费分红{{ $t('ore.ore1') }}-->
-<!--      </div>-->
-<!--      <table cellspacing="10">-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--          <th>{{ $t('ore.ore16') }}</th>-->
-<!--          <th>{{ $t('ore.ore17') }}</th>-->
-<!--          <th>{{ $t('ore.ore21') }}</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr v-for=" i in 5" :key="i">-->
-<!--          <td>#1</td>-->
-<!--          <td>0x0000......0000</td>-->
-<!--          <td>109</td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--      </table>-->
-<!--    </div>-->
+    <!--    <div class="istype">-->
+    <!--      <div :class="type ? '' : 'isdac'" @click="type = 0">{{ $t('ore.ore11') }}</div>-->
+    <!--      <div :class="type ? 'isdac' : ''" @click="type = 1">{{ $t('ore.ore12') }}</div>-->
+    <!--    </div>-->
+    <!--    <div :class="type ? 'type0' : ''">-->
+    <!--      <div class="text1ac">-->
+    <!--        <div>-->
+    <!--          <div class="title3"><img src="@/assets/bazaar/addsa.png" alt="">{{ $t('ore.ore13') }}</div>-->
+    <!--          <div class="num2"><span>5</span>$DBTC</div>-->
+    <!--        </div>-->
+    <!--        <div></div>-->
+    <!--        <div>-->
+    <!--          <div class="title3"><img src="@/assets/bazaar/addsa.png" alt="">{{ $t('ore.ore14') }}</div>-->
+    <!--          <div class="num2"><span>5</span>$DBTC</div>-->
+    <!--        </div>-->
+    <!--        <div class="lllqq">-->
+    <!--          <div class="butten" :class="isFrameasw ? '' : 'isarame'" @click="isFrameasw = false"><img-->
+    <!--            src="@/assets/ore/Frame.png" alt="">{{ isFrameasw ? $t('ore.ore9') : $t('ore.ore10') }}-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="textzhus">-->
+    <!--        *{{ $t('ore.ore15') }}-->
+    <!--      </div>-->
+    <!--      <table cellspacing="10">-->
+    <!--        <thead>-->
+    <!--        <tr>-->
+    <!--          <th>{{ $t('ore.ore16') }}</th>-->
+    <!--          <th>{{ $t('ore.ore17') }}</th>-->
+    <!--          <th>{{ $t('ore.ore18') }}</th>-->
+    <!--          <th>{{ $t('ore.ore19') }}</th>-->
+    <!--        </tr>-->
+    <!--        </thead>-->
+    <!--        <tbody>-->
+    <!--        <tr v-for=" i in 5" :key="i">-->
+    <!--          <td>#1</td>-->
+    <!--          <td>0x0000......0000</td>-->
+    <!--          <td>109</td>-->
+    <!--          <td>2</td>-->
+    <!--        </tr>-->
+    <!--        </tbody>-->
+    <!--      </table>-->
+    <!--    </div>-->
+    <!--    <div :class="type ? '' : 'type0'">-->
+    <!--      <div class="fexlianjie">-->
+    <!--        <img src="@/assets/ore/Framex.png" alt="">-->
+    <!--        <div>-->
+    <!--          {{ $t('ore.ore20') }}-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="textzhus">-->
+    <!--        *排行榜前10名有机会获得手续费分红{{ $t('ore.ore1') }}-->
+    <!--      </div>-->
+    <!--      <table cellspacing="10">-->
+    <!--        <thead>-->
+    <!--        <tr>-->
+    <!--          <th>{{ $t('ore.ore16') }}</th>-->
+    <!--          <th>{{ $t('ore.ore17') }}</th>-->
+    <!--          <th>{{ $t('ore.ore21') }}</th>-->
+    <!--        </tr>-->
+    <!--        </thead>-->
+    <!--        <tbody>-->
+    <!--        <tr v-for=" i in 5" :key="i">-->
+    <!--          <td>#1</td>-->
+    <!--          <td>0x0000......0000</td>-->
+    <!--          <td>109</td>-->
+    <!--        </tr>-->
+    <!--        </tbody>-->
+    <!--      </table>-->
+    <!--    </div>-->
   </div>
 </template>
 
@@ -130,6 +158,7 @@ import {MintdbtcAPI} from "@/components/MintDBTC_API";
 import {useStore} from "vuex";
 import {showFailToast, showSuccessToast} from "vant";
 import {useI18n} from "vue-i18n";
+
 const {t} = useI18n();
 const store = useStore();
 let lianjeshow = computed(() => {
@@ -138,43 +167,51 @@ let lianjeshow = computed(() => {
 const MintDBTC = store.state.MintDBTC; // MintDBTC地址
 let type = ref(0)
 let isFrame = ref(true)
-let qwwww = ref(0)//全网总算力
+let allshow = ref(false)
+let qwwwwa = ref(0)//全网总算力
+let qwwwwb = ref(0)//全网总算力
 let jryyyyz = ref(0)//今日算力因子
-let yhall = ref(0)//用户总算力
+let yhalla = ref(0)//用户总算力
+let yhallb = ref(0)//用户总算力
 let jrdbtc = ref(0)//每日DBTC产出
-let tjdbtc = ref(0)//推荐DBTC产出
+let tjdbtca = ref(0)//推荐DBTC产出
+let tjdbtcb = ref(0)//推荐DBTC产出
 // let isFrameasw = ref(true)
 let youmoren = ref(0)
 onMounted(async () => {
   web3.value = await useWeb3();
   web3data()
 })
+
 async function llllqua() {
-  if (!lianjeshow.value){
+  if (!lianjeshow.value) {
     showFailToast(t('home.home45'));
     return
   }
-  if (youmoren.value <= 0){
+  if (youmoren.value <= 0) {
     showFailToast(t('ore.ore26'));
-  }else {
+  } else {
+    allshow.value = true
     try {
       const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
       const address = localStorage.getItem('address');
-      let aaaa = await contract1.methods.drawDBTC().send({from: address});
+      let aaaa = await contract1.methods.drawDBTC().send({from: address,gasLimit:720000});
       console.log(aaaa)
       web3data()
       showSuccessToast(t('ore.ore27'));
-    }catch (e) {
+    } catch (e) {
       console.log(e)
     }
   }
+  allshow.value = false
 }
+
 async function web3data() {
   try {
     const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
     const address = localStorage.getItem('address');
     const today = new Date();
-    const timestamp =( today.getTime() / 1000).toFixed(0);//今日时间戳
+    const timestamp = (today.getTime() / 1000).toFixed(0);//今日时间戳
     console.log(timestamp)
     let time = await contract1.methods.getStartOfDayTimestamp(timestamp).call({from: address})
     let aaaa = await contract1.methods.getUserCanMintDBTCAmount(localStorage.getItem('address')).call({from: address});//今日可领取算力
@@ -183,22 +220,30 @@ async function web3data() {
     let dddd = await contract1.methods.getHashFactorForEveryDay(time).call({from: address});//今日算力因子
     let eeee = await contract1.methods.getUserNCPower(address).call({from: address});//用户总算力
     let ffff = await contract1.methods.getReferPower(address).call({from: address});//用户推荐算力
-    qwwww.value = AllfromWei2(cccc)
+    const [integer, decimal] = AllfromWei2(cccc).toString().split('.');
+    qwwwwa.value = Number(integer)
+    qwwwwb.value = decimal
     jryyyyz.value = dddd
-    yhall.value = AllfromWei2(eeee)
-    jrdbtc.value = AllfromWei(bbbb)
+    const [integer1, decimal1] = AllfromWei2(eeee).toString().split('.');
+    yhalla.value = Number(integer1)
+    yhallb.value = decimal1
+    jrdbtc.value = Number(AllfromWei(bbbb))
     youmoren.value = Number(AllfromWei(aaaa)).toFixed(2)
-    tjdbtc.value = AllfromWei2(ffff)
+    const [integer2, decimal2] = AllfromWei2(ffff).toString().split('.');
+    tjdbtca.value = Number(integer2)
+    tjdbtcb.value = decimal2
 
   } catch (error) {
     console.log(error);
   }
 }
+
 function AllfromWei2(i) {//fromWei
   if (web3.value) {
     return (Number(web3.value.utils.fromWei(i, 'tether')) / 100000000).toFixed(2);
   }
 }
+
 function AllfromWei(i) {//fromWei
   if (web3.value) {
     return web3.value.utils.fromWei(i, 'ether');
