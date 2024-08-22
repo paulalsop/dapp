@@ -214,23 +214,38 @@ async function web3data() {
     const timestamp = (today.getTime() / 1000).toFixed(0);//今日时间戳
     console.log(timestamp)
     let time = await contract1.methods.getStartOfDayTimestamp(timestamp).call({from: address})
+    console.log(1)
     let aaaa = await contract1.methods.getUserCanMintDBTCAmount(localStorage.getItem('address')).call({from: address});//今日可领取算力
+    console.log(2)
     let bbbb = await contract1.methods._mintDBTCEveryDayAmount().call({from: address});//每日DBTC产出
+    console.log(3)
     let cccc = await contract1.methods.getTotalNCPowerFromEveryDay(time).call({from: address});//全网总算力
+    console.log(4)
     let dddd = await contract1.methods.getHashFactorForEveryDay(time).call({from: address});//今日算力因子
+    console.log(5)
     let eeee = await contract1.methods.getUserNCPower(address).call({from: address});//用户总算力
+    console.log(6)
     let ffff = await contract1.methods.getReferPower(address).call({from: address});//用户推荐算力
+    console.log(7)
     const [integer, decimal] = AllfromWei2(cccc).toString().split('.');
+    console.log(8)
     qwwwwa.value = Number(integer)
+    console.log(9)
     qwwwwb.value = decimal
     jryyyyz.value = dddd
     const [integer1, decimal1] = AllfromWei2(eeee).toString().split('.');
+    console.log(10)
     yhalla.value = Number(integer1)
+    console.log(11)
     yhallb.value = decimal1
     jrdbtc.value = Number(AllfromWei(bbbb))
+    console.log(12)
     youmoren.value = Number(AllfromWei(aaaa)).toFixed(2)
+    console.log(13)
     const [integer2, decimal2] = AllfromWei2(ffff).toString().split('.');
+    console.log(14)
     tjdbtca.value = Number(integer2)
+    console.log(15)
     tjdbtcb.value = decimal2
 
   } catch (error) {
