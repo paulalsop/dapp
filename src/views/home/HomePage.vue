@@ -180,6 +180,12 @@ const wbnb = store.state.wbnb; // wbnb地址
 const DP = store.state.DP; // DP地址
 const DBTCoinNew = store.state.DBTCoinNew; // DBTCoinNew地址
 const USDT = store.state.USDT; // USDT地址
+const BTC = store.state.BTC; // BTC地址
+const ETH = store.state.ETH; // ETH地址
+const BCH = store.state.BCH; // BCH地址
+const SOL = store.state.SOL; // SOL地址
+const DOGE = store.state.DOGE; // DOGE地址
+const TON = store.state.TON; // TON地址
 const MintDBTC = store.state.MintDBTC; // MintDBTC地址
 let rout = ref(45)
 let hashrate = ref(0)//计算算力
@@ -217,7 +223,7 @@ let bontarr = ref([{
 }, {
   id: 3,
   checked: false,
-  prc: 'bnb',
+  prc: 'DBCT2',
   up: '3000',
   name: 'DBTC',
   address: DBTCoinNew,
@@ -232,14 +238,62 @@ let bontarr = ref([{
   address: USDT,
   api: UsdtAPI,
   morenum: '0'
+},{
+  id: 5,
+  checked: false,
+  prc: 'Eth',
+  up: '3000',
+  name: 'ETH',
+  address: ETH,
+  api: UsdtAPI,
+  morenum: '0'
 },
-//   {
-//     id: 5,
-//     checked: false,
-//     prc: 'DBCT',
-//     up: '3.65',
-//     name: 'DBCT'
-// }
+  {
+  id: 6,
+  checked: false,
+  prc: 'bit',
+  up: '3000',
+  name: 'Bitcoin',
+  address: BTC,
+  api: UsdtAPI,
+  morenum: '0'
+},{
+  id: 7,
+  checked: false,
+  prc: 'SOL',
+  up: '3000',
+  name: 'SOL',
+  address: SOL,
+  api: UsdtAPI,
+  morenum: '0'
+},{
+  id: 8,
+  checked: false,
+  prc: 'bch',
+  up: '3000',
+  name: 'BCH',
+  address: BCH,
+  api: UsdtAPI,
+  morenum: '0'
+},{
+  id: 9,
+  checked: false,
+  prc: 'doge',
+  up: '3000',
+  name: 'DOGE',
+  address: DOGE,
+  api: UsdtAPI,
+  morenum: '0'
+},{
+  id: 10,
+  checked: false,
+  prc: 'ton',
+  up: '3000',
+  name: 'TON',
+  address: TON,
+  api: UsdtAPI,
+  morenum: '0'
+}
 ])
 onMounted(async () => {
   web3.value = await useWeb3();
@@ -271,6 +325,7 @@ const handleInput = async () => {//延迟触发
     }
     aaaa = await contract1.methods.calculateStakingCoinsPower(bontarr.value[gommm.value].address, toWei(allamount.value)).call({from: localStorage.getItem('address')});
     hashrate.value = AllfromWei2(aaaa)
+    console.log(AllfromWei2(aaaa),bbbb)
   } catch (e) {
     console.log(e)
   }

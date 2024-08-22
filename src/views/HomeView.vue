@@ -4,6 +4,17 @@
       <van-loading color="#CDF202"/>
     </div>
   </van-overlay>
+  <van-overlay :show="allshowaasczz" z-index="10000" >
+    <div style="display: flex;width: 100%;height: 100%;position:relative " @click="allshowaasczz = false">
+      <div style="width: 188px;height: 288px;background: #1B1B1D;border-radius: 12px 12px 12px 12px;position: absolute ;top: 60px;right: 0;" class="sacax"  @click="out()">
+        <div>SWAP</div>
+        <div>Defi{{ $t('homevall.homevall12_1') }}</div>
+        <div>{{ $t('homevall.homevall12_2') }}</div>
+        <div>{{ $t('homevall.homevall12_3') }}</div>
+        <div>{{ $t('homevall.homevall12_5') }}</div>
+      </div>
+    </div>
+  </van-overlay>
   <div class="popup">
     <van-popup v-model:show="langshow">
       <div class="langw">
@@ -17,11 +28,11 @@
   <div class="popup">
     <van-popup v-model:show="bindshow">
       <div class="sajjnca">
-        <div class="title">确认绑定</div>
+        <div class="title">{{ $t('homevall.homevall10') }}</div>
         <div>{{ shortenAddress(langshowaddl) }}</div>
         <div class="sacaz">
-          <div @click="bindshow = false">取消</div>
-          <div class="isaa" @click="bbbdddss()">确认</div>
+          <div @click="bindshow = false">{{ $t('homevall.homevall11') }}</div>
+          <div class="isaa" @click="bbbdddss()">{{ $t('homevall.homevall12_4') }}</div>
         </div>
       </div>
     </van-popup>
@@ -37,6 +48,7 @@
             lianjeshow ? $t('homevall.homevall2') : $t('homevall.homevall3')
           }}
         </div>
+        <img src="@/assets/homeimg/jjjzaw.png" style="width: 24px; height: 24px" alt="" @click="allshowaasczz = true">
       </div>
     </nav>
     <div class="routre">
@@ -63,10 +75,10 @@
       <div class="tealllink">
         <div class="dbtc"></div>
         <div class="alink">
-          <img src="@/assets/homeimg/icon1.png" alt="">
-          <img src="@/assets/homeimg/icon2.png" alt="">
-          <img src="@/assets/homeimg/icon3.png" alt="">
-          <img src="@/assets/homeimg/icon4.png" alt="">
+          <a href="https://t.me/PetWorld8" target="_blank"><img src="@/assets/homeimg/icon1.png" alt=""></a>
+          <!--          <img src="@/assets/homeimg/icon2.png" alt="">-->
+          <a href="https://twitter.com/bingbingcutn?s=11" target="_blank"><img src="@/assets/homeimg/icon3.png" alt=""></a>
+          <!--          <img src="@/assets/homeimg/icon4.png" alt="">-->
         </div>
       </div>
       <div class="tealllink">
@@ -116,6 +128,7 @@ let active = ref(0)
 let web3 = ref()
 let langshow = ref(false)//语言页面
 let bindshow = ref(false)//绑定页面
+let allshowaasczz = ref(false)//
 let allshow = ref(false)
 let langshowaddl = ref()
 let lianjeshow = computed(() => {
@@ -146,7 +159,9 @@ onMounted(async () => {
 function shortenAddress(address) {
   return address.slice(0, 10) + '...' + address.slice(-10);
 }
-
+function out() {
+  showFailToast(t('home.home34'));
+}
 async function yaojfaqq(i) {
   const address = localStorage.getItem('address');
   if (i == address) {
@@ -155,9 +170,10 @@ async function yaojfaqq(i) {
   try {
     const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
     let aaaa = await contract1.methods.hasRefer(address).call({from: address});//判断是否已经有推荐人
-    if (!aaaa) {
+    let bbbb = await contract1.methods.hasRefer(i).call({from: address});//推荐人是否已经有推荐人
+    console.log(aaaa, bbbb)
+    if (!aaaa && bbbb) {
       bindshow.value = true
-
     }
   } catch (e) {
     console.log(e)
@@ -165,15 +181,18 @@ async function yaojfaqq(i) {
 }
 
 async function bbbdddss() {
-  allshow.value =true
- try {
-   const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
-   let avsxx = await contract1.methods.bindRefer(langshowaddl.value).send({from: localStorage.getItem('address')})
-   console.log(avsxx)
- }catch (e) {
-   console.log(e)
- }
-  allshow.value =false
+  allshow.value = true
+  try {
+    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
+
+    let avsxx = await contract1.methods.bindRefer(langshowaddl.value).send({from: localStorage.getItem('address')})
+    console.log(avsxx)
+    isrouter(3)
+    bindshow.value = false
+  } catch (e) {
+    console.log(e)
+  }
+  allshow.value = false
 }
 
 const getImage = (pic) => {
@@ -282,6 +301,25 @@ function isrouter(i) {
 </script>
 
 <style lang="scss" scoped>
+.sacax{
+  display: flex;
+  flex-direction: column;
+
+  >div{
+    flex-grow: 1;
+    flex-basis: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    color: #FFFFFF;
+    margin: 0 8px;
+    border-bottom: 1px solid  rgba(233,237,244,0.15);;
+  }
+>div:last-child{
+  border: none;
+}
+}
 .popup ::v-deep {
   .van-popup {
     background: transparent;
@@ -364,6 +402,7 @@ function isrouter(i) {
   min-height: 100vh;
   position: relative;
   overflow: hidden;
+
   .tuas {
     position: absolute;
     background-image: url('@/assets/homeimg/bgzs.png');
@@ -480,7 +519,7 @@ function isrouter(i) {
     .alink {
       display: flex;
 
-      > img {
+      > a > img {
         width: 36px;
         height: 36px;
         margin-right: 15px;
@@ -502,10 +541,18 @@ function isrouter(i) {
     border-bottom: 1px solid rgba(233, 237, 244, 0.15);
     padding: 0 24px;
 
+    .scadwa {
+      position: absolute;
+      bottom: 0;
+      background: #7A7A7A;
+      width: 100%;
+      height: 100vh;
+    }
+
     .logeimg {
       width: 94px;
       height: 30px;
-      background-image: url('@/assets/homeimg/logo.png');
+      background-image: url('@/assets/homeimg/logo2.png');
       background-size: 100% 100%;
     }
 

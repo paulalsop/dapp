@@ -8,7 +8,15 @@ const messages = {
     homevall6: "채굴",
     homevall7: "초대",
     homevall8: "연결 성공",
-    homevall9: "연결 실패"
+    homevall9: "연결 실패",
+    homevall10: "바인딩 확인",
+    homevall11: "취소",
+    homevall12: "확인",
+    homevall12_1: "담보 대출",
+    homevall12_2: "펫 월드",
+    homevall12_3: "스포츠 경쟁",
+    homevall12_4: "확인",
+    homevall12_5: "게임 엔터테인먼트"
   },
   home: {
     home1: "예금 연이율",
@@ -65,7 +73,7 @@ const messages = {
   },
   ore:{
     ore1: "전체 네트워크 실시간 해시파워",
-    ore2: "전체 네트워크 실시간 DBTC 총 생산",
+    ore2: "전체 네트워크 남은 DBTC 총 생산량",
     ore3: "전체 네트워크 일일 해시파워",
     ore4: "전체 네트워크 일일 DBTC 총 생산",
     ore5: "현재 일일 생산",

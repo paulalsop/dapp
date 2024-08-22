@@ -8,7 +8,14 @@ const messages = {
     homevall6: "挖礦",
     homevall7: "邀請",
     homevall8: "連接成功",
-    homevall9: "連接失敗"
+    homevall9: "連接失敗",
+    homevall10: "確認綁定",
+    homevall11: "取消",
+    homevall12_1: "質押借貸",
+    homevall12_2: "寵物世界",
+    homevall12_3: "體育競技",
+    homevall12_4: "確認",
+    homevall12_5: "遊戲娛樂"
   },
     home:{
       home1: "存款年利率",
@@ -65,7 +72,7 @@ const messages = {
     },
     ore:{
       ore1: "全網實時算力",
-      ore2: "全網實時產出DBTC總量",
+      ore2: "全網剩餘產出DBTC總量",
       ore3: "全網每日算力",
       ore4: "全網每日產出DBTC總量",
       ore5: "當前每日產出",

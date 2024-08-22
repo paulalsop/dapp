@@ -111,7 +111,7 @@ let bontarr = ref([{
 }, {
   id: 4,
   prc: 'usdt',
-  money:1,
+  money: 1,
   name: 'USDT',
   deposit: 231,
   probability: 0,

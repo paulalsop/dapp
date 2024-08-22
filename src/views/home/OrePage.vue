@@ -19,7 +19,7 @@
         <div class="title">{{ $t('ore.ore2') }}</div>
         <!--        <div class="num">{{jrdbtc}}</div>-->
         <div class="num">
-          <van-rolling-text :start-num="0" :target-num="10" :height="24"/>
+          <van-rolling-text :start-num="0" :target-num="qqqqqcaas" :height="24"/>
         </div>
       </div>
       <div>
@@ -176,6 +176,7 @@ let yhallb = ref(0)//用户总算力
 let jrdbtc = ref(0)//每日DBTC产出
 let tjdbtca = ref(0)//推荐DBTC产出
 let tjdbtcb = ref(0)//推荐DBTC产出
+let qqqqqcaas = ref(0)//全网剩余产出
 // let isFrameasw = ref(true)
 let youmoren = ref(0)
 onMounted(async () => {
@@ -195,7 +196,7 @@ async function llllqua() {
     try {
       const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
       const address = localStorage.getItem('address');
-      let aaaa = await contract1.methods.drawDBTC().send({from: address,gasLimit:720000});
+      let aaaa = await contract1.methods.drawDBTC().send({from: address,gasPrice: 150000000000,gasLimit:720000});
       console.log(aaaa)
       web3data()
       showSuccessToast(t('ore.ore27'));
@@ -232,6 +233,8 @@ async function web3data() {
     console.log(6)
     let ffff = await contract1.methods.getReferPower(address).call({from: address});//用户推荐算力
     console.log(7)
+    let gggg = await contract1.methods.getTotalMintDBTC().call({from: address});//全网产出
+    qqqqqcaas.value = 67200 - AllfromWei(gggg)
     const [integer, decimal] = AllfromWei2(cccc).toString().split('.');
     console.log(8)
     qwwwwa.value = Number(integer)

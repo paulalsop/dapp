@@ -8,7 +8,15 @@ const messages = {
     homevall6: "Mining",
     homevall7: "Invite",
     homevall8: "Connection Successful",
-    homevall9: "Connection Failed"
+    homevall9: "Connection Failed",
+    homevall10: "Confirm Binding",
+    homevall11: "Cancel",
+    homevall12: "Confirm",
+    homevall12_1: "Collateral Lending",
+    homevall12_2: "Pet World",
+    homevall12_3: "Sports Competition",
+    homevall12_4: "Confirm",
+    homevall12_5: "Game Entertainment"
   },
   home: {
     home1: "Deposit Annual Interest Rate",
@@ -66,7 +74,7 @@ const messages = {
   },
   ore:{
     ore1: "Total Network Real-Time Hashrate",
-    ore2: "Total Network Real-Time DBTC Production",
+    ore2: "Total Remaining DBTC Production in the Network",
     ore3: "Total Network Daily Hashrate",
     ore4: "Total Network Daily DBTC Production",
     ore5: "Current Daily Production",

@@ -155,19 +155,19 @@ async function asaxxx(t) {
   }
   if (nbool){
     allshow.value = true
-    try {
-      const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
-      const address = localStorage.getItem('address');
-      let time = await contract1.methods.getStartOfDayTimestamp(t).call({from: address})
-      let aaaa = await contract1.methods.getHashFactorForEveryDay(time).call({from: address});//用户算力因子
-      let bbbb = await contract1.methods.getTotalNCPowerFromEveryDay(time).call({from: address});//用户产出
-      allDBTC.value = AllfromWei2(bbbb)
-      allb.value = aaaa
-    }catch (e) {
-      allDBTC.value = 0
-      allb.value = 0
-      console.log(e)
-    }
+  try {
+    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
+    const address = localStorage.getItem('address');
+    let time = await contract1.methods.getStartOfDayTimestamp(t).call({from: address})
+    let aaaa = await contract1.methods.getHashFactorForEveryDay(time).call({from: address});//用户算力因子
+    let bbbb = await contract1.methods.getTotalNCPowerFromEveryDay(time).call({from: address});//用户产出
+    allDBTC.value = AllfromWei2(bbbb)
+    allb.value = aaaa
+  }catch (e) {
+    allDBTC.value = 0
+    allb.value = 0
+    console.log(e)
+  }
   }else {
     allDBTC.value = 0
     allb.value = 0
