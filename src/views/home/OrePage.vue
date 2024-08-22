@@ -215,7 +215,12 @@ async function web3data() {
     console.log(timestamp)
     let time = await contract1.methods.getStartOfDayTimestamp(timestamp).call({from: address})
     console.log(1)
-    let aaaa = await contract1.methods.getUserCanMintDBTCAmount(localStorage.getItem('address')).call({from: address});//今日可领取算力
+    let aaaa = 0
+    try{
+      aaaa = await contract1.methods.getUserCanMintDBTCAmount(localStorage.getItem('address')).call({from: address});//今日可领取算力
+    }catch {
+      aaaa = 0;
+    }
     console.log(2)
     let bbbb = await contract1.methods._mintDBTCEveryDayAmount().call({from: address});//每日DBTC产出
     console.log(3)
