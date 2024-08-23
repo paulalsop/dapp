@@ -99,9 +99,9 @@ let bontarr = ref([{
   address: DP//地址
 }, {
   id: 3,
-  prc: 'DBCT',
+  prc: 'DBCT2',
   money: 0,
-  name: 'DBCT2',
+  name: 'DBCT',
   deposit: 231,
   probability: 0,
   mobility: 232,
