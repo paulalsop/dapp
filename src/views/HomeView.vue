@@ -162,7 +162,7 @@ onMounted(async () => {
   }
   setTimeout(() => {//开屏动画时间
     kaippdh.value = false;
-  }, 1500);
+  }, 3000);
 })
 
 function shortenAddress(address) {
