@@ -4,6 +4,11 @@
       <van-loading color="#CDF202"/>
     </div>
   </van-overlay>
+  <van-overlay :show="kaippdh" z-index="10000">
+    <div style="display: flex;width: 100%;height: 100%;justify-content: center;align-items: center;background: #010303" v-if="kaippdh">
+      <img src="@/assets/homeimg/kaikk.webp" style="width: 100%" alt="WebP Animation" >
+    </div>
+  </van-overlay>
   <van-overlay :show="allshowaasczz" z-index="10000" >
     <div style="display: flex;width: 100%;height: 100%;position:relative " @click="allshowaasczz = false">
       <div style="width: 188px;height: 288px;background: #1B1B1D;border-radius: 12px 12px 12px 12px;position: absolute ;top: 60px;right: 0;" class="sacax"  @click="out()">
@@ -130,6 +135,7 @@ let langshow = ref(false)//语言页面
 let bindshow = ref(false)//绑定页面
 let allshowaasczz = ref(false)//
 let allshow = ref(false)
+let kaippdh = ref(true)
 let langshowaddl = ref()
 let lianjeshow = computed(() => {
   return store.state.lianjeshow
@@ -154,6 +160,9 @@ onMounted(async () => {
       yaojfaqq(route.query.address)
     }
   }
+  setTimeout(() => {//开屏动画时间
+    kaippdh.value = false;
+  }, 1500);
 })
 
 function shortenAddress(address) {
@@ -316,9 +325,9 @@ function isrouter(i) {
     margin: 0 8px;
     border-bottom: 1px solid  rgba(233,237,244,0.15);;
   }
->div:last-child{
-  border: none;
-}
+  >div:last-child{
+    border: none;
+  }
 }
 .popup ::v-deep {
   .van-popup {

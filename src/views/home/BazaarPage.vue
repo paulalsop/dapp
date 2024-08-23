@@ -71,6 +71,12 @@ const wbnb = store.state.wbnb; // wbnb地址
 const DP = store.state.DP; // DP地址
 const DBTCoinNew = store.state.DBTCoinNew; // DBTCoinNew地址
 const USDT = store.state.USDT; // USDT地址
+const BTC = store.state.BTC; // BTC地址
+const ETH = store.state.ETH; // ETH地址
+const BCH = store.state.BCH; // BCH地址
+const SOL = store.state.SOL; // SOL地址
+const DOGE = store.state.DOGE; // DOGE地址
+const TON = store.state.TON; // TON地址
 const getImage = (pic) => {
   return require(`@/assets/homepage/${pic}.png`);
 }
@@ -101,7 +107,7 @@ let bontarr = ref([{
   id: 3,
   prc: 'DBCT2',
   money: 0,
-  name: 'DBCT',
+  name: 'DBTC',
   deposit: 231,
   probability: 0,
   mobility: 232,
@@ -119,19 +125,73 @@ let bontarr = ref([{
   rate: 2,
   pledge: 3.65,
   address: USDT//地址
+},{
+  id: 5,//id
+  prc: 'Eth',//图片位置
+  money: 0,//金额
+  name: 'ETH',//名字
+  deposit: 231,
+  probability: 0,//存款概率
+  mobility: 232,
+  rate: 2,
+  pledge: 3.65,
+  address: ETH//地址
+},{
+  id: 6,//id
+  prc: 'bit',//图片位置
+  money: 0,//金额
+  name: 'Bitcoin',//名字
+  deposit: 231,
+  probability: 0,//存款概率
+  mobility: 232,
+  rate: 2,
+  pledge: 3.65,
+  address: BTC//地址
+},{
+  id: 7,//id
+  prc: 'SOL',//图片位置
+  money: 0,//金额
+  name: 'SOL',//名字
+  deposit: 231,
+  probability: 0,//存款概率
+  mobility: 232,
+  rate: 2,
+  pledge: 3.65,
+  address: SOL//地址
+},{
+  id: 8,//id
+  prc: 'bch',//图片位置
+  money: 0,//金额
+  name: 'BCH',//名字
+  deposit: 231,
+  probability: 0,//存款概率
+  mobility: 232,
+  rate: 2,
+  pledge: 3.65,
+  address: BCH//地址
+},{
+  id: 9,//id
+  prc: 'doge',//图片位置
+  money: 0,//金额
+  name: 'DOGE',//名字
+  deposit: 231,
+  probability: 0,//存款概率
+  mobility: 232,
+  rate: 2,
+  pledge: 3.65,
+  address: DOGE//地址
+},{
+  id: 10,//id
+  prc: 'ton',//图片位置
+  money: 0,//金额
+  name: 'TON',//名字
+  deposit: 231,
+  probability: 0,//存款概率
+  mobility: 232,
+  rate: 2,
+  pledge: 3.65,
+  address: TON//地址
 }
-// , {
-//     id: 5,
-//     prc: 'DBCT',
-//     money: 0,
-//     name: 'DBCT',
-//     deposit: 231,
-//     probability: 20,
-//     mobility: 232,
-//     rate: 2,
-//     pledge: 3.65,
-//   address:DBTCoinNew//地址
-// }
 ])
 let paiarr = computed(() => {
   return bontarr.value.slice().sort((a, b) => b.probability - a.probability);
