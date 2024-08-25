@@ -10,12 +10,13 @@
           <div class="title">{{ $t('my.my14') }}</div>
           <div class="num">{{ allmore }}</div>
           <div class="yqr" v-show="tjris">{{ $t('my.my4') }}:{{ shortenAddress(tjrisaddd) }}</div>
-        </div>
-        <div>
           <div class="title">{{ $t('my.my15') }}</div>
           <div class="num">{{ allmore2 }}</div>
           <div class="yqr" v-show="tjris">{{ $t('my.my4') }}:{{ shortenAddress(tjrisaddd) }}</div>
         </div>
+<!--        <div>-->
+<!--  -->
+<!--        </div>-->
       </div>
       <div class="bonfas">
         <div class="scais cccopa" data-clipboard-action="copy"
@@ -124,9 +125,15 @@ async function web3data() {
   }
 }
 
+function AllfromWei(i) {//fromWei
+  if (web3.value) {
+    return web3.value.utils.fromWei(i, 'ether');
+  }
+}
+
 function AllfromWei2(i) {//fromWei
   if (web3.value) {
-    return (Number(web3.value.utils.fromWei(i, 'ether'))).toFixed(2);
+    return (Number(web3.value.utils.fromWei(i, 'tether')) / 100000000).toFixed(2);
   }
 }
 
@@ -278,7 +285,7 @@ function shortenAddress(address) {
       padding: 3% 0;
 
       > div {
-        width: 50%;
+        width:100%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -293,7 +300,7 @@ function shortenAddress(address) {
 
       .num {
         font-weight: bold;
-        font-size: 48px;
+        font-size: 30px;
         color: #C2B3FF;
       }
 
