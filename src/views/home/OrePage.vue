@@ -285,16 +285,14 @@ async function web3data() {
     const [integerwwa, decimalkwww] = Number(AllfromWei(asszx1)).toFixed(4).toString().split('.');
     ddddqqa.value = integerwwa
     ddddqqb.value = decimalkwww
-    let zhangfu = Number(AllfromWei(asszx1) - AllfromWei(asszx2)).toFixed(4)
-    let asda = 0
+    let zhangfu = Number(AllfromWei(asszx2) - AllfromWei(asszx1)).toFixed(4)
+    let zzfu =  calculateGrowthRate(AllfromWei(asszx1),AllfromWei(asszx2))
     if (zhangfu > 0) {
       sabo0l.value = true
-      asda = zhangfu *100
     } else {
       sabo0l.value = false
-      asda = -zhangfu *100
     }
-    const [zfffwsa, zfffwsb] = asda.toString().split('.')
+    const [zfffwsa, zfffwsb] = zzfu.toString().split('.')
     zfffa.value = zfffwsa
     zfffb.value = zfffwsb
     console.log(7)
@@ -332,7 +330,13 @@ async function web3data() {
     console.log(error);
   }
 }
-
+function calculateGrowthRate(currentPrice, previousPrice) {
+  if (previousPrice === 0) {
+    return 0;
+  }
+  let growthRate = ((currentPrice - previousPrice) / previousPrice) * 100;
+  return growthRate.toFixed(2);
+}
 function AllfromWei2(i) {//fromWei
   if (web3.value) {
     return (Number(web3.value.utils.fromWei(i, 'tether')) / 100000000).toFixed(2);
