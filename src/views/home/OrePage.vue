@@ -279,22 +279,20 @@ async function web3data() {
     let ffff = await contract1.methods.getReferPower(address).call({from: address});//用户推荐算力
     let asszx1 = await contractDb.methods.getPrice().call({from: address});//获取当前币的价格
     let asszx2 = await contractDb.methods.getOpeningPrice().call({from: address});//开盘价
-    const [integerka, decimalkb] = Number(AllfromWei(asszx2)).toFixed(6).toString().split('.');
+    const [integerka, decimalkb] = Number(AllfromWei(asszx2)).toFixed(4).toString().split('.');
     kkkpaansa.value = integerka
     kkkpaansb.value = decimalkb
-    const [integerwwa, decimalkwww] = Number(AllfromWei(asszx1)).toFixed(6).toString().split('.');
+    const [integerwwa, decimalkwww] = Number(AllfromWei(asszx1)).toFixed(4).toString().split('.');
     ddddqqa.value = integerwwa
     ddddqqb.value = decimalkwww
-    let zhangfu = (Number(AllfromWei(asszx1) - AllfromWei(asszx2)).toFixed(8) /  Number(AllfromWei(asszx1)).toFixed(8)).toFixed(4)
-    let asda = 0
+    let zhangfu = Number(AllfromWei(asszx2) - AllfromWei(asszx1)).toFixed(4)
+    let zzfu =  calculateGrowthRate(AllfromWei(asszx1),AllfromWei(asszx2))
     if (zhangfu > 0) {
       sabo0l.value = true
-      asda = zhangfu *100
     } else {
       sabo0l.value = false
-      asda = -zhangfu *100
     }
-    const [zfffwsa, zfffwsb] = asda.toString().split('.')
+    const [zfffwsa, zfffwsb] = zzfu.toString().split('.')
     zfffa.value = zfffwsa
     zfffb.value = zfffwsb
     console.log(7)
@@ -332,7 +330,13 @@ async function web3data() {
     console.log(error);
   }
 }
-
+function calculateGrowthRate(currentPrice, previousPrice) {
+  if (previousPrice === 0) {
+    return 0;
+  }
+  let growthRate = ((currentPrice - previousPrice) / previousPrice) * 100;
+  return growthRate.toFixed(2);
+}
 function AllfromWei2(i) {//fromWei
   if (web3.value) {
     return (Number(web3.value.utils.fromWei(i, 'tether')) / 100000000).toFixed(2);
