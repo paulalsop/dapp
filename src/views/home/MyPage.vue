@@ -92,11 +92,11 @@ async function web3data() {
     let aaaa = await contract1.methods.hasRefer(localStorage.getItem('address')).call({from: address});//判断是否已经有推荐人
     let ssaa = await contract1.methods.getReferPower(localStorage.getItem('address')).call({from: address});//获取推荐获得的算力
     let ssaa2 = await contract1.methods.getRefers(localStorage.getItem('address')).call({from: address});//获取下级
-    allmore.value = AllfromWei2(ssaa)
+    allmore.value = AllfromWei(ssaa)
     arraa.value = ssaa2
     for (let i = 0; i < ssaa2.length; i++) {
       let aaaa = await contract1.methods.getUserNCPower(ssaa2[i]).call({from: ssaa2[i]});
-      arr222.value.push( AllfromWei2(aaaa))
+      arr222.value.push( AllfromWei(aaaa))
     }
     if (aaaa) {
       tjris.value = true
@@ -114,11 +114,11 @@ function AllfromWei(i) {//fromWei
     return web3.value.utils.fromWei(i, 'ether');
   }
 }
-function AllfromWei2(i) {//fromWei
-  if (web3.value) {
-    return (Number(web3.value.utils.fromWei(i, 'tether')) / 100000000).toFixed(2);
-  }
-}
+// function AllfromWei2(i) {//fromWei
+//   if (web3.value) {
+//     return (Number(web3.value.utils.fromWei(i, 'tether')) / 100000000).toFixed(2);
+//   }
+// }
 function idtablead() {
   // a.value = idtable.value ? 45 : 5;
   // idtable.value = !idtable.value;

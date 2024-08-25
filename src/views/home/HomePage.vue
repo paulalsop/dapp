@@ -324,8 +324,8 @@ const handleInput = async () => {//延迟触发
       purchase.value = allamount.value
     }
     aaaa = await contract1.methods.calculateStakingCoinsPower(bontarr.value[gommm.value].address, toWei(allamount.value)).call({from: localStorage.getItem('address')});
-    hashrate.value = AllfromWei2(aaaa)
-    console.log(AllfromWei2(aaaa),bbbb)
+    hashrate.value = AllfromWei(aaaa)
+    console.log(AllfromWei(aaaa),bbbb)
   } catch (e) {
     console.log(e)
   }
@@ -488,7 +488,7 @@ async function web3data() {
       }
       console.log(bontarr.value)
       let aaaa = await contract1.methods.getTotalNCPowerFromEveryDay(timestamp).call({from: address});
-      Finaleffort.value = AllfromWei2(aaaa)
+      Finaleffort.value = AllfromWei(aaaa)
       let bbbb = await contract1.methods.getTotalMintDBTC().call({from: address});
       Grosspurchase.value = AllfromWei(bbbb)
     // let arr = []
@@ -520,11 +520,11 @@ function AllfromWei(i) {//fromWei
   }
 }
 
-function AllfromWei2(i) {//fromWei
-  if (web3.value) {
-    return (Number(web3.value.utils.fromWei(i, 'tether')) / 100000000).toFixed(2);
-  }
-}
+// function AllfromWei2(i) {//fromWei
+//   if (web3.value) {
+//     return (Number(web3.value.utils.fromWei(i, 'tether')) / 100000000).toFixed(2);
+//   }
+// }
 
 function toWei(value) {//toWei
   if (web3.value) {
