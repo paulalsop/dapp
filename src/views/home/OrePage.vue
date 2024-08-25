@@ -335,7 +335,7 @@ async function web3data() {
 
 function AllfromWei2(i) {//fromWei
   if (web3.value) {
-    return (Number(web3.value.utils.fromWei(i, 'tether')) / 100000000).toFixed(2);
+    return (Number(web3.value.utils.fromWei(i, 'ether')).toFixed(2);
   }
 }
 
