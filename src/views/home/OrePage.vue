@@ -285,7 +285,7 @@ async function web3data() {
     const [integerwwa, decimalkwww] = Number(AllfromWei(asszx1)).toFixed(4).toString().split('.');
     ddddqqa.value = integerwwa
     ddddqqb.value = decimalkwww
-    let zhangfu = Number(AllfromWei(asszx1) - AllfromWei(asszx2)).toFixed(4)
+    let zhangfu = Number(AllfromWei(asszx1) - AllfromWei(asszx2)).toFixed(4) / AllfromWei(asszx1)
     let asda = 0
     if (zhangfu > 0) {
       sabo0l.value = true
