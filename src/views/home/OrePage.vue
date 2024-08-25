@@ -279,10 +279,10 @@ async function web3data() {
     let ffff = await contract1.methods.getReferPower(address).call({from: address});//用户推荐算力
     let asszx1 = await contractDb.methods.getPrice().call({from: address});//获取当前币的价格
     let asszx2 = await contractDb.methods.getOpeningPrice().call({from: address});//开盘价
-    const [integerka, decimalkb] = Number(AllfromWei(asszx2)).toFixed(4).toString().split('.');
+    const [integerka, decimalkb] = Number(AllfromWei(asszx2)).toFixed(6).toString().split('.');
     kkkpaansa.value = integerka
     kkkpaansb.value = decimalkb
-    const [integerwwa, decimalkwww] = Number(AllfromWei(asszx1)).toFixed(4).toString().split('.');
+    const [integerwwa, decimalkwww] = Number(AllfromWei(asszx1)).toFixed(6).toString().split('.');
     ddddqqa.value = integerwwa
     ddddqqb.value = decimalkwww
     let zhangfu = (Number(AllfromWei(asszx1) - AllfromWei(asszx2)).toFixed(8) /  Number(AllfromWei(asszx1)).toFixed(8)).toFixed(4)
