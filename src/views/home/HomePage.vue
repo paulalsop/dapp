@@ -52,7 +52,7 @@
             <div class="jea">
               <div class="sxx2">{{ $t('home.home7') }}</div>
               <div class="saimg">{{ allamount ? allamount : 0 }} <img src="@/assets/homepage/jjjt.png"
-                                                                      alt="">{{ hashrate }}th
+                                                                      alt="">{{ hashrate }} th
               </div>
             </div>
             <div style="color: #6CC734;">{{ hashrate }}th</div>
