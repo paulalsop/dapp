@@ -78,7 +78,7 @@
 
       </div>
       <div class="tealllink">
-        <div class="dbtc"></div>
+<!--        <div class="dbtc"></div>-->
         <div class="alink">
           <a href="https://t.me/PetWorld8" target="_blank"><img src="@/assets/homeimg/icon1.png" alt=""></a>
           <!--          <img src="@/assets/homeimg/icon2.png" alt="">-->
@@ -325,9 +325,9 @@ function isrouter(i) {
     margin: 0 8px;
     border-bottom: 1px solid  rgba(233,237,244,0.15);;
   }
-  >div:last-child{
-    border: none;
-  }
+>div:last-child{
+  border: none;
+}
 }
 .popup ::v-deep {
   .van-popup {

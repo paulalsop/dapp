@@ -27,7 +27,7 @@
     </div>
     <div class="text1ac">
       <div>
-        <div class="title">{{ $t('record.record2') }}DBTC</div>
+        <div class="title">{{ $t('record.record2') }}</div>
         <div class="num">{{ allDBTC }}</div>
       </div>
       <div>

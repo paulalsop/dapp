@@ -6,9 +6,16 @@
     </div>
     <div class="sdaimga">
       <div class="allbody">
-        <div class="title">{{ $t('my.my3') }}</div>
-        <div class="num">{{ allmore }}</div>
-        <div class="yqr" v-show="tjris">{{ $t('my.my4') }}:{{ shortenAddress(tjrisaddd) }}</div>
+        <div>
+          <div class="title">{{ $t('my.my14') }}</div>
+          <div class="num">{{ allmore }}</div>
+          <div class="yqr" v-show="tjris">{{ $t('my.my4') }}:{{ shortenAddress(tjrisaddd) }}</div>
+        </div>
+        <div>
+          <div class="title">{{ $t('my.my15') }}</div>
+          <div class="num">{{ allmore2 }}</div>
+          <div class="yqr" v-show="tjris">{{ $t('my.my4') }}:{{ shortenAddress(tjrisaddd) }}</div>
+        </div>
       </div>
       <div class="bonfas">
         <div class="scais cccopa" data-clipboard-action="copy"
@@ -18,7 +25,7 @@
       </div>
     </div>
     <div class="ascz">
-      <div class="itt">{{ $t('my.my6') }}({{arraa.length}}{{ $t('my.my12') }})</div>
+      <div class="itt">{{ $t('my.my6') }}({{ arraa.length }}{{ $t('my.my12') }})</div>
       <div class="zzkk" @click="idtablead()">{{ idtable ? $t('my.my7') : $t('my.my8') }}<img src="@/assets/my/xa.png"
                                                                                              alt=""
                                                                                              :style="{ transform: `rotate(${idtable ? 360 : 180}deg)` }">
@@ -34,7 +41,8 @@
       <tbody>
       <tr v-for=" (i,index) in arraa" :key="i">
         <td class="cccopaa" data-clipboard-action="copy"
-            @click="copy(i, 'cccopaa')">{{shortenAddress(i)}}<img style="vertical-align:middle;" src="@/assets/my/fz.png" alt=""></td>
+            @click="copy(i, 'cccopaa')">{{ shortenAddress(i) }}<img style="vertical-align:middle;"
+                                                                    src="@/assets/my/fz.png" alt=""></td>
         <td>{{ arr222[index] }}</td>
       </tr>
       </tbody>
@@ -51,6 +59,7 @@ import {useStore} from "vuex";
 import {showFailToast, showSuccessToast} from "vant";
 import ClipboardJS from 'clipboard';
 import {useI18n} from "vue-i18n";
+
 let lianjeshow = computed(() => {
   return store.state.lianjeshow
 })//是否连接钱包
@@ -63,6 +72,7 @@ let tjrisaddd = ref('0000000000000000000000000000')//推荐人
 let arraa = ref([])//子推荐人
 let arr222 = ref([])//子推荐人算力
 let allmore = ref(0)//算力值
+let allmore2 = ref(0)//算力值2
 let affff = localStorage.getItem('address')
 onMounted(async () => {
   web3.value = await useWeb3();
@@ -71,7 +81,7 @@ onMounted(async () => {
 })
 
 function copy(i, inp) {
-  if (!lianjeshow.value){
+  if (!lianjeshow.value) {
     showFailToast(t('home.home45'));
     return
   }
@@ -85,18 +95,22 @@ function copy(i, inp) {
     clipboard.destroy()
   });
 }
+
 async function web3data() {
   try {
     const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
     const address = localStorage.getItem('address');
     let aaaa = await contract1.methods.hasRefer(localStorage.getItem('address')).call({from: address});//判断是否已经有推荐人
-    let ssaa = await contract1.methods.getReferPower(localStorage.getItem('address')).call({from: address});//获取推荐获得的算力
+    // let ssaa = await contract1.methods.getReferPower(localStorage.getItem('address')).call({from: address});//获取推荐获得的算力
+    let yesssaa = await contract1.methods.get_referAllPower(localStorage.getItem('address')).call({from: address});//已经激活推荐算力
+    let ssaa = await contract1.methods.getReferPower(localStorage.getItem('address')).call({from: address});//未激活算力
     let ssaa2 = await contract1.methods.getRefers(localStorage.getItem('address')).call({from: address});//获取下级
     allmore.value = AllfromWei2(ssaa)
+    allmore2.value = AllfromWei2(yesssaa)
     arraa.value = ssaa2
     for (let i = 0; i < ssaa2.length; i++) {
       let aaaa = await contract1.methods.getUserNCPower(ssaa2[i]).call({from: ssaa2[i]});
-      arr222.value.push( AllfromWei2(aaaa))
+      arr222.value.push(AllfromWei2(aaaa))
     }
     if (aaaa) {
       tjris.value = true
@@ -115,6 +129,7 @@ function AllfromWei2(i) {//fromWei
     return (Number(web3.value.utils.fromWei(i, 'ether'))).toFixed(2);
   }
 }
+
 function idtablead() {
   // a.value = idtable.value ? 45 : 5;
   // idtable.value = !idtable.value;
@@ -260,10 +275,15 @@ function shortenAddress(address) {
       width: 100%;
       height: 50%;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-around;
       padding: 3% 0;
+
+      > div {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+      }
 
       .title {
         font-weight: bold;

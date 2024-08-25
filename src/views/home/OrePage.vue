@@ -60,6 +60,13 @@
           <van-rolling-text :start-num="0" :target-num="tjdbtcb" :height="24"/>
         </div>
       </div>
+      <div v-show="Privateplacement">
+        <div class="title title2">{{ $t('ore.ore28') }}</div>
+        <!--        <div class="num">{{tjdbtc}}</div>-->
+        <div class="num">
+          {{ Privateplacement }}
+        </div>
+      </div>
     </div>
 
     <div class="linquaa">
@@ -177,6 +184,7 @@ let jrdbtc = ref(0)//每日DBTC产出
 let tjdbtca = ref(0)//推荐DBTC产出
 let tjdbtcb = ref(0)//推荐DBTC产出
 let qqqqqcaas = ref(0)//全网剩余产出
+let Privateplacement = ref(0)//私募算力
 // let isFrameasw = ref(true)
 let youmoren = ref(0)
 onMounted(async () => {
@@ -236,6 +244,13 @@ async function web3data() {
     let ffff = await contract1.methods.getReferPower(address).call({from: address});//用户推荐算力
     console.log(7)
     let gggg = await contract1.methods.getTotalMintDBTC().call({from: address});//全网产出
+    let ssss = await contract1.methods.hasGiveawayUserNCPower(address).call({from: address});//判断是否有私募算力
+    if (ssss){
+      let ssssa = await contract1.methods.getGiveawayUserNCPower(address).call({from: address});//私募算力
+      Privateplacement.value = AllfromWei2(ssssa)
+    }
+
+    console.log(ssss)
     qqqqqcaas.value = 67200 - AllfromWei(gggg)
     const [integer, decimal] = AllfromWei2(cccc).toString().split('.');
     console.log(8)
