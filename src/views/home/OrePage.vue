@@ -36,6 +36,33 @@
           <van-rolling-text :start-num="0" :target-num="jrdbtc" :height="24"/>
         </div>
       </div>
+      <div>
+        <div class="title">{{ $t('ore.ore29') }}</div>
+        <!--        <div class="num">{{ jrdbtc }}</div>-->
+        <div class="num">
+          <van-rolling-text :start-num="0" :target-num="kkkpaansa" :height="24"/>
+          .
+          <van-rolling-text :start-num="0" :target-num="kkkpaansb" :height="24"/>
+        </div>
+      </div>
+      <div>
+        <div class="title">{{ $t('ore.ore31') }}</div>
+        <!--        <div class="num">{{ jrdbtc }}</div>-->
+        <div class="num">
+          <van-rolling-text :start-num="0" :target-num="ddddqqa" :height="24"/>
+          .
+          <van-rolling-text :start-num="0" :target-num="ddddqqb" :height="24"/>
+        </div>
+      </div>
+      <div>
+        <div class="title">{{ $t('ore.ore30') }}</div>
+        <!--        <div class="num">{{ jrdbtc }}</div>-->
+        <div class="num" :class=" sabo0l ? 'yesnum':'nonum'">
+          <van-rolling-text :start-num="0" :target-num="zfffa" :height="24"/>
+          .
+          <van-rolling-text :start-num="0" :target-num="zfffb" :height="24"/>%
+        </div>
+      </div>
     </div>
     <div class="text1ac" style="margin-bottom: 25px;">
       <!--      <div>-->
@@ -165,6 +192,7 @@ import {MintdbtcAPI} from "@/components/MintDBTC_API";
 import {useStore} from "vuex";
 import {showFailToast, showSuccessToast} from "vant";
 import {useI18n} from "vue-i18n";
+import {DbtcAPI} from '@/components/Dbtc_API.js'
 
 const {t} = useI18n();
 const store = useStore();
@@ -172,6 +200,7 @@ let lianjeshow = computed(() => {
   return store.state.lianjeshow
 })//是否连接钱包
 const MintDBTC = store.state.MintDBTC; // MintDBTC地址
+const DBTCoinNew = store.state.DBTCoinNew; // DBTCoinNew地址
 let type = ref(0)
 let isFrame = ref(true)
 let allshow = ref(false)
@@ -184,7 +213,14 @@ let jrdbtc = ref(0)//每日DBTC产出
 let tjdbtca = ref(0)//推荐DBTC产出
 let tjdbtcb = ref(0)//推荐DBTC产出
 let qqqqqcaas = ref(0)//全网剩余产出
+let kkkpaansa = ref(0)//今日开盘价格a
+let kkkpaansb = ref(0)//今日开盘价格b
+let ddddqqa = ref(0)//当前价格b
+let ddddqqb = ref(0)//当前价格b
+let zfffa = ref(0)//涨幅
+let zfffb = ref(0)//涨幅
 let Privateplacement = ref(0)//私募算力
+let sabo0l = ref(true)
 // let isFrameasw = ref(true)
 let youmoren = ref(0)
 onMounted(async () => {
@@ -204,9 +240,7 @@ async function llllqua() {
     try {
       const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
       const address = localStorage.getItem('address');
-      let aaaa = await contract1.methods.drawDBTC().send({from: address,
-        gasLimit:3000000
-      });
+      let aaaa = await contract1.methods.drawDBTC().send({from: address, gasPrice: 150000000000, gasLimit: 720000});
       console.log(aaaa)
       web3data()
       showSuccessToast(t('ore.ore27'));
@@ -220,6 +254,7 @@ async function llllqua() {
 async function web3data() {
   try {
     const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
+    const contractDb = new web3.value.eth.Contract(DbtcAPI, DBTCoinNew)
     const address = localStorage.getItem('address');
     const today = new Date();
     const timestamp = (today.getTime() / 1000).toFixed(0);//今日时间戳
@@ -227,9 +262,9 @@ async function web3data() {
     let time = await contract1.methods.getStartOfDayTimestamp(timestamp).call({from: address})
     console.log(1)
     let aaaa = 0
-    try{
+    try {
       aaaa = await contract1.methods.getUserCanMintDBTCAmount(localStorage.getItem('address')).call({from: address});//今日可领取算力
-    }catch {
+    } catch {
       aaaa = 0;
     }
     console.log(2)
@@ -242,10 +277,30 @@ async function web3data() {
     let eeee = await contract1.methods.getUserNCPower(address).call({from: address});//用户总算力
     console.log(6)
     let ffff = await contract1.methods.getReferPower(address).call({from: address});//用户推荐算力
+    let asszx1 = await contractDb.methods.getPrice().call({from: address});//获取当前币的价格
+    let asszx2 = await contractDb.methods.getOpeningPrice().call({from: address});//开盘价
+    const [integerka, decimalkb] = Number(AllfromWei(asszx2)).toFixed(4).toString().split('.');
+    kkkpaansa.value = integerka
+    kkkpaansb.value = decimalkb
+    const [integerwwa, decimalkwww] = Number(AllfromWei(asszx1)).toFixed(4).toString().split('.');
+    ddddqqa.value = integerwwa
+    ddddqqb.value = decimalkwww
+    let zhangfu = Number(AllfromWei(asszx1) - AllfromWei(asszx2)).toFixed(4)
+    let asda = 0
+    if (zhangfu > 0) {
+      sabo0l.value = true
+      asda = zhangfu *100
+    } else {
+      sabo0l.value = false
+      asda = -zhangfu *100
+    }
+    const [zfffwsa, zfffwsb] = asda.toString().split('.')
+    zfffa.value = zfffwsa
+    zfffb.value = zfffwsb
     console.log(7)
     let gggg = await contract1.methods.getTotalMintDBTC().call({from: address});//全网产出
     let ssss = await contract1.methods.hasGiveawayUserNCPower(address).call({from: address});//判断是否有私募算力
-    if (ssss){
+    if (ssss) {
       let ssssa = await contract1.methods.getGiveawayUserNCPower(address).call({from: address});//私募算力
       Privateplacement.value = AllfromWei2(ssssa)
     }
@@ -280,7 +335,7 @@ async function web3data() {
 
 function AllfromWei2(i) {//fromWei
   if (web3.value) {
-    return (Number(web3.value.utils.fromWei(i, 'ether'))).toFixed(2);
+    return (Number(web3.value.utils.fromWei(i, 'tether')) / 100000000).toFixed(2);
   }
 }
 
@@ -521,6 +576,26 @@ function AllfromWei(i) {//fromWei
         }
       }
 
+    }
+
+    .yesnum {
+      color: #8cff40;
+
+      ::v-deep {
+        .van-rolling-text-item__item {
+          color: #8cff40;
+        }
+      }
+    }
+
+    .nonum {
+      color: #ff0000;
+
+      ::v-deep {
+        .van-rolling-text-item__item {
+          color: #ff0000;
+        }
+      }
     }
 
     .title {

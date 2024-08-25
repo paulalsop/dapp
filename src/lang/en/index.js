@@ -101,7 +101,11 @@ const messages = {
     ore25: "Today's Hash Power Factor",
     ore26: "Nothing to Claim",
     ore27: "Claim Successful",
-    ore28: "Private Sale Hash Power"
+    ore28: "Private Sale Hash Power",
+    ore29: 'Today\'s Opening Price',
+    ore30: 'Price Increase',
+    ore31: 'Current Price',
+
 
   },
   my:{
