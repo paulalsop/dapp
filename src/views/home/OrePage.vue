@@ -237,13 +237,13 @@ async function web3data() {
     console.log(7)
     let gggg = await contract1.methods.getTotalMintDBTC().call({from: address});//全网产出
     qqqqqcaas.value = 67200 - AllfromWei(gggg)
-    const [integer, decimal] = AllfromWei(cccc).toString().split('.');
+    const [integer, decimal] = AllfromWei2(cccc).toString().split('.');
     console.log(8)
     qwwwwa.value = Number(integer)
     console.log(9)
     qwwwwb.value = decimal
     jryyyyz.value = dddd
-    const [integer1, decimal1] = AllfromWei(eeee).toString().split('.');
+    const [integer1, decimal1] = AllfromWei2(eeee).toString().split('.');
     console.log(10)
     yhalla.value = Number(integer1)
     console.log(11)
@@ -252,7 +252,7 @@ async function web3data() {
     console.log(12)
     youmoren.value = Number(AllfromWei(aaaa)).toFixed(2)
     console.log(13)
-    const [integer2, decimal2] = AllfromWei(ffff).toString().split('.');
+    const [integer2, decimal2] = AllfromWei2(ffff).toString().split('.');
     console.log(14)
     tjdbtca.value = Number(integer2)
     console.log(15)
@@ -263,11 +263,11 @@ async function web3data() {
   }
 }
 
-// function AllfromWei2(i) {//fromWei
-//   if (web3.value) {
-//     return (Number(web3.value.utils.fromWei(i, 'tether')) / 100000000).toFixed(2);
-//   }
-// }
+function AllfromWei2(i) {//fromWei
+  if (web3.value) {
+    return (Number(web3.value.utils.fromWei(i, 'ether'))).toFixed(2);
+  }
+}
 
 function AllfromWei(i) {//fromWei
   if (web3.value) {

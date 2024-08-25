@@ -161,7 +161,7 @@ async function asaxxx(t) {
     let time = await contract1.methods.getStartOfDayTimestamp(t).call({from: address})
     let aaaa = await contract1.methods.getHashFactorForEveryDay(time).call({from: address});//用户算力因子
     let bbbb = await contract1.methods.getTotalNCPowerFromEveryDay(time).call({from: address});//用户产出
-    allDBTC.value = AllfromWei(bbbb)
+    allDBTC.value = AllfromWei2(bbbb)
     allb.value = aaaa
   }catch (e) {
     allDBTC.value = 0
@@ -186,15 +186,9 @@ function getTimestamp(dateString) {
 
   return timestamp;
 }
-// function AllfromWei2(i) {//fromWei
-//   if (web3.value) {
-//     return (Number(web3.value.utils.fromWei(i, 'tether')) / 100000000).toFixed(2);
-//   }
-// }
-
-function AllfromWei(i) {//fromWei
+function AllfromWei2(i) {//fromWei
   if (web3.value) {
-    return web3.value.utils.fromWei(i, 'ether');
+    return (Number(web3.value.utils.fromWei(i, 'ether'))).toFixed(2);
   }
 }
 </script>
