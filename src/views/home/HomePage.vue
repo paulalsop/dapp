@@ -334,8 +334,8 @@ const handleInput = async () => {//延迟触发
       purchase.value = allamount.value
     }
     aaaa = await contract1.methods.calculateStakingCoinsPower(bontarr.value[gommm.value].address, toWei(allamount.value)).call({from: localStorage.getItem('address')});
-    hashrate.value = AllfromWei3(aaaa)
-    console.log(AllfromWei3(aaaa),bbbb)
+    hashrate.value = AllfromWei2(aaaa)
+    console.log(AllfromWei2(aaaa),bbbb)
   } catch (e) {
     console.log(e)
   }
@@ -536,11 +536,7 @@ function AllfromWei2(i) {//fromWei
   }
 }
 
-function AllfromWei3(i) {//fromWei
-  if (web3.value) {
-    return (Number(web3.value.utils.fromWei(i, 'tether')) / 100000000).toFixed(2);
-  }
-}
+
 
 function toWei(value) {//toWei
   if (web3.value) {
