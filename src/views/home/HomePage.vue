@@ -186,6 +186,7 @@ const BCH = store.state.BCH; // BCH地址
 const SOL = store.state.SOL; // SOL地址
 const DOGE = store.state.DOGE; // DOGE地址
 const TON = store.state.TON; // TON地址
+const MS = store.state.MorningStar; // TON地址
 const MintDBTC = store.state.MintDBTC; // MintDBTC地址
 let rout = ref(45)
 let hashrate = ref(0)//计算算力
@@ -291,6 +292,15 @@ let bontarr = ref([{
   up: '3000',
   name: 'TON',
   address: TON,
+  api: UsdtAPI,
+  morenum: '0'
+},{
+  id: 10,
+  checked: false,
+  prc: 'MS',
+  up: '3000',
+  name: 'MorningStar',
+  address: MS,
   api: UsdtAPI,
   morenum: '0'
 }

@@ -77,6 +77,7 @@ const BCH = store.state.BCH; // BCH地址
 const SOL = store.state.SOL; // SOL地址
 const DOGE = store.state.DOGE; // DOGE地址
 const TON = store.state.TON; // TON地址
+const MS = store.state.MorningStar; // TON地址
 const getImage = (pic) => {
   return require(`@/assets/homepage/${pic}.png`);
 }
@@ -191,6 +192,17 @@ let bontarr = ref([{
   rate: 2,
   pledge: 3.65,
   address: TON//地址
+},{
+  id: 10,//id
+  prc: 'MS',//图片位置
+  money: 0,//金额
+  name: 'MorningStar',//名字
+  deposit: 231,
+  probability: 0,//存款概率
+  mobility: 232,
+  rate: 2,
+  pledge: 3.65,
+  address: MS//地址
 }
 ])
 let paiarr = computed(() => {
