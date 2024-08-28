@@ -9,7 +9,6 @@
         <div>
           <div class="title">{{ $t('my.my14') }}</div>
           <div class="num">{{ allmore }}</div>
-          <div class="yqr" v-show="tjris">{{ $t('my.my4') }}:{{ shortenAddress(tjrisaddd) }}</div>
           <div class="title">{{ $t('my.my15') }}</div>
           <div class="num">{{ allmore2 }}</div>
           <div class="yqr" v-show="tjris">{{ $t('my.my4') }}:{{ shortenAddress(tjrisaddd) }}</div>
@@ -27,9 +26,8 @@
     </div>
     <div class="ascz">
       <div class="itt">{{ $t('my.my6') }}({{ arraa.length }}{{ $t('my.my12') }})</div>
-      <div class="zzkk" @click="idtablead()">{{ idtable ? $t('my.my7') : $t('my.my8') }}<img src="@/assets/my/xa.png"
-                                                                                             alt=""
-                                                                                             :style="{ transform: `rotate(${idtable ? 360 : 180}deg)` }">
+      <div class="zzkk" @click="idtablead()">{{ idtable ? $t('my.my7') : $t('my.my8') }}
+        <img src="@/assets/my/xa.png" alt="" :style="{ transform: `rotate(${idtable ? 360 : 180}deg)` }">
       </div>
     </div>
     <table cellspacing="10">
