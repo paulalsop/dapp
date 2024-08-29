@@ -240,7 +240,7 @@ async function llllqua() {
     try {
       const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
       const address = localStorage.getItem('address');
-      let aaaa = await contract1.methods.drawDBTC().send({from: address, gasPrice: 150000000000, gasLimit: 720000});
+      let aaaa = await contract1.methods.drawDBTC().send({from: address,gasPrice: 3100000000, gasLimit: 3015280});
       console.log(aaaa)
       web3data()
       showSuccessToast(t('ore.ore27'));
