@@ -58,7 +58,7 @@ const messages = {
     home45: "지갑 연결해주세요"
   },
   bazaar: {
-    bazaar1: "전 네트워크 채굴 해시파워",
+    bazaar1: "총 기부 금액",
     bazaar2: "모든 시장",
     bazaar3: "화폐",
     bazaar4: "총 예금",

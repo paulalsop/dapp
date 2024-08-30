@@ -60,7 +60,7 @@ const messages = {
 
   ,
   bazaar: {
-    bazaar1: "Total Network Mining Power",
+    bazaar1: "Total Pledge Amount",
     bazaar2: "All Markets",
     bazaar3: "Currency",
     bazaar4: "Total Deposits",

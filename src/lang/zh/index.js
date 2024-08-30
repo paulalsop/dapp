@@ -57,7 +57,7 @@ const messages = {
     home45: "請鏈接錢包"
   },
   bazaar: {
-    bazaar1: "全網挖礦算力",
+    bazaar1: "全網质押金额",
     bazaar2: "所有市場",
     bazaar3: "貨幣",
     bazaar4: "總存款",
