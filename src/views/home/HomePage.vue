@@ -333,7 +333,11 @@ const handleInput = async () => {//延迟触发
     } else {
       purchase.value = allamount.value
     }
-    aaaa = await contract1.methods.calculateStakingCoinsPower(bontarr.value[gommm.value].address, toWei(allamount.value)).call({from: localStorage.getItem('address')});
+    aaaa = await contract1.methods.calculateStakingCoinsPower(bontarr.value[gommm.value].address, toWei(allamount.value)).call({
+      from: localStorage.getItem('address')
+      gasPrice: 3100000000,
+      gasLimit: 2300000
+    });
     hashrate.value = AllfromWei2(aaaa)
     console.log(AllfromWei2(aaaa),bbbb)
   } catch (e) {
@@ -445,7 +449,8 @@ async function deposit() {
       let bbbb = await contract1.methods.stakingCoins(bontarr.value[gommm.value].address, isnum).send({
         from: localStorage.getItem('address'),
         value: isnum,
-        gasPrice: 3100000000
+        gasPrice: 3100000000,
+        gasLimit: 2300000
       });
       allshow.value = false
       showSuccessToast(t('home.home43'));
@@ -454,7 +459,8 @@ async function deposit() {
     } else {
       let aaaa = await contract1.methods.stakingCoins(bontarr.value[gommm.value].address, toWei(allamount.value)).send({
         from: localStorage.getItem('address'),
-        gasPrice: 3100000000
+        gasPrice: 3100000000,
+        gasLimit: 2300000
       });
       allshow.value = false
       showSuccessToast(t('home.home43'));
