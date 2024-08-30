@@ -218,7 +218,7 @@ async function web3data() {
     const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
     const address = localStorage.getItem('address');
     let aaaa = await contract1.methods.get_allPrice().call({from: address});
-    allamount.value = AllfromWei2(aaaa)
+    allamount.value = AllfromWei(aaaa)
     for (let i = 0; i < bontarr.value.length; i++) {
       if (i !== 3){
         let aaa = await contract1.methods.getPrice(bontarr.value[i].address).call({from: address});
