@@ -32,20 +32,20 @@
       </div>
       <div>
         <div class="title">{{ $t('ore.ore25') }}</div>
-        <div class="num">{{allb}}</div>
+        <div class="num">{{ allb }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue"
-import {useWeb3} from '@/web3/index.js';
-import {MintdbtcAPI} from "@/components/MintDBTC_API";
-import {useStore} from "vuex";
+import { onMounted, ref } from 'vue'
+import { useWeb3 } from '@/web3/index.js'
+import { MintdbtcAPI } from '@/components/MintDBTC_API'
+import { useStore } from 'vuex'
 
-const store = useStore();
-const MintDBTC = store.state.MintDBTC; // MintDBTC地址
+const store = useStore()
+const MintDBTC = store.state.MintDBTC // MintDBTC地址
 let showweek = ref(false)
 let allshow = ref(false)
 let allDBTC = ref(0)
@@ -69,21 +69,21 @@ let ismark = ref([
   }
 ])
 onMounted(async () => {
-  web3.value = await useWeb3();
+  web3.value = await useWeb3()
   web3data()
 })
 
-async function web3data() {
+async function web3data () {
   try {
     const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
-    const address = localStorage.getItem('address');
-    let aaaa = await contract1.methods.getUserReceivesStartDate(address).call({from: address});//用户注册时间
+    const address = localStorage.getItem('address')
+    let aaaa = await contract1.methods.getUserReceivesStartDate(address).call({ from: address })//用户注册时间
     let timeday = getToday8AMTimestamp()
     let arr = getNextSevenDaysTimestamps(Number(aaaa))
-    const filteredTimestamps = arr.filter(timestamp => timestamp <=  timeday);
+    const filteredTimestamps = arr.filter(timestamp => timestamp <= timeday)
     let arr2 = []
     for (let index = 0; index < filteredTimestamps.length; index++) {
-      let csssa = await contract1.methods.getUserReceiveRecord(address,filteredTimestamps[index]).call({from: address});
+      let csssa = await contract1.methods.getUserReceiveRecord(address, filteredTimestamps[index]).call({ from: address })
       arr2.push(csssa)
     }
     let arr3 = arr2.map((bool, index) => ({
@@ -91,104 +91,118 @@ async function web3data() {
       time: filteredTimestamps[index]
     }))
     showweekarr.value = arr3
-    const { trueArray, falseArray } = arr3.reduce((acc, obj) => {
-      const formattedTime = formatDate(obj.time*1000);
+    const {
+      trueArray,
+      falseArray
+    } = arr3.reduce((acc, obj) => {
+      const formattedTime = formatDate(obj.time * 1000)
       if (obj.bool) {
-        acc.trueArray.push( formattedTime );
+        acc.trueArray.push(formattedTime)
       } else {
-        acc.falseArray.push(formattedTime );
+        acc.falseArray.push(formattedTime)
       }
-      return acc;
-    }, { trueArray: [], falseArray: [] });
+      return acc
+    }, {
+      trueArray: [],
+      falseArray: []
+    })
     let time8 = getToday8amTimestampsass()
     asaxxx(time8)
     ismark.value[0].date = trueArray
     ismark.value[1].date = falseArray
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
 }
+
 //获取时间戳
-function getToday8AMTimestamp() {
-  const now = new Date();
-  return  ( now / 1000).toFixed(0);
+function getToday8AMTimestamp () {
+  const now = new Date()
+  return (now / 1000).toFixed(0)
 }
-function getToday8amTimestampsass() {
-  const now = new Date();
+
+function getToday8amTimestampsass () {
+  const now = new Date()
   // 设置时间为今天的 08:00:00
-  now.setHours(8, 0, 0, 0);
+  now.setHours(8, 0, 0, 0)
   // 获取时间戳并转换为秒
-  const timestamp = Math.floor(now.getTime() / 1000);
-  return timestamp;
+  const timestamp = Math.floor(now.getTime() / 1000)
+  return timestamp
 }
+
 // 获取从某个时间戳开始，连续7天早上8:00的时间戳
-function getNextSevenDaysTimestamps(startTimestamp) {
-  const oneDayMilliseconds = 24 * 60 * 60 ; // 一天的秒数
-  const timestamps = [];
+function getNextSevenDaysTimestamps (startTimestamp) {
+  const oneDayMilliseconds = 24 * 60 * 60 // 一天的秒数
+  const timestamps = []
 
   for (let i = 0; i < 7; i++) {
-    const currentTimestamp = startTimestamp + i * oneDayMilliseconds;
-    timestamps.push(currentTimestamp);
+    const currentTimestamp = startTimestamp + i * oneDayMilliseconds
+    timestamps.push(currentTimestamp)
   }
 
-  return timestamps;
+  return timestamps
 }
-function formatDate(timestamp) {
-  const date = new Date(timestamp);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份是从 0 开始的，所以需要加 1
-  const day = String(date.getDate()).padStart(2, '0');
 
-  return `${year}/${month}/${day}`;
+function formatDate (timestamp) {
+  const date = new Date(timestamp)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0') // 月份是从 0 开始的，所以需要加 1
+  const day = String(date.getDate()).padStart(2, '0')
+
+  return `${year}/${month}/${day}`
 }
+
 const handleChange = (val) => {
   isshowday.value = val
   let asd = getTimestamp(val)
   asaxxx(asd)
 }
-async function asaxxx(t) {
+
+async function asaxxx (t) {
   let nbool = false
   for (let index = 0; index < showweekarr.value.length; index++) {
-    if (t == showweekarr.value[index].time){
+    if (t == showweekarr.value[index].time) {
       nbool = true
     }
   }
-  if (nbool){
+  if (nbool) {
     allshow.value = true
-  try {
-    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
-    const address = localStorage.getItem('address');
-    let time = await contract1.methods.getStartOfDayTimestamp(t).call({from: address})
-    let aaaa = await contract1.methods.getHashFactorForEveryDay(time).call({from: address});//用户算力因子
-    let bbbb = await contract1.methods.getTotalNCPowerFromEveryDay(time).call({from: address});//用户产出
-    allDBTC.value = AllfromWei2(bbbb)
-    allb.value = aaaa
-  }catch (e) {
-    allDBTC.value = 0
-    allb.value = 0
-    console.log(e)
-  }
-  }else {
+    try {
+      const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
+      const address = localStorage.getItem('address')
+      let time = await contract1.methods.getStartOfDayTimestamp(t).call({ from: address })
+      let aaaa = await contract1.methods.getHashFactorForEveryDay(time).call({ from: address })//用户算力因子
+      let bbbb = await contract1.methods.getTotalNCPowerFromEveryDay(time).call({ from: address })//用户产出
+      allDBTC.value = AllfromWei2(bbbb)
+      allb.value = aaaa
+    } catch (e) {
+      allDBTC.value = 0
+      allb.value = 0
+      console.log(e)
+    }
+  } else {
     allDBTC.value = 0
     allb.value = 0
   }
   allshow.value = false
 }
-function getTimestamp(dateString) {
+
+function getTimestamp (dateString) {
   // 创建日期对象
-  const date = new Date(dateString);
+  const date = new Date(dateString)
 
   // 设置时间为当天的 08:00:00
-  date.setHours(8, 0, 0, 0);
+  date.setHours(8, 0, 0, 0)
 
   // 获取时间戳并转换为秒
-  const timestamp = Math.floor(date.getTime() / 1000);
+  const timestamp = Math.floor(date.getTime() / 1000)
 
-  return timestamp;
+  return timestamp
 }
-function AllfromWei2(i) {//fromWei
+
+function AllfromWei2 (i) {//fromWei
   if (web3.value) {
-    return (Number(web3.value.utils.fromWei(i, 'ether')) / 100).toFixed(2);
+    return (Number(web3.value.utils.fromWei(i, 'ether')) / 100).toFixed(2)
   }
 }
 </script>
