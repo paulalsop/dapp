@@ -3,7 +3,7 @@ import Web3 from "web3";
 async function getEth() {
     const provider = Web3.givenProvider;
     if (provider !== window.ethereum) {
-        alert("error 10404:MetaMask not installed");
+        //alert("error 10404:MetaMask not installed");
     } else {
         return provider;
     }
@@ -18,7 +18,7 @@ export async function useWeb3(callback) {
         web3 = new Web3(web3Provider)
     } catch (e) {
         console.log(e)
-        alert('Please open it in a browser with a wallet')
+       // alert('Please open it in a browser with a wallet')
         return ;
     }
     callback && callback(web3, userAddress[0]);

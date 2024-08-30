@@ -30,7 +30,7 @@ async function getSignature() {//登录
       console.error('User denied account access', error);
     }
   } else {
-    alert('You need to install MetaMask!');
+    //alert('You need to install MetaMask!');
     return
   }
   try {
