@@ -62,7 +62,7 @@ const messages = {
     bazaar2: "모든 시장",
     bazaar3: "화폐",
     bazaar4: "총 예금",
-    bazaar5: "수익률",
+    bazaar5: "공약율",
     bazaar6: "유동성",
     bazaar7: "예금 금리",
     bazaar8: "담보 인자",

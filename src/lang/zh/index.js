@@ -61,7 +61,7 @@ const messages = {
     bazaar2: "所有市場",
     bazaar3: "貨幣",
     bazaar4: "總存款",
-    bazaar5: "收益率",
+    bazaar5: "质押率",
     bazaar6: "流動性",
     bazaar7: "存款利率",
     bazaar8: "抵押因子",

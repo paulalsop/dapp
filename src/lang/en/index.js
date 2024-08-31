@@ -64,7 +64,7 @@ const messages = {
     bazaar2: "All Markets",
     bazaar3: "Currency",
     bazaar4: "Total Deposits",
-    bazaar5: "Yield",
+    bazaar5: "Pledge Rate",
     bazaar6: "Liquidity",
     bazaar7: "Deposit Rate",
     bazaar8: "Collateral Factor",
