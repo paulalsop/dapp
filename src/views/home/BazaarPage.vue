@@ -213,6 +213,7 @@ onMounted(async () => {
   web3data()
 })
 
+
 async function web3data() {
   try {
     const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
