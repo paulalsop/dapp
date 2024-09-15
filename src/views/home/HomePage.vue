@@ -457,7 +457,7 @@ async function deposit() {
       web3data()
       console.log(bbbb)
     } else {
-      let aaaa = await contract1.methods.stakingCoins(bontarr.value[gommm.value].address, toWei(allamount.value)).send({
+      let aaaa = await contract1.methods.stakingCoins(bontarr.value[gommm.value].address, isnum).send({
         from: localStorage.getItem('address'),
         gasPrice: 3100000000,
         gasLimit: 2300000
