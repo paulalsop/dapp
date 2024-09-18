@@ -87,13 +87,13 @@
           <van-rolling-text :start-num="0" :target-num="tjdbtcb" :height="24"/>
         </div>
       </div>
-      <div v-show="Privateplacement">
-        <div class="title title2">{{ $t('ore.ore28') }}</div>
-        <!--        <div class="num">{{tjdbtc}}</div>-->
-        <div class="num">
-          {{ Privateplacement }}
-        </div>
-      </div>
+<!--      <div v-show="Privateplacement">-->
+<!--        <div class="title title2">{{ $t('ore.ore28') }}</div>-->
+<!--        &lt;!&ndash;        <div class="num">{{tjdbtc}}</div>&ndash;&gt;-->
+<!--        <div class="num">-->
+<!--          {{ Privateplacement }}-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
 
     <div class="linquaa">
