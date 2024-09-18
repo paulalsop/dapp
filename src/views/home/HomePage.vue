@@ -212,7 +212,7 @@ let bontarr = ref([{
   address: wbnb,//地址
   api: WbnbAPI,//api
   morenum: '0'//用户余额
-}, {
+},{
   id: 2,
   checked: false,
   prc: 'dp',
@@ -242,6 +242,15 @@ let bontarr = ref([{
 },{
   id: 5,
   checked: false,
+  prc: 'MS',
+  up: '3000',
+  name: 'MorningStar',
+  address: MS,
+  api: UsdtAPI,
+  morenum: '0'
+}, {
+  id: 6,
+  checked: false,
   prc: 'Eth',
   up: '3000',
   name: 'ETH',
@@ -250,7 +259,7 @@ let bontarr = ref([{
   morenum: '0'
 },
   {
-  id: 6,
+  id: 7,
   checked: false,
   prc: 'bit',
   up: '3000',
@@ -259,7 +268,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 7,
+  id: 8,
   checked: false,
   prc: 'SOL',
   up: '3000',
@@ -268,7 +277,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 8,
+  id: 9,
   checked: false,
   prc: 'bch',
   up: '3000',
@@ -277,7 +286,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 9,
+  id: 10,
   checked: false,
   prc: 'doge',
   up: '3000',
@@ -286,21 +295,12 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 10,
+  id: 11,
   checked: false,
   prc: 'ton',
   up: '3000',
   name: 'TON',
   address: TON,
-  api: UsdtAPI,
-  morenum: '0'
-},{
-  id: 11,
-  checked: false,
-  prc: 'MS',
-  up: '3000',
-  name: 'MorningStar',
-  address: MS,
   api: UsdtAPI,
   morenum: '0'
 }
