@@ -48,7 +48,7 @@
       <div class="logeimg">
       </div>
       <div class="logerr">
-        <div class="yaoqin" @click="isrouter(3)">{{ $t('homevall.homevall1') }}</div>
+        <div class="yaoqin" @click="langshow = true"></div>
         <div class="lianje" @click="getSignature()"><img src="@/assets/homeimg/link.png" v-show="!lianjeshow" alt="">{{
             lianjeshow ? $t('homevall.homevall2') : $t('homevall.homevall3')
           }}
@@ -571,14 +571,20 @@ function isrouter(i) {
       font-size: 13px;
 
       .yaoqin {
-        padding: 7px 26px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 999px;
-        border: 1px solid rgba(233, 237, 244, 0.15);
+        //padding: 7px 26px;
+        //background: rgba(255, 255, 255, 0.1);
+        //border-radius: 999px;
+        //border: 1px solid rgba(233, 237, 244, 0.15);
+        //
+        //@media screen and (max-width: 340px) {
+        //  padding: 7px 16px;
+        //}
 
-        @media screen and (max-width: 340px) {
-          padding: 7px 16px;
-        }
+        width: 34px;
+        height: 34px;
+        background-image: url('@/assets/homeimg/qiou.png');
+        background-size: 100% 100%;
+        margin-right: 8px;
       }
 
       .lianje {
