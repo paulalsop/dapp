@@ -230,17 +230,8 @@ let bontarr = ref([{
   address: DBTCoinNew,
   api: DbtcAPI,
   morenum: '0'
-}, {
-  id: 4,
-  checked: false,
-  prc: 'usdt',
-  up: '3000',
-  name: 'USDT',
-  address: USDT,
-  api: UsdtAPI,
-  morenum: '0'
 },{
-  id: 5,
+  id: 4,
   checked: false,
   prc: 'MS',
   up: '3000',
@@ -249,7 +240,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 }, {
-  id: 6,
+  id: 5,
   checked: false,
   prc: 'Eth',
   up: '3000',
@@ -259,7 +250,7 @@ let bontarr = ref([{
   morenum: '0'
 },
   {
-  id: 7,
+  id: 6,
   checked: false,
   prc: 'bit',
   up: '3000',
@@ -268,7 +259,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 8,
+  id: 7,
   checked: false,
   prc: 'SOL',
   up: '3000',
@@ -277,7 +268,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 9,
+  id: 8,
   checked: false,
   prc: 'bch',
   up: '3000',
@@ -286,7 +277,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 10,
+  id: 9,
   checked: false,
   prc: 'doge',
   up: '3000',
@@ -295,7 +286,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 11,
+  id: 10,
   checked: false,
   prc: 'ton',
   up: '3000',
@@ -327,7 +318,7 @@ const handleInput = async () => {//延迟触发
     const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
     let aaaa
     let bbbb
-    if (gommm.value != 3) {
+    if (gommm.value != 10) {
       bbbb = await contract1.methods.getPrice(bontarr.value[gommm.value].address).call({from: localStorage.getItem('address')});
       purchase.value = (Number(AllfromWei(bbbb)) * allamount.value).toFixed(2)
     } else {

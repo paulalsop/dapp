@@ -115,17 +115,17 @@ let bontarr = ref([{
   rate: 2,
   pledge: 3.65,
   address: DBTCoinNew//地址
-}, {
-  id: 4,
-  prc: 'usdt',
-  money: 1,
-  name: 'USDT',
+},{
+  id: 4,//id
+  prc: 'MS',//图片位置
+  money: 0,//金额
+  name: 'MorningStar',//名字
   deposit: 231,
-  probability: 0,
+  probability: 0,//存款概率
   mobility: 232,
   rate: 2,
   pledge: 3.65,
-  address: USDT//地址
+  address: MS//地址
 },{
   id: 5,//id
   prc: 'Eth',//图片位置
@@ -192,17 +192,6 @@ let bontarr = ref([{
   rate: 2,
   pledge: 3.65,
   address: TON//地址
-},{
-  id: 11,//id
-  prc: 'MS',//图片位置
-  money: 0,//金额
-  name: 'MorningStar',//名字
-  deposit: 231,
-  probability: 0,//存款概率
-  mobility: 232,
-  rate: 2,
-  pledge: 3.65,
-  address: MS//地址
 }
 ])
 let paiarr = computed(() => {
@@ -221,7 +210,7 @@ async function web3data() {
     let aaaa = await contract1.methods.get_allPrice().call({from: address});
     allamount.value = Number(AllfromWei(aaaa)).toFixed(4)
     for (let i = 0; i < bontarr.value.length; i++) {
-      if (i !== 3){
+      if (i !== 10){
         let aaa = await contract1.methods.getPrice(bontarr.value[i].address).call({from: address});
         bontarr.value[i].money = Number(AllfromWei(aaa)).toFixed(8)
       }else {
