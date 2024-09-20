@@ -55,7 +55,8 @@ const messages = {
     home42: "입력해 주세요",
     home43: "입금 성공",
     home44: "입금 실패",
-    home45: "지갑 연결해주세요"
+    home45: "지갑 연결해주세요",
+    home46: "활성화되지 않음"
   },
   bazaar: {
     bazaar1: "총 기부 금액",

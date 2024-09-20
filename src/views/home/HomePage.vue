@@ -369,13 +369,17 @@ async function isxianshow() {
 
 //打开
 async function afasww(i, bool) {
+  console.log("---------")
   if (!lianjeshow.value){
     showFailToast(t('home.home45'));
     return
   }
-  gommm.value = i - 1
-  allshow.value = true
+
   if (bool) {
+    console.log("-----2----")
+    gommm.value = i - 1
+    allshow.value = true
+    console.log("-----3----")
     if (i == 1) {
       allshow.value = false
       delall()
@@ -393,8 +397,10 @@ async function afasww(i, bool) {
       }
     }
   } else {
-    return
+    showFailToast(t('home.home46'));
+    return;
   }
+  console.log("---4-----")
 }
 
 //授权函数

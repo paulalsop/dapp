@@ -55,7 +55,8 @@ const messages = {
     home42: "Please Enter",
     home43: "Deposit Successful",
     home44: "Deposit Failed",
-    home45: "Please Connect Wallet"
+    home45: "Please Connect Wallet",
+    home46: "Not activated",
   }
 
   ,

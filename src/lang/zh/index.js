@@ -54,7 +54,8 @@ const messages = {
     home42: "請輸入",
     home43: "存入成功",
     home44: "存入失敗",
-    home45: "請鏈接錢包"
+    home45: "請鏈接錢包",
+    home46: "占未开通",
   },
   bazaar: {
     bazaar1: "全網质押金额",
