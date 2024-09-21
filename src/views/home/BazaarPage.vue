@@ -192,6 +192,17 @@ let bontarr = ref([{
   rate: 2,
   pledge: 3.65,
   address: TON//地址
+},{
+  id: 11,
+  prc: 'usdt',
+  money: 1,
+  name: 'USDT',
+  deposit: 231,
+  probability: 0,
+  mobility: 232,
+  rate: 2,
+  pledge: 3.65,
+  address: USDT//地址
 }
 ])
 let paiarr = computed(() => {
@@ -207,16 +218,28 @@ async function web3data() {
   try {
     const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
     const address = localStorage.getItem('address');
-    let aaaa = await contract1.methods.get_allPrice().call({from: address});
-    allamount.value = Number(AllfromWei(aaaa)).toFixed(4)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const timestamp = today.getTime() / 1000;
+    let aaaa = await contract1.methods.getTotalNCPowerFromEveryDay(timestamp).call({from: address});
+    allamount.value = Number(AllfromWei2(aaaa)).toFixed(4)
+    let others = 0;
     for (let i = 0; i < bontarr.value.length; i++) {
       if (i !== 10){
         let aaa = await contract1.methods.getPrice(bontarr.value[i].address).call({from: address});
         bontarr.value[i].money = Number(AllfromWei(aaa)).toFixed(8)
+        let dkds = await contract1.methods.getTokenPowerByAllPowerPercent(bontarr.value[i].address).call({from: address});
+        others += Number(dkds);
+        bontarr.value[i].probability = dkds;
       }else {
         bontarr.value[i].money = 1
+        console.log("====-=-=",others)
+        if(allamount.value > 0){
+          bontarr.value[i].probability = Number(100 - others);}else{
+          bontarr.value[i].probability = 0;
+        }
       }
-      bontarr.value[i].probability = await contract1.methods.getTokenPowerByAllPowerPercent(bontarr.value[i].address).call({from: address});
+
     }
     console.log(bontarr.value)
   } catch (error) {
