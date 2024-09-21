@@ -430,8 +430,15 @@ async function deposit() {
     showFailToast(t('home.home42'));
     return
   }
+
+  if(purchase.value < 100){
+    showFailToast(t('home.home47'));
+    return
+  }
   allshow.value = true
-  console.log(Number(toWei(allamount.value)), Number(bontarr.value[gommm.value].morenum))
+
+  console.log("purchase.value",purchase.value)
+  console.log('=======',Number(toWei(allamount.value)), Number(bontarr.value[gommm.value].morenum))
   let isnum = '0'
   if (toWei(allamount.value) > bontarr.value[gommm.value].morenum) {
     allamount.value = AllfromWei(bontarr.value[gommm.value].morenum)

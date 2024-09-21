@@ -56,7 +56,8 @@ const messages = {
     home43: "입금 성공",
     home44: "입금 실패",
     home45: "지갑 연결해주세요",
-    home46: "활성화되지 않음"
+    home46: "활성화되지 않음",
+    home47:"입금된 토큰의 가치는 100 USDT 이상이어야 합니다."
   },
   bazaar: {
     bazaar1: "총 기부 금액",
