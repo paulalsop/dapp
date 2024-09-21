@@ -229,8 +229,15 @@ async function web3data() {
         let aaa = await contract1.methods.getPrice(bontarr.value[i].address).call({from: address});
         bontarr.value[i].money = Number(AllfromWei(aaa)).toFixed(8)
         let dkds = await contract1.methods.getTokenPowerByAllPowerPercent(bontarr.value[i].address).call({from: address});
-        others += Number(dkds);
-        bontarr.value[i].probability = dkds;
+
+        if(i == 1){
+          others += Number(dkds) + 1;
+          bontarr.value[i].probability = Number(dkds) + 1;
+        }else{
+          others += Number(dkds);
+          bontarr.value[i].probability = dkds;
+        }
+
       }else {
         bontarr.value[i].money = 1
         console.log("====-=-=",others)
