@@ -298,7 +298,7 @@ let bontarr = ref([{
 ])
 onMounted(async () => {
   web3.value = await useWeb3();
-  web3data()
+ await web3data()
 })
 const getImage = (pic) => {
   return require(`@/assets/homepage/${pic}.png`);
