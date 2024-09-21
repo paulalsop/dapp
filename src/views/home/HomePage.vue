@@ -441,8 +441,11 @@ async function deposit() {
   console.log('=======',Number(toWei(allamount.value)), Number(bontarr.value[gommm.value].morenum))
   let isnum = '0'
   if (toWei(allamount.value) > bontarr.value[gommm.value].morenum) {
-    allamount.value = AllfromWei(bontarr.value[gommm.value].morenum)
-    isnum = bontarr.value[gommm.value].morenum
+    showFailToast(t('home.home48'));
+    allshow.value = false
+    return
+    // allamount.value = AllfromWei(bontarr.value[gommm.value].morenum)
+    // isnum = bontarr.value[gommm.value].morenum
   } else {
     isnum = toWei(allamount.value)
   }
