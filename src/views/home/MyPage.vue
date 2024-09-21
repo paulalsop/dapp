@@ -7,8 +7,8 @@
     <div class="sdaimga">
       <div class="allbody">
         <div>
-          <div class="title">{{ $t('my.my14') }}</div>
-          <div class="num">{{ allmore }}</div>
+<!--          <div class="title">{{ $t('my.my14') }}</div>-->
+<!--          <div class="num">{{ allmore }}</div>-->
           <div class="title">{{ $t('my.my15') }}</div>
           <div class="num">{{ allmore2 }}</div>
           <div class="yqr" v-show="tjris">{{ $t('my.my4') }}:{{ shortenAddress(tjrisaddd) }}</div>
@@ -101,10 +101,10 @@ async function web3data() {
     const address = localStorage.getItem('address');
     let aaaa = await contract1.methods.hasRefer(localStorage.getItem('address')).call({from: address});//判断是否已经有推荐人
     // let ssaa = await contract1.methods.getReferPower(localStorage.getItem('address')).call({from: address});//获取推荐获得的算力
-    let yesssaa = await contract1.methods.get_referAllPower(localStorage.getItem('address')).call({from: address});//已经激活推荐算力
-    let ssaa = await contract1.methods.getReferPower(localStorage.getItem('address')).call({from: address});//未激活算力
+    let yesssaa = await contract1.methods.getReferPower(localStorage.getItem('address')).call({from: address});//已经激活推荐算力
+    //let ssaa = await contract1.methods.getReferPower(localStorage.getItem('address')).call({from: address});//未激活算力
     let ssaa2 = await contract1.methods.getRefers(localStorage.getItem('address')).call({from: address});//获取下级
-    allmore.value = AllfromWei2(ssaa)
+    //allmore.value = AllfromWei2(ssaa)
     allmore2.value = AllfromWei2(yesssaa)
     arraa.value = ssaa2
     for (let i = 0; i < ssaa2.length; i++) {

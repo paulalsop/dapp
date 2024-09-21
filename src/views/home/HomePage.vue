@@ -431,7 +431,7 @@ async function deposit() {
     return
   }
 
-  if(purchase.value < 100){
+  if(purchase.value < 0.01){
     showFailToast(t('home.home47'));
     return
   }
@@ -440,15 +440,15 @@ async function deposit() {
   console.log("purchase.value",purchase.value)
   console.log('=======',Number(toWei(allamount.value)), Number(bontarr.value[gommm.value].morenum))
   let isnum = '0'
-  if (toWei(allamount.value) > bontarr.value[gommm.value].morenum) {
-    showFailToast(t('home.home48'));
-    allshow.value = false
-    return
-    // allamount.value = AllfromWei(bontarr.value[gommm.value].morenum)
-    // isnum = bontarr.value[gommm.value].morenum
-  } else {
+  // if (toWei(allamount.value) > bontarr.value[gommm.value].morenum) {
+  //   showFailToast(t('home.home48'));
+  //   allshow.value = false
+  //   return
+  //   // allamount.value = AllfromWei(bontarr.value[gommm.value].morenum)
+  //   // isnum = bontarr.value[gommm.value].morenum
+  // } else {
     isnum = toWei(allamount.value)
-  }
+  // }
 
   try {
     const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
