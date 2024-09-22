@@ -71,7 +71,7 @@ const messages = {
     bazaar8: "담보 인자",
     bazaar9: "예금 순위",
     bazaar10: "보안 보고서 보기",
-    bazaar11: "유명 감사 회사 Beosin의 보안 감사 통과"
+    bazaar11: "유명 감사 회사 Certik/CFG.ninja에 의해 보안 감사 완료"
   }
 ,
   ore:{

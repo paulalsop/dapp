@@ -73,7 +73,7 @@ const messages = {
     bazaar8: "Collateral Factor",
     bazaar9: "Deposit Ranking",
     bazaar10: "View Security Report",
-    bazaar11: "Passed Security Audit by Renowned Audit Firm Beosin"
+    bazaar11: "Audited by well-known audit companies Certik/CFG.ninja for security"
   }
 ,
   ore:{

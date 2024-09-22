@@ -154,7 +154,7 @@
       </tbody>
     </table>
     <div class="imgatutu">
-      <div class="kkan">{{ $t('home.home32') }}</div>
+      <a class="kkan" href="https://audit.cfg.ninja/dbt-coin" target="_blank">{{ $t('home.home32') }}</a>
       <div class="asft">{{ $t('bazaar.bazaar11') }}</div>
     </div>
   </div>

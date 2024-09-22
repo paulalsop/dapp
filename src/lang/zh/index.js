@@ -70,7 +70,7 @@ const messages = {
     bazaar8: "抵押因子",
     bazaar9: "存款排名",
     bazaar10: "查看安全報告",
-    bazaar11: "通過知名稽核公司Beosin安全稽核"
+    bazaar11: "通過知名稽核公司certik/cfg.ninja安全稽核"
   },
     ore:{
       ore1: "全網實時算力",
