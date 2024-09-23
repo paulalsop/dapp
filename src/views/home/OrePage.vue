@@ -10,7 +10,7 @@
         <div class="title">{{ $t('ore.ore1') }}</div>
         <div class="num">
           <van-rolling-text :start-num="0" :target-num="qwwwwa" :height="24"/>
-          .
+          <span class="num">.</span>
           <van-rolling-text :start-num="0" :target-num="qwwwwb" :height="24"/>
         </div>
         <!--        <div class="num">{{qwwww}}</div>-->
@@ -41,7 +41,7 @@
         <!--        <div class="num">{{ jrdbtc }}</div>-->
         <div class="num">
           <van-rolling-text :start-num="0" :target-num="kkkpaansa" :height="24"/>
-          .
+          <span class="num">.</span>
           <van-rolling-text :start-num="0" :target-num="kkkpaansb" :height="24"/>
         </div>
       </div>
@@ -50,7 +50,7 @@
         <!--        <div class="num">{{ jrdbtc }}</div>-->
         <div class="num">
           <van-rolling-text :start-num="0" :target-num="ddddqqa" :height="24"/>
-          .
+          <span class="num">.</span>
           <van-rolling-text :start-num="0" :target-num="ddddqqb" :height="24"/>
         </div>
       </div>
@@ -59,7 +59,7 @@
         <!--        <div class="num">{{ jrdbtc }}</div>-->
         <div class="num" :class=" sabo0l ? 'yesnum':'nonum'">
           <van-rolling-text :start-num="0" :target-num="zfffa" :height="24"/>
-          .
+          <span class="num" :class=" sabo0l ? 'yesnum':'nonum'">.</span>
           <van-rolling-text :start-num="0" :target-num="zfffb" :height="24"/>%
         </div>
       </div>
@@ -74,7 +74,7 @@
         <!--        <div class="num">{{ yhall }}</div>-->
         <div class="num">
           <van-rolling-text :start-num="0" :target-num="yhalla" :height="24"/>
-          .
+          <span class="num">.</span>
           <van-rolling-text :start-num="0" :target-num="yhallb" :height="24"/>
         </div>
       </div>
@@ -83,7 +83,7 @@
         <!--        <div class="num">{{tjdbtc}}</div>-->
         <div class="num">
           <van-rolling-text :start-num="0" :target-num="tjdbtca" :height="24"/>
-          .
+          <span class="num">.</span>
           <van-rolling-text :start-num="0" :target-num="tjdbtcb" :height="24"/>
         </div>
       </div>
@@ -564,17 +564,25 @@ function AllfromWei(i) {//fromWei
     }
 
     .num {
-      font-weight: 600;
-      font-size: 20px;
+      font-weight: 200;
+      font-size: 16px;
       color: #C2B3FF;
-      line-height: 25px;
-
+      line-height: 16px;
+      letter-spacing: -40px;
       ::v-deep {
         .van-rolling-text-item__item {
-          font-weight: 600;
-          font-size: 20px;
+          letter-spacing: -40px;
+          margin-right: 5px;
+          font-weight: 200;
+          font-size: 16px;
           color: #C2B3FF;
+
         }
+      }
+      .decimal-point {
+        font-size: 18px;
+        color: #C2B3FF;
+        margin-left: -2px; /* 根据需要微调位置 */
       }
 
     }
