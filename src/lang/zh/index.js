@@ -73,7 +73,7 @@ const messages = {
     bazaar11: "通過知名稽核公司certik/cfg.ninja安全稽核"
   },
     ore:{
-      ore1: "全網實時算力",
+      ore1: "今日新增算力",
       ore2: "全網剩餘產出DBTC總量",
       ore3: "全網每日算力",
       ore4: "全網每日產出DBTC總量",
