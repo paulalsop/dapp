@@ -321,7 +321,7 @@ async function web3data() {
     yhallb.value = decimal1
     jrdbtc.value = Number(AllfromWei(bbbb))
     console.log(12)
-    youmoren.value = Number(AllfromWei(aaaa)).toFixed(16)
+    youmoren.value = Number(AllfromWei(aaaa)).toFixed(10)
     console.log(13)
     const [integer2, decimal2] = AllfromWei2(ffff).toString().split('.');
     console.log(14)
