@@ -510,7 +510,7 @@ async function web3data() {
         }
       }
       console.log(bontarr.value)
-      let aaaa = await contract1.methods.getTotalNCPowerFromEveryDay(timestamp).call({from: address});
+      let aaaa = await contract1.methods._ltp().call({from: address});
       Finaleffort.value = AllfromWei2(aaaa)
       let bbbb = await contract1.methods.getTotalMintDBTC().call({from: address});
       Grosspurchase.value = AllfromWei(bbbb)
