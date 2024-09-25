@@ -77,7 +77,7 @@ const messages = {
   }
 ,
   ore:{
-    ore1: "New Power Added Today",
+    ore1: "Total Network Hashrate",
     ore2: "Total Remaining DBTC Production in the Network",
     ore3: "Total Network Daily Hashrate",
     ore4: "Total Network Daily DBTC Production",

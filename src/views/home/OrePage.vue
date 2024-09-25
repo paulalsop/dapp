@@ -271,7 +271,7 @@ async function web3data() {
     // let bbbb = await contract1.methods._mintDBTCEveryDayAmount().call({from: address});//每日DBTC产出
     let bbbb = await web3.value.utils.toWei('10', 'ether');//每日DBTC产出
     console.log(3)
-    let cccc = await contract1.methods.getTotalNCPowerFromEveryDay(time).call({from: address});//全网总算力
+    let cccc = await contract1.methods._ltp().call({from: address});//全网总算力
     console.log(4)
     let dddd = await contract1.methods.getHashFactorForEveryDay(time).call({from: address});//今日算力因子
     console.log(5)
