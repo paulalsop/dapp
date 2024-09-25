@@ -149,6 +149,16 @@ async function checkSwapStatus() {
   }
 }
 
+watch(dbtcAmount, (newValue) => {
+  if (parseFloat(newValue) > parseFloat(dbtcBalance.value)) {
+    dbtcAmount.value = dbtcBalance.value; // 如果输入的DBTC大于余额，则显示最大余额
+  }
+  calculateUSDT(); // 每次输入变化后重新计算USDT
+});
+
+watch(slippage, (newSlippage) => {
+  calculateUSDT(); // 当滑点变化时重新计算USDT
+});
 // 计算用户输入的DBTC对应的实际USDT数量
 function calculateUSDT() {
   if (bestPrice.value > 0 && dbtcAmount.value > 0) {
