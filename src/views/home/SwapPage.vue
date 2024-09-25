@@ -8,8 +8,8 @@
     <!-- 出售 Section -->
     <div class="group flex-col">
       <div class="header flex-row justify-center">
-        <img class="thumbnail" src="@/assets/swap/sale@2x.png" />
-        <span class="text-group">{{ $t('swap.sell') }}</span>
+<!--        <img class="thumbnail" src="@/assets/swap/sale@2x.png" />-->
+<!--        <span class="text-group">{{ $t('swap.sell') }}</span>-->
       </div>
       <div class="content flex-row justify-between">
         <div class="token-info flex-row">
@@ -40,8 +40,8 @@
     <!-- 购买 Section -->
     <div class="group flex-col">
       <div class="header flex-row justify-center">
-        <img class="thumbnail" src="@/assets/swap/buy@2x.png" />
-        <span class="text-group">{{ $t('swap.buy') }}</span>
+<!--        <img class="thumbnail" src="@/assets/swap/buy@2x.png" />-->
+<!--        <span class="text-group">{{ $t('swap.buy') }}</span>-->
       </div>
       <div class="content flex-row justify-between">
         <div class="token-info flex-row">
