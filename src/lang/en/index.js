@@ -133,6 +133,23 @@ const messages = {
     record1: "Claim History",
     record2: "Today's Hash Power Output",
     record3: "Daily Deposit Hashrate"
+  },
+  swap: {
+    sell: "Sell",
+    buy: "Buy",
+    balance: "Balance",
+    price: "Price",
+    slippage: "Slippage",
+    exchange: "Exchange",
+    approve: "Approve",
+    bestPrice: "Best Price",
+    enterAmount: "Enter DBTC Amount",
+    insufficientApproval: "You haven't approved enough DBTC",
+    exchangeSuccess: "Exchange Successful",
+    exchangeFail: "Exchange Failed",
+    approveSuccess: "Approval Successful",
+    approveFail: "Approval Failed",
+    bestPriceError: "Failed to get the price",
   }
 }
 

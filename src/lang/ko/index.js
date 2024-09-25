@@ -130,6 +130,22 @@ const messages = {
     record1: "수령 기록",
     record2: "당일 해시파워 생산",
     record3: "오늘의 예금 해시파워"
+  },swap: {
+    sell: "판매",
+    buy: "구매",
+    balance: "잔액",
+    price: "가격",
+    slippage: "슬리피지",
+    exchange: "교환",
+    approve: "승인",
+    bestPrice: "최적의 가격",
+    enterAmount: "DBTC 수량 입력",
+    insufficientApproval: "승인된 DBTC가 부족합니다",
+    exchangeSuccess: "교환 성공",
+    exchangeFail: "교환 실패",
+    approveSuccess: "승인 성공",
+    approveFail: "승인 실패",
+    bestPriceError: "가격 가져오기 실패"
   }
 }
 

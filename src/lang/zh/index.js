@@ -128,6 +128,23 @@ const messages = {
     record1:'领取记录',
     record2: '當日算力產出',
     record3:'当日存款算力',
+  },
+  swap: {
+    sell: "出售",
+    buy: "購買",
+    balance: "餘額",
+    price: "價格",
+    slippage: "滑點",
+    exchange: "闪兌",
+    approve: "授權",
+    bestPrice: "價格",
+    enterAmount: "输入DBTC数量",
+    insufficientApproval: "您尚未授權足夠的DBTC",
+    exchangeSuccess: "兌換成功",
+    exchangeFail: "兌換失敗",
+    approveSuccess: "授權成功",
+    approveFail: "授權失敗",
+    bestPriceError: "獲取價格失敗",
   }
 }
 

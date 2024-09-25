@@ -133,6 +133,22 @@ const messages = {
     record1: "บันทึกการรับ",
     record2: "กำลังขุดที่ผลิตได้ในวันนี้",
     record3: "พลังการขุดจากเงินฝากประจำวัน"
+  },swap: {
+    sell: "ขาย",
+    buy: "ซื้อ",
+    balance: "ยอดคงเหลือ",
+    price: "ราคา",
+    slippage: "อัตราสลิปเพจ",
+    exchange: "แลกเปลี่ยน",
+    approve: "อนุมัติ",
+    bestPrice: "ราคาที่ดีที่สุด",
+    enterAmount: "ป้อนจำนวน DBTC",
+    insufficientApproval: "คุณยังไม่ได้อนุมัติ DBTC เพียงพอ",
+    exchangeSuccess: "แลกเปลี่ยนสำเร็จ",
+    exchangeFail: "การแลกเปลี่ยนล้มเหลว",
+    approveSuccess: "อนุมัติสำเร็จ",
+    approveFail: "การอนุมัติล้มเหลว",
+    bestPriceError: "การดึงราคาล้มเหลว",
   }
 }
 

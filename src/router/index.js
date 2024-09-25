@@ -30,6 +30,10 @@ const routes = [
         path: '/Home/RecordPage',
         component: () => import('@/views/home/RecordPage.vue'),
         name: 'RecordPage'
+      },{
+        path: '/Home/SwapPage',
+        component: () => import('@/views/home/SwapPage.vue'),
+        name: 'SwapPage'
       },
       {
         path: "/Home",

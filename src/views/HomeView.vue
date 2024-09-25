@@ -9,14 +9,14 @@
       <img src="@/assets/homeimg/kaikk.webp" style="width: 100%" alt="WebP Animation" >
     </div>
   </van-overlay>
-  <van-overlay :show="allshowaasczz" z-index="10000" >
+  <van-overlay :show="allshowaasczz" z-index="10000">
     <div style="display: flex;width: 100%;height: 100%;position:relative " @click="allshowaasczz = false">
-      <div style="width: 188px;height: 288px;background: #1B1B1D;border-radius: 12px 12px 12px 12px;position: absolute ;top: 60px;right: 0;" class="sacax"  @click="out()">
-        <div>SWAP</div>
-        <div>Defi{{ $t('homevall.homevall12_1') }}</div>
-        <div>{{ $t('homevall.homevall12_2') }}</div>
-        <div>{{ $t('homevall.homevall12_3') }}</div>
-        <div>{{ $t('homevall.homevall12_5') }}</div>
+      <div style="width: 188px;height: 288px;background: #1B1B1D;border-radius: 12px;position: absolute;top: 60px;right: 0;" class="sacax" @click.stop>
+        <div @click="navigateToSwap()">SWAP</div>
+        <div @click="out()">Defi{{ $t('homevall.homevall12_1') }}</div>
+        <div @click="out()">{{ $t('homevall.homevall12_2') }}</div>
+        <div @click="out()">{{ $t('homevall.homevall12_3') }}</div>
+        <div @click="out()">{{ $t('homevall.homevall12_5') }}</div>
       </div>
     </div>
   </van-overlay>
@@ -143,7 +143,14 @@ let lianjeshow = computed(() => {
 let inlang = ref(0)//当前语言
 let langarrc = ['en', 'zh', 'ko', 'th']
 let alangarrc = ref(['English', '繁体中文', '한국어', 'ภาษาไทย'])
-let arr = ['/Home/HomePage', '/Home/BazaarPage', '/Home/OrePage', '/Home/MyPage']
+let arr = ['/Home/HomePage', '/Home/BazaarPage', '/Home/OrePage', '/Home/MyPage','/Home/SwapPage']
+// let allshowaasczz = ref(false); // 控制 SWAP 菜单弹窗的显示
+
+// 跳转到 Swap 页面的方法
+const navigateToSwap = () => {
+  allshowaasczz.value = false; // 关闭弹窗
+  router.push('/Home/SwapPage'); // 跳转到 /Home/SwapPage
+};
 onMounted(async () => {
   inroute(route.path)
   onlang()
