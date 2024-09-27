@@ -100,7 +100,7 @@ const messages = {
     ore21: "Team Deposit",
     ore22: "Claim History",
     ore23: "My Referral Hash Power",
-    ore24: "Production starts the day after hash power is generated and continues for 7 days",
+    ore24: "Production starts the day after hash power is generated and continues for 30 days",
     ore25: "Today's Hash Power Factor",
     ore26: "Nothing to Claim",
     ore27: "Claim Successful",
