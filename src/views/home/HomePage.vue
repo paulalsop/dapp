@@ -155,7 +155,8 @@
     </table>
     <div class="imgatutu">
       <a class="kkan" href="https://audit.cfg.ninja/dbt-coin" target="_blank">{{ $t('home.home32') }}</a>
-      <div class="asft">{{ $t('bazaar.bazaar11') }}</div>
+      <a class="kkan" href="https://skynet.certik.com/zh-CN/projects/dbtc" target="_blank">{{ $t('home.home323') }}</a>
+<!--      <div class="asft">{{ $t('bazaar.bazaar11') }}</div>-->
     </div>
   </div>
 </template>
@@ -956,13 +957,31 @@ function toWei(value) {//toWei
     color: white;
 
     .kkan {
-      position: absolute;
-      top: 40%;
-      right: 10px;
-      transform: translateY(-50%);
+      display: inline-block; /* Ensure the buttons are inline */
+      margin-right: 20px; /* Add some space between the buttons */
       padding: 5px 14px;
       border-radius: 999px;
       background: linear-gradient(95deg, #9010FD 0%, #4049FC 29%, #D8AEF8 69%, #FC5C90 100%);
+      text-align: center;
+    }
+
+    .kkan:nth-child(1) {
+      margin-top: 60px; /* Space the buttons below the logo */
+     margin-left: 60px;
+      margin-right: 10px;
+
+    }
+
+    .kkan:nth-child(2) {
+      margin-top:60px; /* Ensure uniform spacing for both buttons */
+      margin-right: 20px;
+    }
+
+    .button-wrapper {
+      display: flex; /* Align the buttons side by side */
+      justify-content: flex-start; /* Align the buttons left */
+      gap: 10px; /* Add space between the buttons */
+      margin-top: 10px; /* Ensure the buttons are below the logo */
     }
 
     .asft {
