@@ -145,7 +145,7 @@
           <van-switch v-model="i.checked" active-color="#cdf202" disabled
                       inactive-color="#a9a9a9" size="24px"/>
         </td>
-        <td class="vina"><img :src="getImage(i.prc)" alt="">{{ i.name }}</td>
+        <td class="vina"><img :src="getImage(i.prc)" alt="" @click="copyAddress(i.address)">{{ i.name }}</td>
         <td>
           <div class="linkup" @click="afasww(i.id, i.checked)">{{ i.up }}% <img
             src="@/assets/homepage/Frame22.png" alt=""></div>
@@ -424,7 +424,13 @@ async function jActivate() {
     console.log(e)
   }
 }
-
+const copyAddress = (address) => {
+  navigator.clipboard.writeText(address).then(() => {
+    showSuccessToast(t('home.copySuccess')); // Display a success message (you can customize this as needed)
+  }).catch(err => {
+    showFailToast(t('home.copyFailed')); // Display an error message if the copy fails
+  });
+};
 //存入函数
 async function deposit() {
   if (allamount.value === undefined || allamount.value <= 0) {

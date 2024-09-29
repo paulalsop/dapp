@@ -59,6 +59,7 @@ const messages = {
     home46: "占未开通",
     home47:"存入代币价值要大于100 USDT",
     home48:"存入代币数量大于钱包数量！",
+    copySuccess:"複製成功"
   },
   bazaar: {
     bazaar1: "全網质押金额",

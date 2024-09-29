@@ -60,6 +60,7 @@ const messages = {
     home46: "활성화되지 않음",
     home47:"입금된 토큰의 가치는 100 USDT 이상이어야 합니다.",
     home48:"입금된 토큰 수량이 지갑 잔액보다 많습니다!",
+    copySuccess:"복사 성공"
   },
   bazaar: {
     bazaar1: "총 기부 금액",

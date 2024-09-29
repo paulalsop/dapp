@@ -60,6 +60,7 @@ const messages = {
     home46: "Not activated",
     home47:'The value of deposited tokens must be greater than 100 USDT.',
     home48:'The number of deposited tokens is greater than the wallet balance!',
+    copySuccess:"Copy Success"
   }
 
   ,
