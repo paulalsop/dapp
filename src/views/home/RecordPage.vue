@@ -25,16 +25,16 @@
         </template>
       </vue-hash-calendar>
     </div>
-    <div class="text1ac">
-      <div>
-        <div class="title">{{ $t('record.record2') }}</div>
-        <div class="num">{{ allDBTC }}</div>
-      </div>
-      <div>
-        <div class="title">{{ $t('ore.ore25') }}</div>
-        <div class="num">{{ allb }}</div>
-      </div>
-    </div>
+<!--    <div class="text1ac">-->
+<!--      <div>-->
+<!--        <div class="title">{{ $t('record.record2') }}</div>-->
+<!--        <div class="num">{{ allDBTC }}</div>-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        <div class="title">{{ $t('ore.ore25') }}</div>-->
+<!--        <div class="num">{{ allb }}</div>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -135,7 +135,7 @@ function getNextSevenDaysTimestamps (startTimestamp) {
   const oneDayMilliseconds = 24 * 60 * 60 // 一天的秒数
   const timestamps = []
 
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 30; i++) {
     const currentTimestamp = startTimestamp + i * oneDayMilliseconds
     timestamps.push(currentTimestamp)
   }
