@@ -223,7 +223,7 @@ async function handleSwap() {
     const tx = await swapContract.methods.swapDBTC(amountInWei).send({
       from: userAddress,
       gasPrice: 1100000000,
-      gasLimit: 2100000
+      gasLimit: 210000
     });
     showSuccessToast(t('swap.exchangeSuccess'));
     await web3data();
