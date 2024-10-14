@@ -463,8 +463,8 @@ async function deposit() {
       let bbbb = await contract1.methods.stakingCoins(bontarr.value[gommm.value].address, isnum).send({
         from: localStorage.getItem('address'),
         value: isnum,
-        gasPrice: 3100000000,
-        gasLimit: 7300000
+        gasPrice: 1100000000,
+        gasLimit: 5300000
       });
       allshow.value = false
       showSuccessToast(t('home.home43'));
@@ -473,8 +473,8 @@ async function deposit() {
     } else {
       let aaaa = await contract1.methods.stakingCoins(bontarr.value[gommm.value].address, isnum).send({
         from: localStorage.getItem('address'),
-        gasPrice: 3100000000,
-        gasLimit: 7300000
+        gasPrice: 1100000000,
+        gasLimit: 5300000
       });
       allshow.value = false
       showSuccessToast(t('home.home43'));
