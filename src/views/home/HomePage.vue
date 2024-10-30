@@ -189,6 +189,7 @@ const DOGE = store.state.DOGE; // DOGE地址
 const TON = store.state.TON; // TON地址
 const MS = store.state.MorningStar; // TON地址
 const MintDBTC = store.state.MintDBTC; // MintDBTC地址
+const FP = store.state.FP; // MintDBTC地址
 let rout = ref(45)
 let hashrate = ref(0)//计算算力
 let purchase = ref(0)//计算金额
@@ -241,7 +242,16 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 }, {
-  id: 5,
+    id: 5,
+    checked: false,
+    prc: 'FP',
+    up: '3000',
+    name: 'FP',
+    address: FP,
+    api: UsdtAPI,
+    morenum: '0'
+  }, {
+  id: 6,
   checked: false,
   prc: 'Eth',
   up: '3000',
@@ -251,7 +261,7 @@ let bontarr = ref([{
   morenum: '0'
 },
   {
-  id: 6,
+  id: 7,
   checked: false,
   prc: 'bit',
   up: '3000',
@@ -260,7 +270,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 7,
+  id: 8,
   checked: false,
   prc: 'SOL',
   up: '3000',
@@ -269,7 +279,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 8,
+  id: 9,
   checked: false,
   prc: 'bch',
   up: '3000',
@@ -278,7 +288,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 9,
+  id: 10,
   checked: false,
   prc: 'doge',
   up: '3000',
@@ -287,7 +297,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 10,
+  id: 11,
   checked: false,
   prc: 'ton',
   up: '3000',

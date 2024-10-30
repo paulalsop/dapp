@@ -14,6 +14,7 @@ export default createStore({
     DOGE: '0xbA2aE424d960c26247Dd6c32edC70B295c744C43',
     TON: '0x76A797A59Ba2C17726896976B7B3747BfD1d220f',
     MorningStar: '0xd06b94a6af942ac2eefc4658f23b2c2e34131419',
+    FP: '0x9eb026b4861b679e2c6653389868ace280985f4b',
     SwapDBTC: '0x547b08E2915c459aB999280878159caC03C27730',
     lianjeshow:false
   },
