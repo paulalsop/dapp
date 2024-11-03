@@ -15,7 +15,7 @@ export default createStore({
     TON: '0x76A797A59Ba2C17726896976B7B3747BfD1d220f',
     MorningStar: '0xd06b94a6af942ac2eefc4658f23b2c2e34131419',
     FP: '0x9eb026b4861b679e2c6653389868ace280985f4b',
-    SwapDBTC: '0xF39fE585D302F32C1Ea75A7468b44CC37323d761',
+    SwapDBTC: '0x8Ed182503d9260E137AE3229B03386eD10CD456A',
     lianjeshow:false
   },
   getters: {
