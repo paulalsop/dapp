@@ -58,7 +58,7 @@ const messages = {
     home44: "Deposit Failed",
     home45: "Please Connect Wallet",
     home46: "Not activated",
-    home47:'The value of deposited tokens must be greater than 100 USDT.',
+    home47:'The value of deposited tokens must be greater than 110 USDT.',
     home48:'The number of deposited tokens is greater than the wallet balance!',
     copySuccess:"Copy Success"
   }

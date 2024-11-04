@@ -57,7 +57,7 @@ const messages = {
     home44: "存入失敗",
     home45: "請鏈接錢包",
     home46: "占未开通",
-    home47:"存入代币价值要大于100 USDT",
+    home47:"存入代币价值要大于110 USDT",
     home48:"存入代币数量大于钱包数量！",
     copySuccess:"複製成功"
   },
