@@ -337,9 +337,7 @@ const handleInput = async () => {//延迟触发
       purchase.value = allamount.value
     }
     aaaa = await contract1.methods.calculateStakingCoinsPower(bontarr.value[gommm.value].address, toWei(allamount.value)).call({
-      from: localStorage.getItem('address'),
-      gasPrice: 3100000000,
-      gasLimit: 2300000
+      from: localStorage.getItem('address')
     });
     hashrate.value = AllfromWei2(aaaa)
     console.log(AllfromWei2(aaaa),bbbb)
