@@ -180,6 +180,7 @@ const {t} = useI18n();
 const wbnb = store.state.wbnb; // wbnb地址
 const DP = store.state.DP; // DP地址
 const DBTCoinNew = store.state.DBTCoinNew; // DBTCoinNew地址
+const MintDBTCPlus = store.state.MintDBTCPlus; // DBTCoinNew地址
 const USDT = store.state.USDT; // USDT地址
 const BTC = store.state.BTC; // BTC地址
 const ETH = store.state.ETH; // ETH地址
@@ -397,7 +398,7 @@ async function afasww(i, bool) {
       gomaishow.value = true
     } else {
       const contract1 = new web3.value.eth.Contract(bontarr.value[gommm.value].api, bontarr.value[gommm.value].address)
-      const balance2 = await contract1.methods.allowance(localStorage.getItem('address'), MintDBTC).call();
+      const balance2 = await contract1.methods.allowance(localStorage.getItem('address'), MintDBTCPlus).call();
       allshow.value = false
       console.log(balance2)
       if (parseInt(balance2) < parseInt('115092089237316195423570985008687907853269984665640564039457584007913129639935')) {
@@ -419,7 +420,8 @@ async function jActivate() {
   allshow.value = true
   try {
     const contract1 = new web3.value.eth.Contract(bontarr.value[gommm.value].api, bontarr.value[gommm.value].address)
-    await contract1.methods.approve(MintDBTC, '115092089237316195423570985008687907853269984665640564039457584007913129639935').send({
+    console.log('token address :',bontarr.value[gommm.value].address)
+    await contract1.methods.approve(MintDBTCPlus, '115092089237316195423570985008687907853269984665640564039457584007913129639935').send({
       from: localStorage.getItem('address'),
       gasPrice: 3100000000
     })
@@ -468,23 +470,35 @@ async function deposit() {
   // }
 
   try {
-    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
+    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTCPlus);
+    const contract2 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC);
+    let aaaa1 = await contract2.methods.getUserCanMintDBTCAmount(localStorage.getItem('address')).call();//今日可领取算力
+
+
     if (gommm.value === 0) {
+      console.log('aaaa1',aaaa1)
+      if(aaaa1 > 0){
+        await contract2.methods.drawDBTC().send({from: localStorage.getItem('address'),gasPrice: 3100000000, gasLimit: 3015280});
+      }
       let bbbb = await contract1.methods.stakingCoins(bontarr.value[gommm.value].address, isnum).send({
         from: localStorage.getItem('address'),
         value: isnum,
-        gasPrice: 1100000000,
-        gasLimit: 5300000
+        gasPrice: 2100000000,
+        gasLimit: 2300000
       });
       allshow.value = false
       showSuccessToast(t('home.home43'));
       web3data()
       console.log(bbbb)
     } else {
+      console.log('aaaa2',aaaa1)
+      if(aaaa1 > 0){
+        await contract2.methods.drawDBTC().send({from: localStorage.getItem('address'),gasPrice: 3100000000, gasLimit: 3015280});
+      }
       let aaaa = await contract1.methods.stakingCoins(bontarr.value[gommm.value].address, isnum).send({
         from: localStorage.getItem('address'),
-        gasPrice: 1100000000,
-        gasLimit: 5300000
+        gasPrice: 2100000000,
+        gasLimit: 2300000
       });
       allshow.value = false
       showSuccessToast(t('home.home43'));

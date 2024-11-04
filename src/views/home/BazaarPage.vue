@@ -78,7 +78,7 @@ const SOL = store.state.SOL; // SOL地址
 const DOGE = store.state.DOGE; // DOGE地址
 const TON = store.state.TON; // TON地址
 const MS = store.state.MorningStar; // TON地址
-const FP = store.state.FS; // TON地址
+const FP = store.state.FP; // TON地址
 const getImage = (pic) => {
   return require(`@/assets/homepage/${pic}.png`);
 }
