@@ -192,6 +192,7 @@ const MS = store.state.MorningStar; // TON地址
 const MintDBTC = store.state.MintDBTC; // MintDBTC地址
 const FP = store.state.FP; // MintDBTC地址
 const USDP = store.state.USDP; // MintDBTC地址
+const Mars = store.state.Mars; // MintDBTC地址
 let rout = ref(45)
 let hashrate = ref(0)//计算算力
 let purchase = ref(0)//计算金额
@@ -261,9 +262,18 @@ let bontarr = ref([{
   address: USDP,
   api: UsdtAPI,
   morenum: '0'
+}, {
+  id: 7,
+  checked: false,
+  prc: 'Mars',
+  up: '3000',
+  name: 'Mars',
+  address: Mars,
+  api: UsdtAPI,
+  morenum: '0'
 }
   , {
-    id: 7,
+    id: 8,
     checked: false,
     prc: 'Eth',
     up: '3000',
@@ -273,7 +283,7 @@ let bontarr = ref([{
     morenum: '0'
   },
   {
-  id: 8,
+  id: 9,
   checked: false,
   prc: 'bit',
   up: '3000',
@@ -282,7 +292,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 9,
+  id: 10,
   checked: false,
   prc: 'SOL',
   up: '3000',
@@ -291,7 +301,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 10,
+  id: 11,
   checked: false,
   prc: 'bch',
   up: '3000',
@@ -300,7 +310,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 11,
+  id: 12,
   checked: false,
   prc: 'doge',
   up: '3000',
@@ -309,7 +319,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 },{
-  id: 12,
+  id: 13,
   checked: false,
   prc: 'ton',
   up: '3000',
@@ -341,7 +351,7 @@ const handleInput = async () => {//延迟触发
     const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
     let aaaa
     let bbbb
-    if (gommm.value != 11) {
+    if (gommm.value != 12) {
       bbbb = await contract1.methods.getPrice(bontarr.value[gommm.value].address).call({from: localStorage.getItem('address')});
       purchase.value = (Number(AllfromWei(bbbb)) * allamount.value).toFixed(2)
     } else {
