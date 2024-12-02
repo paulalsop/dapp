@@ -81,6 +81,7 @@ const MS = store.state.MorningStar; // TON地址
 const FP = store.state.FP; // TON地址
 const USDP = store.state.USDP; // TON地址
 const Mars = store.state.Mars; // TON地址
+const EGA = store.state.EGA; // TON地址
 const getImage = (pic) => {
   return require(`@/assets/homepage/${pic}.png`);
 }
@@ -173,9 +174,20 @@ let bontarr = ref([{
   rate: 2,
   pledge: 3.65,
   address: Mars//地址
+},{
+  id: 9,//id
+  prc: 'EGA',//图片位置
+  money: 0,//金额
+  name: 'EGA',//名字
+  deposit: 231,
+  probability: 0,//存款概率
+  mobility: 232,
+  rate: 2,
+  pledge: 3.65,
+  address: EGA//地址
 },
   {
-  id: 9,//id
+  id: 10,//id
   prc: 'bit',//图片位置
   money: 0,//金额
   name: 'Bitcoin',//名字
@@ -186,7 +198,7 @@ let bontarr = ref([{
   pledge: 3.65,
   address: BTC//地址
 },{
-  id: 10,//id
+  id: 11,//id
   prc: 'SOL',//图片位置
   money: 0,//金额
   name: 'SOL',//名字
@@ -197,7 +209,7 @@ let bontarr = ref([{
   pledge: 3.65,
   address: SOL//地址
 },{
-  id: 11,//id
+  id: 12,//id
   prc: 'bch',//图片位置
   money: 0,//金额
   name: 'BCH',//名字
@@ -208,7 +220,7 @@ let bontarr = ref([{
   pledge: 3.65,
   address: BCH//地址
 },{
-  id: 12,//id
+  id: 13,//id
   prc: 'doge',//图片位置
   money: 0,//金额
   name: 'DOGE',//名字
@@ -219,7 +231,7 @@ let bontarr = ref([{
   pledge: 3.65,
   address: DOGE//地址
 },{
-  id: 13,//id
+  id: 14,//id
   prc: 'ton',//图片位置
   money: 0,//金额
   name: 'TON',//名字
@@ -230,7 +242,7 @@ let bontarr = ref([{
   pledge: 3.65,
   address: TON//地址
 },{
-  id: 14,
+  id: 15,
   prc: 'usdt',
   money: 1,
   name: 'USDT',
@@ -262,7 +274,7 @@ async function web3data() {
     allamount.value = Number(AllfromWei2(aaaa)).toFixed(4)
     let others = 0;
     for (let i = 0; i < bontarr.value.length; i++) {
-      if (i !== 13){
+      if (i !== 14){
         let aaa = await contract1.methods.getPrice(bontarr.value[i].address).call({from: address});
         bontarr.value[i].money = Number(AllfromWei(aaa)).toFixed(8)
         let dkds = await contract1.methods.getTokenPowerByAllPowerPercent(bontarr.value[i].address).call({from: address});

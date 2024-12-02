@@ -19,6 +19,7 @@ export default createStore({
     USDP: '0x4aBAA97C173A028188A801fbc718B3D6a7F57d9c',
     Mars: '0x660455B21e82709bbc85D27a1c24797e13aAf533',
     SwapDBTC: '0x8Ed182503d9260E137AE3229B03386eD10CD456A',
+    EGA: '0x66FDe17C6bBd7E0f523b396c9fB02bec29e427d2',
     lianjeshow:false
   },
   getters: {
