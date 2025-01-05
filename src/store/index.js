@@ -20,6 +20,7 @@ export default createStore({
     Mars: '0x660455B21e82709bbc85D27a1c24797e13aAf533',
     SwapDBTC: '0x8Ed182503d9260E137AE3229B03386eD10CD456A',
     EGA: '0x66FDe17C6bBd7E0f523b396c9fB02bec29e427d2',
+    C13:'0x7D1FFFD3cE989A95dF96d060Ff93bFdC369Dfd04',
     lianjeshow:false
   },
   getters: {
