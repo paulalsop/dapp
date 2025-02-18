@@ -261,7 +261,7 @@ let bontarr = ref([{
     checked: false,
     prc: 'MIAO',
     up: '3000',
-    name: 'MAIO',
+    name: 'MIAO',
     address: MIAO,
     api: UsdtAPI,
     morenum: '0'
