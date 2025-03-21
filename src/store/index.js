@@ -22,6 +22,7 @@ export default createStore({
     EGA: '0x66FDe17C6bBd7E0f523b396c9fB02bec29e427d2',
     C13: '0x7D1FFFD3cE989A95dF96d060Ff93bFdC369Dfd04',
     MIAO: '0xe87739e3494ae2afe555cdd46df45050cc709522',
+    BTL: '0x94833cf5fe10536f5a427ed265ff46b03f902100',
     lianjeshow: false
   },
   getters: {
