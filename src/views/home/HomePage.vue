@@ -509,7 +509,7 @@ async function deposit() {
     return
   }
 
-  if(purchase.value < 110){
+  if(purchase.value < 10){
     showFailToast(t('home.home47'));
     return
   }
