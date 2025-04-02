@@ -243,11 +243,13 @@ watch(swapType, () => {
 // 计算用户输入的USDT对应的实际代币数量
 function calculateToken() {
   if (bestPrice.value > 0 && usdtAmount.value > 0) {
-    const usdtAfterSlippage = parseFloat(usdtAmount.value) * (1 - parseFloat(slippage.value) / 100);
+
     if (swapType.value === "DBTC") {
+      const usdtAfterSlippage = parseFloat(usdtAmount.value) * (1 - parseFloat(slippage.value) / 100);
       calculatedToken.value = (usdtAfterSlippage / bestPrice.value * 0.9975).toFixed(8);
     } else {
       // USDA兑换比例为1:2
+      const usdtAfterSlippage = parseFloat(usdtAmount.value);
       calculatedToken.value = (usdtAfterSlippage * 2).toFixed(8);
     }
   } else {
