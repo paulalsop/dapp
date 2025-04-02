@@ -142,7 +142,7 @@ const messages = {
     approve: "승인",
     bestPrice: "최적의 가격",
     enterAmount: "DBTC 수량 입력",
-    insufficientApproval: "승인된 DBTC가 부족합니다",
+    insufficientApproval: "승인된 가 부족합니다",
     exchangeSuccess: "교환 성공",
     exchangeFail: "교환 실패",
     approveSuccess: "승인 성공",

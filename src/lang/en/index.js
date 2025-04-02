@@ -145,7 +145,7 @@ const messages = {
     exchange: "Exchange",
     approve: "Approve",
     bestPrice: "Best Price",
-    enterAmount: "Enter DBTC Amount",
+    enterAmount: "Enter Amount",
     insufficientApproval: "You haven't approved enough DBTC",
     exchangeSuccess: "Exchange Successful",
     exchangeFail: "Exchange Failed",

@@ -144,7 +144,7 @@ const messages = {
     exchange: "แลกเปลี่ยน",
     approve: "อนุมัติ",
     bestPrice: "ราคาที่ดีที่สุด",
-    enterAmount: "ป้อนจำนวน DBTC",
+    enterAmount: "ป้อนจำนวน",
     insufficientApproval: "คุณยังไม่ได้อนุมัติ DBTC เพียงพอ",
     exchangeSuccess: "แลกเปลี่ยนสำเร็จ",
     exchangeFail: "การแลกเปลี่ยนล้มเหลว",

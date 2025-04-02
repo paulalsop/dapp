@@ -140,7 +140,7 @@ const messages = {
     exchange: "闪兌",
     approve: "授權",
     bestPrice: "價格",
-    enterAmount: "输入DBTC数量",
+    enterAmount: "输入数量",
     insufficientApproval: "您尚未授權足夠的DBTC",
     exchangeSuccess: "兌換成功",
     exchangeFail: "兌換失敗",

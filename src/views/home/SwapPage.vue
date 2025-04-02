@@ -11,7 +11,7 @@
         :class="['type-option', swapType === 'DBTC' ? 'active' : '']"
         @click="changeSwapType('DBTC')"
       >
-        USDT → DBTC
+        DBTC → USDT
       </div>
       <div
         :class="['type-option', swapType === 'USDA' ? 'active' : '']"
@@ -26,21 +26,21 @@
       <div class="content flex-row justify-between">
         <div class="token-info flex-row">
           <div class="token-icon-wrapper">
-            <img class="token-icon" src="@/assets/swap/usdt@2x.png" />
+            <img class="token-icon" :src="inputTokenIcon" />
           </div>
           <div class="token-text flex-row">
-            <span class="token-name">USDT</span>
+            <span class="token-name">{{ inputTokenName }}</span>
             <img class="dropdown-icon" src="@/assets/swap/Frame@2x(1).png" />
           </div>
         </div>
-        <span class="token-amount">{{ $t('swap.balance') }}: {{ formattedUSDTBalance }} USDT</span>
+        <span class="token-amount">{{ $t('swap.balance') }}: {{ inputTokenBalance }} {{ inputTokenName }}</span>
       </div>
       <div class="input-wrapper flex-col">
         <input
             type="number"
             class="input-field"
             :placeholder="$t('swap.enterAmount')"
-            v-model="usdtAmount"
+            v-model="inputAmount"
             @input="calculateToken"
         />
       </div>
@@ -55,15 +55,15 @@
     <div class="group flex-col">
       <div class="content flex-row justify-between">
         <div class="token-info flex-row">
-          <div class="token-icon-wrapper" :class="swapType === 'USDA' ? 'usda-icon-wrapper' : ''">
-            <img class="token-icon" :src="tokenIcon" />
+          <div class="token-icon-wrapper" :class="swapType === 'USDA' && outputTokenName === 'USDA' ? 'usda-icon-wrapper' : ''">
+            <img class="token-icon" :src="outputTokenIcon" />
           </div>
           <div class="token-text flex-row">
-            <span class="token-name">{{ tokenName }}</span>
+            <span class="token-name">{{ outputTokenName }}</span>
             <img class="dropdown-icon" src="@/assets/swap/Frame@2x(1).png" />
           </div>
         </div>
-        <span class="token-amount">{{ $t('swap.balance') }}: {{ tokenBalance }} {{ tokenName }}</span>
+        <span class="token-amount">{{ $t('swap.balance') }}: {{ outputTokenBalance }} {{ outputTokenName }}</span>
       </div>
       <div class="input-wrapper flex-col">
         <input
@@ -79,7 +79,7 @@
     <div class="price-panel flex-col">
       <div class="price-info flex-row justify-between">
         <span class="price-label">{{ $t('swap.price') }}</span>
-        <span class="price-value">{{ bestPrice }} USDT / {{ tokenName }}</span>
+        <span class="price-value">{{ bestPrice }} {{ swapType === 'DBTC' ? 'USDT / DBTC' : 'USDT / USDA' }}</span>
       </div>
       <div class="slippage-info flex-row justify-between">
         <span class="slippage-label">{{ $t('swap.slippage') }}</span>
@@ -134,7 +134,7 @@ const web3 = ref(null);
 const usdtBalance = ref(0);
 const dbtcBalance = ref(0);
 const usdaBalance = ref(0);
-const usdtAmount = ref(""); // User input for USDT
+const inputAmount = ref(""); // User input amount
 const calculatedToken = ref(0); // 计算出的代币数量
 const bestPrice = ref(0); // 最优惠的价格
 const slippage = ref("10");
@@ -145,22 +145,42 @@ const formattedDBTCBalance = computed(() => parseFloat(dbtcBalance.value).toFixe
 const formattedUSDABalance = computed(() => parseFloat(usdaBalance.value).toFixed(8));
 
 // 添加代币切换相关
-const swapType = ref("DBTC"); // 默认兑换DBTC
+const swapType = ref("DBTC"); // 默认兑换DBTC到USDT
 
-// 根据当前选择的代币类型，返回对应的代币图标
-const tokenIcon = computed(() => {
-  return swapType.value === "DBTC"
-    ? require("@/assets/swap/DBTC@2x.png")
+// 根据当前选择的代币类型，确定输入和输出代币
+const inputTokenName = computed(() => {
+  return swapType.value === "DBTC" ? "DBTC" : "USDT";
+});
+
+const outputTokenName = computed(() => {
+  return swapType.value === "DBTC" ? "USDT" : "USDA";
+});
+
+// 根据当前选择的代币类型，返回对应的输入代币图标
+const inputTokenIcon = computed(() => {
+  return swapType.value === "DBTC" 
+    ? require("@/assets/swap/DBTC@2x.png") 
+    : require("@/assets/swap/usdt@2x.png");
+});
+
+// 根据当前选择的代币类型，返回对应的输出代币图标
+const outputTokenIcon = computed(() => {
+  return swapType.value === "DBTC" 
+    ? require("@/assets/swap/usdt@2x.png") 
     : require("@/assets/swap/USDA.png");
 });
 
-// 根据当前选择的代币类型，返回对应的代币名称
-const tokenName = computed(() => swapType.value);
+// 根据当前选择的代币类型，返回对应的输入代币余额
+const inputTokenBalance = computed(() => {
+  return swapType.value === "DBTC" 
+    ? formattedDBTCBalance.value 
+    : formattedUSDTBalance.value;
+});
 
-// 根据当前选择的代币类型，返回对应的代币余额
-const tokenBalance = computed(() => {
-  return swapType.value === "DBTC"
-    ? formattedDBTCBalance.value
+// 根据当前选择的代币类型，返回对应的输出代币余额
+const outputTokenBalance = computed(() => {
+  return swapType.value === "DBTC" 
+    ? formattedUSDTBalance.value 
     : formattedUSDABalance.value;
 });
 
@@ -188,14 +208,19 @@ onMounted(async () => {
 // 检查授权状态
 async function checkApprovalStatus() {
   try {
-    const usdtContract = new web3.value.eth.Contract(UsdtAPI, USDT);
-    let allowance;
-
+    let contractToCheck, targetContract;
+    
     if (swapType.value === "DBTC") {
-      allowance = await usdtContract.methods.allowance(userAddress, SwapDBTC).call();
+      // 如果是DBTC->USDT，需要检查DBTC的授权
+      contractToCheck = new web3.value.eth.Contract(DbtcAPI, DBTC);
+      targetContract = SwapDBTC;
     } else {
-      allowance = await usdtContract.methods.allowance(userAddress, SwapUsda).call();
+      // 如果是USDT->USDA，需要检查USDT的授权
+      contractToCheck = new web3.value.eth.Contract(UsdtAPI, USDT);
+      targetContract = SwapUsda;
     }
+    
+    const allowance = await contractToCheck.methods.allowance(userAddress, targetContract).call();
 
     if (parseFloat(allowance) > 0) {
       isApproved.value = true; // 已经授权
@@ -224,9 +249,17 @@ async function checkSwapStatus() {
   }
 }
 
-watch(usdtAmount, (newValue) => {
-  if (parseFloat(newValue) > parseFloat(usdtBalance.value)) {
-    usdtAmount.value = usdtBalance.value; // 如果输入的USDT大于余额，则显示最大余额
+watch(inputAmount, (newValue) => {
+  if (swapType.value === "DBTC") {
+    // DBTC->USDT兑换时检查DBTC余额
+    if (parseFloat(newValue) > parseFloat(dbtcBalance.value)) {
+      inputAmount.value = dbtcBalance.value;
+    }
+  } else {
+    // USDT->USDA兑换时检查USDT余额
+    if (parseFloat(newValue) > parseFloat(usdtBalance.value)) {
+      inputAmount.value = usdtBalance.value;
+    }
   }
   calculateToken(); // 每次输入变化后重新计算
 });
@@ -236,21 +269,21 @@ watch(slippage, (newSlippage) => {
 });
 
 watch(swapType, () => {
-  usdtAmount.value = ""; // 切换类型时清空输入
+  inputAmount.value = ""; // 切换类型时清空输入
   calculatedToken.value = 0;
 });
 
-// 计算用户输入的USDT对应的实际代币数量
+// 计算代币兑换数量
 function calculateToken() {
-  if (bestPrice.value > 0 && usdtAmount.value > 0) {
-
+  if (bestPrice.value > 0 && inputAmount.value > 0) {
     if (swapType.value === "DBTC") {
-      const usdtAfterSlippage = parseFloat(usdtAmount.value) * (1 - parseFloat(slippage.value) / 100);
-      calculatedToken.value = (usdtAfterSlippage / bestPrice.value * 0.9975).toFixed(8);
+      // DBTC->USDT兑换
+      const dbtcAfterSlippage = parseFloat(inputAmount.value) * (1 - parseFloat(slippage.value) / 100);
+      calculatedToken.value = (dbtcAfterSlippage * bestPrice.value * 0.9975).toFixed(8);
     } else {
-      // USDA兑换比例为1:2
-      const usdtAfterSlippage = parseFloat(usdtAmount.value);
-      calculatedToken.value = (usdtAfterSlippage * 2).toFixed(8);
+      // USDT->USDA兑换，比例为1:2
+      const usdtAfterSlippage = parseFloat(inputAmount.value) * (1 - parseFloat(slippage.value) / 100);
+      calculatedToken.value = (usdtAfterSlippage * 2 * 0.9975).toFixed(8);
     }
   } else {
     calculatedToken.value = 0;
@@ -298,46 +331,51 @@ async function web3data() {
 async function handleSwap() {
   allshow.value = true;
   try {
-    if (!usdtAmount.value || parseFloat(usdtAmount.value) <= 0) {
-      showFailToast(t('swap.invalidAmount'));// 提示用户输入有效数量
+    if (!inputAmount.value || parseFloat(inputAmount.value) <= 0) {
+      showFailToast(t('swap.invalidAmount')); // 提示用户输入有效数量
       return;
     }
 
-    // 检查用户是否已经授权USDT
-    const usdtContract = new web3.value.eth.Contract(UsdtAPI, USDT);
-    let allowance;
-    let swapContract;
-
+    let contractToCheck, targetContract, swapContract, amountInWei;
+    
+    // 根据当前兑换类型设置相关合约和参数
     if (swapType.value === "DBTC") {
-      allowance = await usdtContract.methods.allowance(userAddress, SwapDBTC).call();
+      // DBTC->USDT兑换
+      contractToCheck = new web3.value.eth.Contract(DbtcAPI, DBTC);
+      targetContract = SwapDBTC;
       swapContract = new web3.value.eth.Contract(SwapDbtcAPI, SwapDBTC);
+      amountInWei = web3.value.utils.toWei(inputAmount.value.toString(), "ether");
     } else {
-      allowance = await usdtContract.methods.allowance(userAddress, SwapUsda).call();
+      // USDT->USDA兑换
+      contractToCheck = new web3.value.eth.Contract(UsdtAPI, USDT);
+      targetContract = SwapUsda;
       swapContract = new web3.value.eth.Contract(USDASwapABI, SwapUsda);
+      amountInWei = web3.value.utils.toWei(inputAmount.value.toString(), "ether");
     }
-
-    if (parseFloat(allowance) < parseFloat(web3.value.utils.toWei(usdtAmount.value.toString(), "ether"))) {
+    
+    // 检查授权额度
+    const allowance = await contractToCheck.methods.allowance(userAddress, targetContract).call();
+    if (parseFloat(allowance) < parseFloat(amountInWei)) {
       showFailToast(t('swap.notEnoughAllowance'));
       return;
     }
 
-    // 将USDT转换为Wei
-    const amountInWei = web3.value.utils.toWei(usdtAmount.value.toString(), "ether");
-
     // 发送兑换交易
     if (swapType.value === "DBTC") {
+      // DBTC->USDT兑换
       await swapContract.methods.swapDBTC(amountInWei).send({
         from: userAddress
       });
     } else {
+      // USDT->USDA兑换
       await swapContract.methods.swap(amountInWei).send({
         from: userAddress
       });
     }
-
+    
     showSuccessToast(t('swap.exchangeSuccess'));
     await web3data();
-    usdtAmount.value = "";
+    inputAmount.value = "";
     calculatedToken.value = 0;
   } catch (error) {
     showFailToast(t('swap.exchangeFail'));
@@ -349,16 +387,24 @@ async function handleSwap() {
 async function handleApprove() {
   allshow.value = true;
   try {
-    const usdtContract = new web3.value.eth.Contract(UsdtAPI, USDT);
-    const amountInWei = web3.value.utils.toWei("1000000000", "ether"); // 授权大量USDT
-
-    // 根据当前选择的代币类型，授权对应的合约
-    const contractToApprove = swapType.value === "DBTC" ? SwapDBTC : SwapUsda;
-
-    const tx = await usdtContract.methods.approve(contractToApprove, amountInWei).send({
+    let contractToApprove, targetContract;
+    
+    if (swapType.value === "DBTC") {
+      // DBTC->USDT兑换，授权DBTC
+      contractToApprove = new web3.value.eth.Contract(DbtcAPI, DBTC);
+      targetContract = SwapDBTC;
+    } else {
+      // USDT->USDA兑换，授权USDT
+      contractToApprove = new web3.value.eth.Contract(UsdtAPI, USDT);
+      targetContract = SwapUsda;
+    }
+    
+    const amountInWei = web3.value.utils.toWei("1000000000", "ether"); // 授权大量代币
+    
+    await contractToApprove.methods.approve(targetContract, amountInWei).send({
       from: userAddress,
     });
-
+    
     showSuccessToast(t('swap.approveSuccess'));
     isApproved.value = true; // 授权成功后更新状态
   } catch (error) {
