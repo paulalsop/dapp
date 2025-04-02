@@ -85,6 +85,7 @@ const EGA = store.state.EGA; // TON地址
 const C13 = store.state.C13; // C13地址
 const MIAO = store.state.MIAO; // C13地址
 const BTL = store.state.BTL; // C13地址
+const USDA = store.state.USDA; // C13地址
 const getImage = (pic) => {
   return require(`@/assets/homepage/${pic}.png`);
 }
@@ -190,8 +191,20 @@ let bontarr = ref([{
   rate: 2,
   pledge: 3.65,
   address: USDP//地址
-},{
-  id: 10,//id
+}
+  ,{
+    id: 10,//id
+    prc: 'USDA',//图片位置
+    money: 0,//金额
+    name: 'USDA',//名字
+    deposit: 231,
+    probability: 0,//存款概率
+    mobility: 232,
+    rate: 2,
+    pledge: 3.65,
+    address: USDA//地址
+  },{
+  id: 11,//id
   prc: 'Mars',//图片位置
   money: 0,//金额
   name: 'Mars',//名字
@@ -202,7 +215,7 @@ let bontarr = ref([{
   pledge: 3.65,
   address: Mars//地址
 },{
-  id: 11,//id
+  id: 12,//id
   prc: 'EGA',//图片位置
   money: 0,//金额
   name: 'EGA',//名字
@@ -214,7 +227,7 @@ let bontarr = ref([{
   address: EGA//地址
 },
   {
-    id: 12,//id
+    id: 13,//id
     prc: 'BTL',//图片位置
     money: 0,//金额
     name: 'BTL',//名字
@@ -226,7 +239,7 @@ let bontarr = ref([{
     address: BTL//地址
   },
   {
-  id: 13,//id
+  id: 14,//id
   prc: 'bit',//图片位置
   money: 0,//金额
   name: 'Bitcoin',//名字
@@ -237,7 +250,7 @@ let bontarr = ref([{
   pledge: 3.65,
   address: BTC//地址
 },{
-  id: 14,//id
+  id: 15,//id
   prc: 'SOL',//图片位置
   money: 0,//金额
   name: 'SOL',//名字
@@ -248,7 +261,7 @@ let bontarr = ref([{
   pledge: 3.65,
   address: SOL//地址
 },{
-  id: 15,//id
+  id: 16,//id
   prc: 'bch',//图片位置
   money: 0,//金额
   name: 'BCH',//名字
@@ -259,7 +272,7 @@ let bontarr = ref([{
   pledge: 3.65,
   address: BCH//地址
 },{
-  id: 16,//id
+  id: 17,//id
   prc: 'doge',//图片位置
   money: 0,//金额
   name: 'DOGE',//名字
@@ -270,7 +283,7 @@ let bontarr = ref([{
   pledge: 3.65,
   address: DOGE//地址
 },{
-  id: 17,//id
+  id: 18,//id
   prc: 'ton',//图片位置
   money: 0,//金额
   name: 'TON',//名字
@@ -281,7 +294,7 @@ let bontarr = ref([{
   pledge: 3.65,
   address: TON//地址
 },{
-  id: 18,
+  id: 19,
   prc: 'usdt',
   money: 1,
   name: 'USDT',
@@ -304,41 +317,79 @@ onMounted(async () => {
 
 async function web3data() {
   try {
-    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
+    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC);
     const address = localStorage.getItem('address');
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const timestamp = today.getTime() / 1000;
-    let aaaa = await contract1.methods.getTotalNCPowerFromEveryDay(timestamp).call({from: address});
-    allamount.value = Number(AllfromWei2(aaaa)).toFixed(4)
-    let others = 0;
-    for (let i = 0; i < bontarr.value.length; i++) {
-      if (i !== 17){
-        let aaa = await contract1.methods.getPrice(bontarr.value[i].address).call({from: address});
-        bontarr.value[i].money = Number(AllfromWei(aaa)).toFixed(8)
-        let dkds = await contract1.methods.getTokenPowerByAllPowerPercent(bontarr.value[i].address).call({from: address});
-
-        if(i == 1){
-          others += Number(dkds) + 1;
-          bontarr.value[i].probability = Number(dkds) + 1;
-        }else{
-          others += Number(dkds);
-          bontarr.value[i].probability = dkds;
-        }
-
-      }else {
-        bontarr.value[i].money = 1
-        console.log("====-=-=",others)
-        if(allamount.value > 0){
-          bontarr.value[i].probability = Number(100 - others);}else{
-          bontarr.value[i].probability = 0;
-        }
-      }
-
+    
+    // 获取总量，如果出错则设为0
+    let totalNCPower = "0";
+    try {
+      totalNCPower = await contract1.methods.getTotalNCPowerFromEveryDay(timestamp).call({from: address});
+      allamount.value = Number(AllfromWei2(totalNCPower)).toFixed(4);
+    } catch (error) {
+      console.error("获取总量失败:", error);
+      allamount.value = "0";
     }
-    console.log(bontarr.value)
+    
+    let others = 0;
+    
+    // 循环获取每个代币的数据
+    for (let i = 0; i < bontarr.value.length; i++) {
+      try {
+        if (i !== 18) {
+          // 获取代币价格
+          try {
+            const price = await contract1.methods.getPrice(bontarr.value[i].address).call({from: address});
+            bontarr.value[i].money = Number(AllfromWei(price)).toFixed(8);
+          } catch (priceError) {
+            console.error(`获取 ${bontarr.value[i].name} 价格失败:`, priceError);
+            bontarr.value[i].money = "0";
+          }
+          
+          // 获取代币占比
+          try {
+            const tokenPercent = await contract1.methods.getTokenPowerByAllPowerPercent(bontarr.value[i].address).call({from: address});
+            
+            if (i == 1) {
+              // DP 代币特殊处理
+              const adjustedPercent = Number(tokenPercent) + 1;
+              others += adjustedPercent;
+              bontarr.value[i].probability = adjustedPercent;
+            } else {
+              others += Number(tokenPercent);
+              bontarr.value[i].probability = tokenPercent;
+            }
+          } catch (percentError) {
+            console.error(`获取 ${bontarr.value[i].name} 占比失败:`, percentError);
+            bontarr.value[i].probability = 0;
+          }
+        } else {
+          // USDT 特殊处理
+          bontarr.value[i].money = 1;
+          if (allamount.value > 0) {
+            bontarr.value[i].probability = Number(100 - others);
+          } else {
+            bontarr.value[i].probability = 0;
+          }
+        }
+      } catch (tokenError) {
+        console.error(`处理 ${bontarr.value[i].name} 时发生错误:`, tokenError);
+        // 设置默认值
+        bontarr.value[i].money = "0";
+        bontarr.value[i].probability = 0;
+      }
+    }
+    
   } catch (error) {
-    console.log(error);
+    console.error("获取数据失败:", error);
+    // 全局错误，设置所有代币为默认值
+    allamount.value = "0";
+    bontarr.value.forEach(item => {
+      item.money = "0";
+      item.probability = 0;
+    });
   }
 }
 function AllfromWei(i) {//fromWei

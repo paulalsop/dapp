@@ -23,6 +23,8 @@ export default createStore({
     C13: '0x7D1FFFD3cE989A95dF96d060Ff93bFdC369Dfd04',
     MIAO: '0xe87739e3494ae2afe555cdd46df45050cc709522',
     BTL: '0x94833cf5fe10536f5a427ed265ff46b03f902100',
+    USDA: '0xE70302FB21f61AEe47bC2D63E529870c728d4b5A',
+    USDASwap: '0x4b7301423AD5339Ed6cb11571d822480f6CA1BA3',
     lianjeshow: false
   },
   getters: {

@@ -5,29 +5,43 @@
     </div>
   </van-overlay>
   <div class="page flex-col">
+    <!-- 切换类型选择器 -->
+    <div class="swap-type-selector">
+      <div 
+        :class="['type-option', swapType === 'DBTC' ? 'active' : '']" 
+        @click="changeSwapType('DBTC')"
+      >
+        USDT → DBTC
+      </div>
+      <div 
+        :class="['type-option', swapType === 'USDA' ? 'active' : '']" 
+        @click="changeSwapType('USDA')"
+      >
+        USDT → USDA
+      </div>
+    </div>
+
     <!-- 出售 Section -->
     <div class="group flex-col">
-      <div class="header flex-row justify-center">
-<!--        <img class="thumbnail" src="@/assets/swap/sale@2x.png" />-->
-<!--        <span class="text-group">{{ $t('swap.sell') }}</span>-->
-      </div>
       <div class="content flex-row justify-between">
         <div class="token-info flex-row">
-          <img class="token-icon" src="@/assets/swap/DBTC@2x.png" />
+          <div class="token-icon-wrapper">
+            <img class="token-icon" src="@/assets/swap/usdt@2x.png" />
+          </div>
           <div class="token-text flex-row">
-            <span class="token-name">DBTC</span>
+            <span class="token-name">USDT</span>
             <img class="dropdown-icon" src="@/assets/swap/Frame@2x(1).png" />
           </div>
         </div>
-        <span class="token-amount">{{ $t('swap.balance') }}: {{ formattedDBTCBalance }} DBTC</span>
+        <span class="token-amount">{{ $t('swap.balance') }}: {{ formattedUSDTBalance }} USDT</span>
       </div>
       <div class="input-wrapper flex-col">
         <input
             type="number"
             class="input-field"
             :placeholder="$t('swap.enterAmount')"
-            v-model="dbtcAmount"
-            @input="calculateUSDT"
+            v-model="usdtAmount"
+            @input="calculateToken"
         />
       </div>
     </div>
@@ -39,34 +53,37 @@
 
     <!-- 购买 Section -->
     <div class="group flex-col">
-      <div class="header flex-row justify-center">
-<!--        <img class="thumbnail" src="@/assets/swap/buy@2x.png" />-->
-<!--        <span class="text-group">{{ $t('swap.buy') }}</span>-->
-      </div>
       <div class="content flex-row justify-between">
         <div class="token-info flex-row">
-          <img class="token-icon" src="@/assets/swap/usdt@2x.png" />
+          <div class="token-icon-wrapper" :class="swapType === 'USDA' ? 'usda-icon-wrapper' : ''">
+            <img class="token-icon" :src="tokenIcon" />
+          </div>
           <div class="token-text flex-row">
-            <span class="token-name">USDT</span>
+            <span class="token-name">{{ tokenName }}</span>
             <img class="dropdown-icon" src="@/assets/swap/Frame@2x(1).png" />
           </div>
         </div>
-        <span class="token-amount">{{ $t('swap.balance') }}: {{ formattedUSDTBalance }} USDT</span>
+        <span class="token-amount">{{ $t('swap.balance') }}: {{ tokenBalance }} {{ tokenName }}</span>
       </div>
       <div class="input-wrapper flex-col">
-        <input type="text" class="input-field" :value="calculatedUSDT" readonly />
+        <input 
+          type="text" 
+          class="input-field" 
+          :value="calculatedToken" 
+          readonly 
+        />
       </div>
     </div>
 
-    <!-- 新增的面板 -->
+    <!-- 价格面板 -->
     <div class="price-panel flex-col">
       <div class="price-info flex-row justify-between">
         <span class="price-label">{{ $t('swap.price') }}</span>
-        <span class="price-value">{{ bestPrice }} USDT / DBTC</span>
+        <span class="price-value">{{ bestPrice }} USDT / {{ tokenName }}</span>
       </div>
       <div class="slippage-info flex-row justify-between">
         <span class="slippage-label">{{ $t('swap.slippage') }}</span>
-        <select v-model="slippage" class="slippage-select" @change="calculateUSDT">
+        <select v-model="slippage" class="slippage-select" @change="calculateToken">
           <option value="10">10%</option>
           <option value="15">15%</option>
           <option value="20">20%</option>
@@ -96,29 +113,65 @@ import { useWeb3 } from "@/web3/index.js";
 import { SwapDbtcAPI } from "@/components/SwapDBTC_ABI";
 import { UsdtAPI } from "@/components/Usdt_API";
 import { DbtcAPI } from "@/components/Dbtc_API";
+import { USDASwapABI } from "@/components/USDASwap_ABI";
+import { USDAAPI } from "@/components/USDA_API";
 import { useStore } from "vuex";
-import {showSuccessToast, showFailToast} from 'vant';
+import { showSuccessToast, showFailToast } from 'vant';
+
 let allshow = ref(false);
 let canSwap = ref(false); // To store the result from startSwap method
 const store = useStore();
 const USDT = store.state.USDT; // USDT contract address
 const DBTC = store.state.DBTCoinNew; // DBTCoinNew contract address
 const SwapDBTC = store.state.SwapDBTC; // Swap contract address
-import {useI18n} from "vue-i18n";
-const {t} = useI18n();
+const Usda = store.state.USDA; // Usda contract address
+const SwapUsda = store.state.USDASwap; // SwapUsda contract address
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 
 // Web3 initialization
 const web3 = ref(null);
 const usdtBalance = ref(0);
 const dbtcBalance = ref(0);
-const dbtcAmount = ref(""); // User input for DBTC
-const calculatedUSDT = ref(0); // 用户输入的DBTC计算出的USDT
-const bestPrice = ref(0); // 最优惠的价格 (1 DBTC 对应多少 USDT)
+const usdaBalance = ref(0);
+const usdtAmount = ref(""); // User input for USDT
+const calculatedToken = ref(0); // 计算出的代币数量
+const bestPrice = ref(0); // 最优惠的价格
 const slippage = ref("10");
 const userAddress = localStorage.getItem("address"); // User address
 const isApproved = ref(false); // 用于存储用户是否已经授权
 const formattedUSDTBalance = computed(() => parseFloat(usdtBalance.value).toFixed(8));
 const formattedDBTCBalance = computed(() => parseFloat(dbtcBalance.value).toFixed(8));
+const formattedUSDABalance = computed(() => parseFloat(usdaBalance.value).toFixed(8));
+
+// 添加代币切换相关
+const swapType = ref("DBTC"); // 默认兑换DBTC
+
+// 根据当前选择的代币类型，返回对应的代币图标
+const tokenIcon = computed(() => {
+  return swapType.value === "DBTC" 
+    ? require("@/assets/swap/DBTC@2x.png")
+    : require("@/assets/swap/USDA.png");
+});
+
+// 根据当前选择的代币类型，返回对应的代币名称
+const tokenName = computed(() => swapType.value);
+
+// 根据当前选择的代币类型，返回对应的代币余额
+const tokenBalance = computed(() => {
+  return swapType.value === "DBTC" 
+    ? formattedDBTCBalance.value
+    : formattedUSDABalance.value;
+});
+
+// 切换兑换类型
+const changeSwapType = async (type) => {
+  swapType.value = type;
+  await getBestPrice();
+  await checkSwapStatus();
+  await checkApprovalStatus();
+  calculateToken();
+};
 
 onMounted(async () => {
   web3.value = await useWeb3();
@@ -129,52 +182,90 @@ onMounted(async () => {
   await checkSwapStatus();
 
   // 检查用户是否已授权
-  const dbtcContract = new web3.value.eth.Contract(DbtcAPI, DBTC);
-  const allowance = await dbtcContract.methods.allowance(userAddress, SwapDBTC).call();
-
-  if (parseFloat(allowance) > 0) {
-    isApproved.value = true; // 已经授权
-  } else {
-    isApproved.value = false; // 未授权
-  }
+  await checkApprovalStatus();
 });
+
+// 检查授权状态
+async function checkApprovalStatus() {
+  try {
+    const usdtContract = new web3.value.eth.Contract(UsdtAPI, USDT);
+    let allowance;
+    
+    if (swapType.value === "DBTC") {
+      allowance = await usdtContract.methods.allowance(userAddress, SwapDBTC).call();
+    } else {
+      allowance = await usdtContract.methods.allowance(userAddress, SwapUsda).call();
+    }
+
+    if (parseFloat(allowance) > 0) {
+      isApproved.value = true; // 已经授权
+    } else {
+      isApproved.value = false; // 未授权
+    }
+  } catch (error) {
+    console.error("Error checking approval status:", error);
+    isApproved.value = false;
+  }
+}
 
 // Call startSwap method to check if the swap is allowed
 async function checkSwapStatus() {
   try {
-    const swapContract = new web3.value.eth.Contract(SwapDbtcAPI, SwapDBTC);
-    canSwap.value = await swapContract.methods.startSwap().call();
+    if (swapType.value === "DBTC") {
+      const swapContract = new web3.value.eth.Contract(SwapDbtcAPI, SwapDBTC);
+      canSwap.value = await swapContract.methods.startSwap().call();
+    } else {
+      // 对于USDA兑换，默认允许兑换
+      canSwap.value = true;
+    }
   } catch (error) {
     console.error("Error checking swap status:", error);
+    canSwap.value = false;
   }
 }
 
-watch(dbtcAmount, (newValue) => {
-  if (parseFloat(newValue) > parseFloat(dbtcBalance.value)) {
-    dbtcAmount.value = dbtcBalance.value; // 如果输入的DBTC大于余额，则显示最大余额
+watch(usdtAmount, (newValue) => {
+  if (parseFloat(newValue) > parseFloat(usdtBalance.value)) {
+    usdtAmount.value = usdtBalance.value; // 如果输入的USDT大于余额，则显示最大余额
   }
-  calculateUSDT(); // 每次输入变化后重新计算USDT
+  calculateToken(); // 每次输入变化后重新计算
 });
 
 watch(slippage, (newSlippage) => {
-  calculateUSDT(); // 当滑点变化时重新计算USDT
+  calculateToken(); // 当滑点变化时重新计算
 });
-// 计算用户输入的DBTC对应的实际USDT数量
-function calculateUSDT() {
-  if (bestPrice.value > 0 && dbtcAmount.value > 0) {
-    const dbtcAfterSlippage = parseFloat(dbtcAmount.value) * (1 - parseFloat(slippage.value) / 100);
-    calculatedUSDT.value = (dbtcAfterSlippage * bestPrice.value * 0.9975).toFixed(8);
+
+watch(swapType, () => {
+  usdtAmount.value = ""; // 切换类型时清空输入
+  calculatedToken.value = 0;
+});
+
+// 计算用户输入的USDT对应的实际代币数量
+function calculateToken() {
+  if (bestPrice.value > 0 && usdtAmount.value > 0) {
+    const usdtAfterSlippage = parseFloat(usdtAmount.value) * (1 - parseFloat(slippage.value) / 100);
+    if (swapType.value === "DBTC") {
+      calculatedToken.value = (usdtAfterSlippage / bestPrice.value * 0.9975).toFixed(8);
+    } else {
+      // USDA兑换比例为1:2
+      calculatedToken.value = (usdtAfterSlippage * 2 * 0.9975).toFixed(8);
+    }
   } else {
-    calculatedUSDT.value = 0;
+    calculatedToken.value = 0;
   }
 }
 
 // 获取最优惠的价格
 async function getBestPrice() {
   try {
-    const swapContract = new web3.value.eth.Contract(SwapDbtcAPI, SwapDBTC);
-    const price = await swapContract.methods.getPrice().call();
-    bestPrice.value = parseFloat(web3.value.utils.fromWei(price, "ether")).toFixed(4);
+    if (swapType.value === "DBTC") {
+      const swapContract = new web3.value.eth.Contract(SwapDbtcAPI, SwapDBTC);
+      const price = await swapContract.methods.getPrice().call();
+      bestPrice.value = parseFloat(web3.value.utils.fromWei(price, "ether")).toFixed(4);
+    } else {
+      // 对于USDA兑换，使用固定价格1:2 (0.5表示1USDT=2USDA)
+      bestPrice.value = 0.5;
+    }
   } catch (error) {
     showFailToast(t('swap.bestPriceError'));
   }
@@ -184,6 +275,7 @@ async function web3data() {
   try {
     const usdtContract = new web3.value.eth.Contract(UsdtAPI, USDT);
     const dbtcContract = new web3.value.eth.Contract(DbtcAPI, DBTC);
+    const usdaContract = new web3.value.eth.Contract(USDAAPI, Usda);
 
     // Get USDT balance
     const usdtBal = await usdtContract.methods.balanceOf(userAddress).call({ from: userAddress });
@@ -192,6 +284,10 @@ async function web3data() {
     // Get DBTC balance
     const dbtcBal = await dbtcContract.methods.balanceOf(userAddress).call({ from: userAddress });
     dbtcBalance.value = web3.value.utils.fromWei(dbtcBal, "ether");
+
+    // Get USDA balance
+    const usdaBal = await usdaContract.methods.balanceOf(userAddress).call({ from: userAddress });
+    usdaBalance.value = web3.value.utils.fromWei(usdaBal, "ether");
   } catch (error) {
     console.error("Error fetching balances:", error);
   }
@@ -200,33 +296,47 @@ async function web3data() {
 async function handleSwap() {
   allshow.value = true;
   try {
-    if (!dbtcAmount.value || parseFloat(dbtcAmount.value) <= 0) {
+    if (!usdtAmount.value || parseFloat(usdtAmount.value) <= 0) {
       showFailToast(t('swap.invalidAmount'));// 提示用户输入有效数量
       return;
     }
 
-    // 检查用户是否已经授权DBTC
-    const dbtcContract = new web3.value.eth.Contract(DbtcAPI, DBTC);
-    const allowance = await dbtcContract.methods.allowance(userAddress, SwapDBTC).call();
+    // 检查用户是否已经授权USDT
+    const usdtContract = new web3.value.eth.Contract(UsdtAPI, USDT);
+    let allowance;
+    let swapContract;
+    
+    if (swapType.value === "DBTC") {
+      allowance = await usdtContract.methods.allowance(userAddress, SwapDBTC).call();
+      swapContract = new web3.value.eth.Contract(SwapDbtcAPI, SwapDBTC);
+    } else {
+      allowance = await usdtContract.methods.allowance(userAddress, SwapUsda).call();
+      swapContract = new web3.value.eth.Contract(USDASwapABI, SwapUsda);
+    }
 
-    if (parseFloat(allowance) < parseFloat(web3.value.utils.toWei(dbtcAmount.value.toString(), "ether"))) {
+    if (parseFloat(allowance) < parseFloat(web3.value.utils.toWei(usdtAmount.value.toString(), "ether"))) {
       showFailToast(t('swap.notEnoughAllowance'));
       return;
     }
 
-    // 将DBTC转换为Wei
-    const amountInWei = web3.value.utils.toWei(dbtcAmount.value.toString(), "ether");
-
-    const swapContract = new web3.value.eth.Contract(SwapDbtcAPI, SwapDBTC);
+    // 将USDT转换为Wei
+    const amountInWei = web3.value.utils.toWei(usdtAmount.value.toString(), "ether");
 
     // 发送兑换交易
-    const tx = await swapContract.methods.swapDBTC(amountInWei).send({
-      from: userAddress
-    });
+    if (swapType.value === "DBTC") {
+      await swapContract.methods.swapDBTC(amountInWei).send({
+        from: userAddress
+      });
+    } else {
+      await swapContract.methods.swap(amountInWei).send({
+        from: userAddress
+      });
+    }
+    
     showSuccessToast(t('swap.exchangeSuccess'));
     await web3data();
-    dbtcAmount.value = "";
-    calculatedUSDT.value = 0;
+    usdtAmount.value = "";
+    calculatedToken.value = 0;
   } catch (error) {
     showFailToast(t('swap.exchangeFail'));
   } finally {
@@ -237,11 +347,16 @@ async function handleSwap() {
 async function handleApprove() {
   allshow.value = true;
   try {
-    const dbtcContract = new web3.value.eth.Contract(DbtcAPI, DBTC);
-    const amountInWei = web3.value.utils.toWei("1000000000", "ether"); // 授权大量DBTC
-    const tx = await dbtcContract.methods.approve(SwapDBTC, amountInWei).send({
+    const usdtContract = new web3.value.eth.Contract(UsdtAPI, USDT);
+    const amountInWei = web3.value.utils.toWei("1000000000", "ether"); // 授权大量USDT
+    
+    // 根据当前选择的代币类型，授权对应的合约
+    const contractToApprove = swapType.value === "DBTC" ? SwapDBTC : SwapUsda;
+    
+    const tx = await usdtContract.methods.approve(contractToApprove, amountInWei).send({
       from: userAddress,
     });
+    
     showSuccessToast(t('swap.approveSuccess'));
     isApproved.value = true; // 授权成功后更新状态
   } catch (error) {
@@ -266,6 +381,31 @@ async function handleApprove() {
   margin: 0 auto;
 }
 
+/* 添加代币类型选择器样式 */
+.swap-type-selector {
+  display: flex;
+  width: 90%;
+  background-color: rgba(27, 27, 29, 1);
+  border-radius: 40px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.type-option {
+  flex: 1;
+  text-align: center;
+  padding: 12px 0;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.type-option.active {
+  background-color: #CDF202;
+  color: rgba(27, 27, 29, 1);
+  font-weight: bold;
+}
+
 .group {
   box-shadow: 0px 30px 60px rgba(6, 19, 13, 0.08);
   background-color: rgba(27, 27, 29, 1);
@@ -273,7 +413,8 @@ async function handleApprove() {
   width: 90%;
   padding: 20px;
   margin-bottom: 15px;
-  height: 167px; /* Fixed height for group panels */
+  height: auto; /* 修改为自适应高度 */
+  min-height: 130px; /* 设置最小高度 */
 }
 
 .header {
@@ -299,25 +440,44 @@ async function handleApprove() {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 .token-info {
   background-color: rgba(255, 255, 255, 0.07);
   border-radius: 8px;
-  padding: 5px 10px;
+  padding: 8px 10px;
   display: flex;
   align-items: center;
-  width: 85px;
+  width: auto;
+  min-width: 85px;
+}
+
+.token-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.usda-icon-wrapper {
+  background-color: rgba(255, 255, 255, 0.3); /* 为USDA图标增加更明显的背景 */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* 添加边框增加对比度 */
 }
 
 .token-icon {
   width: 24px;
   height: 24px;
+  object-fit: contain;
 }
 
 .token-text {
-  margin-left: 5px;
+  margin-left: 8px;
   display: flex;
   align-items: center;
 }
@@ -326,6 +486,7 @@ async function handleApprove() {
   font-size: 15px;
   color: rgba(255, 255, 255, 1);
   margin-right: 5px;
+  font-weight: 500;
 }
 
 .dropdown-icon {
@@ -335,35 +496,39 @@ async function handleApprove() {
 
 .token-amount {
   font-size: 12px;
-  color: rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .input-wrapper {
-  margin-top: 15px;
   width: 100%;
-  padding: 0 5%;
 }
 
 .input-field {
-  width: 80%;
-  padding: 10px;
+  width: 100%;
+  padding: 12px 15px;
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.9);
-  font-size: 18px;
+  font-size: 16px;
   outline: none;
+  box-sizing: border-box;
 }
 
 .icon-wrapper {
   display: flex;
   justify-content: center;
-  margin-bottom: 11px; /* 11px between panels */
+  margin: -5px 0; /* 减小上下间距 */
+  z-index: 2;
+  position: relative;
 }
 
 .label_5 {
   width: 30px;
   height: 30px;
+  background-color: rgba(27, 27, 29, 1);
+  border-radius: 50%;
+  padding: 5px;
 }
 
 .button-wrapper {
@@ -381,6 +546,17 @@ async function handleApprove() {
   font-size: 14px;
   text-align: center;
   border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    opacity: 0.9;
+  }
+  
+  &:active {
+    transform: scale(0.98);
+  }
 }
 
 .price-panel {
@@ -407,19 +583,29 @@ async function handleApprove() {
 .price-value {
   color: #CDF202;
   font-size: 16px;
+  font-weight: 500;
 }
 
 .slippage-select {
   background-color: rgba(255, 255, 255, 0.07);
   color: white;
   border-radius: 8px;
-  padding: 5px;
-  border: none;
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   outline: none;
+  cursor: pointer;
 }
 
 .gray-button {
   background-color: gray;
   cursor: not-allowed;
+  
+  &:hover {
+    opacity: 1;
+  }
+  
+  &:active {
+    transform: none;
+  }
 }
 </style>

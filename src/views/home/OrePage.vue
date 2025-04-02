@@ -253,97 +253,267 @@ async function llllqua() {
 
 async function web3data() {
   try {
-    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
-    const contractDb = new web3.value.eth.Contract(DbtcAPI, DBTCoinNew)
+    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC);
+    const contractDb = new web3.value.eth.Contract(DbtcAPI, DBTCoinNew);
     const address = localStorage.getItem('address');
+    
+    // 获取基本时间信息
     const today = new Date();
-    const timestamp = (today.getTime() / 1000).toFixed(0);//今日时间戳
-    console.log(timestamp)
-    let time = await contract1.methods.getStartOfDayTimestamp(timestamp).call({from: address})
-    console.log(1)
-    let aaaa = 0
+    const timestamp = (today.getTime() / 1000).toFixed(0); // 今日时间戳
+    
+    let time;
     try {
-      aaaa = await contract1.methods.getUserCanMintDBTCAmount(localStorage.getItem('address')).call({from: address});//今日可领取算力
-    } catch {
-      aaaa = 0;
+      time = await contract1.methods.getStartOfDayTimestamp(timestamp).call({from: address});
+    } catch (error) {
+      console.error("获取日期时间戳失败:", error);
+      time = timestamp; // 使用当前时间戳作为默认值
     }
-    console.log(2)
-    // let bbbb = await contract1.methods._mintDBTCEveryDayAmount().call({from: address});//每日DBTC产出
-    let bbbb = await web3.value.utils.toWei('10', 'ether');//每日DBTC产出
-    console.log(3)
-    let cccc = await contract1.methods._ltp().call({from: address});//全网总算力
-    console.log(4)
-    let dddd = await contract1.methods.getHashFactorForEveryDay(time).call({from: address});//今日算力因子
-    console.log(5)
-    let eeee = await contract1.methods.getUserNCPower(address).call({from: address});//用户总算力
-    console.log(6)
-    let ffff = await contract1.methods.getReferPower(address).call({from: address});//用户推荐算力
-    let asszx1 = await contractDb.methods.getPrice().call({from: address});//获取当前币的价格
-    let asszx2 = await contractDb.methods.getOpeningPrice().call({from: address});//开盘价
-    const [integerka, decimalkb] = Number(AllfromWei(asszx2)).toFixed(2).toString().split('.');
-    kkkpaansa.value = integerka
-    kkkpaansb.value = decimalkb
-    const [integerwwa, decimalkwww] = Number(AllfromWei(asszx1)).toFixed(2).toString().split('.');
-    ddddqqa.value = integerwwa
-    ddddqqb.value = decimalkwww
-    let zhangfu = (Number(AllfromWei(asszx1) - AllfromWei(asszx2)).toFixed(8) /  Number(AllfromWei(asszx2)).toFixed(8)).toFixed(4)
-    let asda = 0
-    if (zhangfu > 0) {
-      sabo0l.value = true
-      asda = Number(zhangfu *100).toFixed(2)
-    } else {
-      sabo0l.value = false
-      asda = Number(-zhangfu *100).toFixed(2)
+    
+    // 获取今日可领取算力
+    let aaaa = "0";
+    try {
+      aaaa = await contract1.methods.getUserCanMintDBTCAmount(address).call({from: address});
+    } catch (error) {
+      console.error("获取可领取算力失败:", error);
+      aaaa = "0";
     }
-    const [zfffwsa, zfffwsb] = asda.toString().split('.')
-    zfffa.value = zfffwsa
-    zfffb.value = zfffwsb
-    console.log(7)
-    let gggg = await contract1.methods.getTotalMintDBTC().call({from: address});//全网产出
-    let ssss = await contract1.methods.hasGiveawayUserNCPower(address).call({from: address});//判断是否有私募算力
-    if (ssss) {
-      let ssssa = await contract1.methods.getGiveawayUserNCPower(address).call({from: address});//私募算力
-      Privateplacement.value = AllfromWei2(ssssa)
+    
+    // 获取每日DBTC产出
+    let bbbb = "0";
+    try {
+      // bbbb = await contract1.methods._mintDBTCEveryDayAmount().call({from: address});
+      bbbb = await web3.value.utils.toWei('10', 'ether'); // 每日DBTC产出
+    } catch (error) {
+      console.error("获取每日产出失败:", error);
+      bbbb = await web3.value.utils.toWei('0', 'ether');
     }
-
-    console.log(ssss)
-    qqqqqcaas.value = 67200 - AllfromWei(gggg)
-    const [integer, decimal] = AllfromWei2(cccc).toString().split('.');
-    console.log(8)
-    qwwwwa.value = Number(integer)
-    console.log(9)
-    qwwwwb.value = decimal
-    jryyyyz.value = dddd
-    const [integer1, decimal1] = AllfromWei2(eeee).toString().split('.');
-    console.log(10)
-    yhalla.value = Number(integer1)
-    console.log(11)
-    yhallb.value = decimal1
-    jrdbtc.value = Number(AllfromWei(bbbb))
-    console.log(12)
-    youmoren.value = Number(AllfromWei(aaaa)).toFixed(10)
-    console.log(13)
-    const [integer2, decimal2] = AllfromWei2(ffff).toString().split('.');
-    console.log(14)
-    tjdbtca.value = Number(integer2)
-    console.log(15)
-    tjdbtcb.value = decimal2
-
+    
+    // 获取全网总算力
+    let cccc = "0";
+    try {
+      cccc = await contract1.methods._ltp().call({from: address});
+    } catch (error) {
+      console.error("获取全网算力失败:", error);
+      cccc = "0";
+    }
+    
+    // 获取今日算力因子
+    let dddd = 0;
+    try {
+      dddd = await contract1.methods.getHashFactorForEveryDay(time).call({from: address});
+    } catch (error) {
+      console.error("获取算力因子失败:", error);
+      dddd = 0;
+    }
+    
+    // 获取用户总算力
+    let eeee = "0";
+    try {
+      eeee = await contract1.methods.getUserNCPower(address).call({from: address});
+    } catch (error) {
+      console.error("获取用户算力失败:", error);
+      eeee = "0";
+    }
+    
+    // 获取用户推荐算力
+    let ffff = "0";
+    try {
+      ffff = await contract1.methods.getReferPower(address).call({from: address});
+    } catch (error) {
+      console.error("获取推荐算力失败:", error);
+      ffff = "0";
+    }
+    
+    // 获取当前币的价格和开盘价
+    let asszx1 = "0";
+    let asszx2 = "0";
+    try {
+      asszx1 = await contractDb.methods.getPrice().call({from: address}); // 获取当前币的价格
+      asszx2 = await contractDb.methods.getOpeningPrice().call({from: address}); // 开盘价
+    } catch (error) {
+      console.error("获取价格信息失败:", error);
+      asszx1 = "0";
+      asszx2 = "0";
+    }
+    
+    // 处理开盘价格
+    try {
+      const [integerka, decimalkb] = Number(AllfromWei(asszx2)).toFixed(2).toString().split('.');
+      kkkpaansa.value = parseInt(integerka) || 0;
+      kkkpaansb.value = Number(decimalkb) || 0;
+    } catch (error) {
+      console.error("处理开盘价格失败:", error);
+      kkkpaansa.value = 0;
+      kkkpaansb.value = 0;
+    }
+    
+    // 处理当前价格
+    try {
+      const [integerwwa, decimalkwww] = Number(AllfromWei(asszx1)).toFixed(2).toString().split('.');
+      ddddqqa.value = parseInt(integerwwa) || 0;
+      ddddqqb.value = Number(decimalkwww) || 0;
+    } catch (error) {
+      console.error("处理当前价格失败:", error);
+      ddddqqa.value = 0;
+      ddddqqb.value = 0;
+    }
+    
+    // 计算涨幅
+    try {
+      let zhangfu = 0;
+      const price1 = Number(AllfromWei(asszx1));
+      const price2 = Number(AllfromWei(asszx2));
+      
+      if (price2 > 0) {
+        zhangfu = ((price1 - price2) / price2).toFixed(4);
+      }
+      
+      let asda = 0;
+      if (zhangfu > 0) {
+        sabo0l.value = true;
+        asda = Number(zhangfu * 100).toFixed(2);
+      } else {
+        sabo0l.value = false;
+        asda = Number(-zhangfu * 100).toFixed(2);
+      }
+      
+      const [zfffwsa, zfffwsb] = asda.toString().split('.');
+      zfffa.value = parseInt(zfffwsa) || 0;
+      zfffb.value = Number(zfffwsb) || 0;
+    } catch (error) {
+      console.error("计算涨幅失败:", error);
+      zfffa.value = 0;
+      zfffb.value = 0;
+      sabo0l.value = true;
+    }
+    
+    // 获取全网产出
+    let gggg = "0";
+    try {
+      gggg = await contract1.methods.getTotalMintDBTC().call({from: address});
+      qqqqqcaas.value = Number(67200 - Number(AllfromWei(gggg))) || 0;
+    } catch (error) {
+      console.error("获取全网产出失败:", error);
+      qqqqqcaas.value = Number(67200) || 0;
+    }
+    
+    // 检查是否有私募算力
+    try {
+      let ssss = await contract1.methods.hasGiveawayUserNCPower(address).call({from: address});
+      if (ssss) {
+        try {
+          let ssssa = await contract1.methods.getGiveawayUserNCPower(address).call({from: address});
+          Privateplacement.value = AllfromWei2(ssssa);
+        } catch (error) {
+          console.error("获取私募算力失败:", error);
+          Privateplacement.value = 0;
+        }
+      } else {
+        Privateplacement.value = 0;
+      }
+    } catch (error) {
+      console.error("检查私募算力失败:", error);
+      Privateplacement.value = 0;
+    }
+    
+    // 处理全网总算力
+    try {
+      const [integer, decimal] = AllfromWei2(cccc).toString().split('.');
+      qwwwwa.value = Number(integer) || 0;
+      qwwwwb.value = Number(decimal) || 0;
+    } catch (error) {
+      console.error("处理全网总算力失败:", error);
+      qwwwwa.value = 0;
+      qwwwwb.value = 0;
+    }
+    
+    // 设置今日算力因子
+    jryyyyz.value = Number(dddd) || 0;
+    
+    // 处理用户总算力
+    try {
+      const [integer1, decimal1] = AllfromWei2(eeee).toString().split('.');
+      yhalla.value = Number(integer1) || 0;
+      yhallb.value = Number(decimal1) || 0;
+    } catch (error) {
+      console.error("处理用户总算力失败:", error);
+      yhalla.value = 0;
+      yhallb.value = 0;
+    }
+    
+    // 设置每日DBTC产出
+    try {
+      jrdbtc.value = Number(AllfromWei(bbbb)) || 0;
+    } catch (error) {
+      console.error("设置每日产出失败:", error);
+      jrdbtc.value = 0;
+    }
+    
+    // 设置可领取算力
+    try {
+      youmoren.value = Number(AllfromWei(aaaa)).toFixed(10) || 0;
+    } catch (error) {
+      console.error("设置可领取算力失败:", error);
+      youmoren.value = 0;
+    }
+    
+    // 处理推荐算力
+    try {
+      const [integer2, decimal2] = AllfromWei2(ffff).toString().split('.');
+      tjdbtca.value = Number(integer2) || 0;
+      tjdbtcb.value = Number(decimal2) || 0;
+    } catch (error) {
+      console.error("处理推荐算力失败:", error);
+      tjdbtca.value = 0;
+      tjdbtcb.value = 0;
+    }
+    
   } catch (error) {
-    console.log(error);
+    console.error("web3data 函数执行失败:", error);
+    // 设置所有数据的默认值
+    qwwwwa.value = 0;
+    qwwwwb.value = 0;
+    jryyyyz.value = 0;
+    yhalla.value = 0;
+    yhallb.value = 0;
+    jrdbtc.value = 0;
+    tjdbtca.value = 0;
+    tjdbtcb.value = 0;
+    qqqqqcaas.value = 0;
+    kkkpaansa.value = 0;
+    kkkpaansb.value = 0;
+    ddddqqa.value = 0;
+    ddddqqb.value = 0;
+    zfffa.value = 0;
+    zfffb.value = 0;
+    Privateplacement.value = 0;
+    sabo0l.value = true;
+    youmoren.value = 0;
   }
 }
 
 function AllfromWei2(i) {//fromWei
-  if (web3.value) {
-    return (Number(web3.value.utils.fromWei(i, 'ether')) / 100).toFixed(2);
+  if (web3.value && i) {
+    try {
+      return (Number(web3.value.utils.fromWei(i, 'ether')) / 100).toFixed(2);
+    } catch (error) {
+      console.error("AllfromWei2 转换失败:", error);
+      return "0.00";
+    }
   }
+  return "0.00";
 }
 
 function AllfromWei(i) {//fromWei
-  if (web3.value) {
-    return web3.value.utils.fromWei(i, 'ether');
+  if (web3.value && i) {
+    try {
+      return web3.value.utils.fromWei(i, 'ether');
+    } catch (error) {
+      console.error("AllfromWei 转换失败:", error);
+      return "0";
+    }
   }
+  return "0";
 }
 </script>
 
