@@ -16,7 +16,16 @@ const messages = {
     homevall12_2: "펫 월드",
     homevall12_3: "스포츠 경쟁",
     homevall12_4: "확인",
-    homevall12_5: "게임 엔터테인먼트"
+    homevall12_5: "게임 엔터테인먼트",
+    swap: "스왑",
+    referInputPlaceholder: "추천인 주소 입력",
+    invalidAddress: "유효하지 않은 주소",
+    cannotReferSelf: "자신을 추천인으로 설정할 수 없습니다",
+    referNeedsRefer: "이 추천인은 자신의 추천인이 있어야 합니다",
+    bindSuccess: "바인딩 성공",
+    bindFailed: "바인딩 실패",
+    bindReferError: "추천인 바인딩 오류",
+    checkReferralError: "추천 상태 확인 실패"
   },
   home: {
     home1: "채굴 연이율",

@@ -12,11 +12,20 @@ const messages = {
     homevall10: "Confirm Binding",
     homevall11: "Cancel",
     homevall12: "Confirm",
-    homevall12_1: "Collateral Lending",
+    homevall12_1: "Defi Collateral Lending",
     homevall12_2: "Pet World",
     homevall12_3: "Sports Competition",
     homevall12_4: "Confirm",
-    homevall12_5: "Game Entertainment"
+    homevall12_5: "Game Entertainment",
+    swap: "SWAP",
+    referInputPlaceholder: "Enter Referrer Address",
+    invalidAddress: "Invalid address",
+    cannotReferSelf: "You cannot set yourself as referrer",
+    referNeedsRefer: "This referrer must have their own referrer",
+    bindSuccess: "Binding successful",
+    bindFailed: "Binding failed",
+    bindReferError: "Error binding referrer",
+    checkReferralError: "Failed to check referral status"
   },
   home: {
     home1: "Mining Annual Rate",

@@ -15,7 +15,16 @@ const messages = {
     homevall12_2: "寵物世界",
     homevall12_3: "體育競技",
     homevall12_4: "確認",
-    homevall12_5: "遊戲娛樂"
+    homevall12_5: "遊戲娛樂",
+    swap: "閃兌",
+    referInputPlaceholder: "輸入推薦人地址",
+    invalidAddress: "無效的地址",
+    cannotReferSelf: "不能將自己設為推薦人",
+    referNeedsRefer: "該推薦人需要自己也有推薦人",
+    bindSuccess: "綁定成功",
+    bindFailed: "綁定失敗",
+    bindReferError: "綁定推薦人失敗",
+    checkReferralError: "檢查推薦人狀態失敗"
   },
   home: {
     home1: "挖礦年利率",

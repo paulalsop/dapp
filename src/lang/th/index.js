@@ -16,7 +16,16 @@ const messages = {
     homevall12_2: "โลกสัตว์เลี้ยง",
     homevall12_3: "การแข่งขันกีฬา",
     homevall12_4: "ยืนยัน",
-    homevall12_5: "เกมและบันเทิง"
+    homevall12_5: "เกมและบันเทิง",
+    swap: "สวอป",
+    referInputPlaceholder: "ป้อนที่อยู่ผู้แนะนำ",
+    invalidAddress: "ที่อยู่ไม่ถูกต้อง",
+    cannotReferSelf: "คุณไม่สามารถตั้งตัวคุณเองเป็นผู้แนะนำได้",
+    referNeedsRefer: "ผู้แนะนำนี้ต้องมีผู้แนะนำของตัวเองด้วย",
+    bindSuccess: "การผูกสำเร็จ",
+    bindFailed: "การผูกล้มเหลว",
+    bindReferError: "เกิดข้อผิดพลาดในการผูกผู้แนะนำ",
+    checkReferralError: "ตรวจสอบสถานะการแนะนำล้มเหลว"
   },
   home: {
     home1: "อัตราผลตอบแทนจากการขุด",

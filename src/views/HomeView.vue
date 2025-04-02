@@ -12,7 +12,7 @@
   <van-overlay :show="allshowaasczz" z-index="10000">
     <div style="display: flex;width: 100%;height: 100%;position:relative " @click="allshowaasczz = false">
       <div style="width: 188px;height: 288px;background: #1B1B1D;border-radius: 12px;position: absolute;top: 60px;right: 0;" class="sacax" @click.stop>
-        <div @click="navigateToSwap()">SWAP</div>
+        <div @click="navigateToSwap()">{{ $t('homevall.swap') }}</div>
         <div @click="out()">Defi{{ $t('homevall.homevall12_1') }}</div>
         <div @click="out()">{{ $t('homevall.homevall12_2') }}</div>
         <div @click="out()">{{ $t('homevall.homevall12_3') }}</div>
@@ -34,10 +34,17 @@
     <van-popup v-model:show="bindshow">
       <div class="sajjnca">
         <div class="title">{{ $t('homevall.homevall10') }}</div>
-        <div>{{ shortenAddress(langshowaddl) }}</div>
+        <div v-if="langshowaddl">{{ shortenAddress(langshowaddl) }}</div>
+        <div v-else class="refer-input-container">
+          <input 
+            v-model="inputReferAddress" 
+            class="refer-input" 
+            :placeholder="$t('homevall.referInputPlaceholder')" 
+          />
+        </div>
         <div class="sacaz">
           <div @click="bindshow = false">{{ $t('homevall.homevall11') }}</div>
-          <div class="isaa" @click="bbbdddss()">{{ $t('homevall.homevall12_4') }}</div>
+          <div class="isaa" @click="handleBindRefer()">{{ $t('homevall.homevall12_4') }}</div>
         </div>
       </div>
     </van-popup>
@@ -146,6 +153,9 @@ let alangarrc = ref(['English', '繁体中文', '한국어', 'ภาษาไท
 let arr = ['/Home/HomePage', '/Home/BazaarPage', '/Home/OrePage', '/Home/MyPage','/Home/SwapPage']
 // let allshowaasczz = ref(false); // 控制 SWAP 菜单弹窗的显示
 
+// 添加新变量用于存储用户输入的推荐人地址
+let inputReferAddress = ref('');
+
 // 跳转到 Swap 页面的方法
 const navigateToSwap = () => {
   allshowaasczz.value = false; // 关闭弹窗
@@ -239,15 +249,13 @@ async function getSignature() {//登录
     localStorage.setItem('address', accountval);
     store.commit('backlianje', true)
     showSuccessToast(t('homevall.homevall8'));
+    
+    // 检查用户是否已有推荐人，如果没有则提示绑定
+    await checkAndPromptReferral(accountval);
 
     // Toast;
   } catch (switchError) {
     showFailToast(t('homevall.homevall9'));
-    // Notify({
-    //   message: '链接失败',
-    //   duration: 1000,
-    //   background: '#1989fa'
-    // });
     // 这个错误代码表示尚未将该链添加到MetaMask中
     if (switchError.code === 4902) {
       try {
@@ -270,6 +278,29 @@ async function getSignature() {//登录
       console.error('Failed to switch the network:', switchError);
     }
   }
+}
+
+// 添加新函数：检查用户是否有推荐人，如果没有则显示绑定界面
+async function checkAndPromptReferral(userAddress) {
+  try {
+    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC);
+    // 检查当前用户是否已有推荐人
+    let hasReferral = await contract1.methods.hasRefer(userAddress).call({from: userAddress});
+    
+    if (!hasReferral) {
+      // 用户没有推荐人，显示绑定推荐人对话框
+      showBindReferralDialog();
+    }
+  } catch (error) {
+    console.error(t('homevall.checkReferralError'), error);
+  }
+}
+
+// 显示绑定推荐人对话框
+function showBindReferralDialog() {
+  // 创建推荐人输入对话框
+  langshowaddl.value = ""; // 清空之前可能存在的推荐人地址
+  bindshow.value = true;   // 显示绑定对话框
 }
 
 function onlang() {
@@ -314,6 +345,51 @@ function isrouter(i) {
     path: arr[i]
   })
 }
+
+// 处理绑定推荐人按钮的点击
+async function handleBindRefer() {
+  allshow.value = true;
+  try {
+    // 决定使用哪个地址作为推荐人
+    const referAddress = langshowaddl.value || inputReferAddress.value;
+    
+    // 验证地址是否有效
+    if (!referAddress || !web3.value.utils.isAddress(referAddress)) {
+      showFailToast(t('homevall.invalidAddress'));
+      allshow.value = false;
+      return;
+    }
+    
+    // 确保用户不能自己推荐自己
+    const userAddress = localStorage.getItem('address');
+    if (referAddress === userAddress) {
+      showFailToast(t('homevall.cannotReferSelf'));
+      allshow.value = false;
+      return;
+    }
+    
+    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC);
+    
+    // 检查推荐人是否有资格
+    const referHasRefer = await contract1.methods.hasRefer(referAddress).call({from: userAddress});
+    if (!referHasRefer) {
+      showFailToast(t('homevall.referNeedsRefer'));
+      allshow.value = false;
+      return;
+    }
+    
+    // 执行绑定操作
+    await contract1.methods.bindRefer(referAddress).send({from: userAddress});
+    showSuccessToast(t('homevall.bindSuccess'));
+    isrouter(3); // 跳转到个人页面
+    bindshow.value = false;
+  } catch (error) {
+    console.error(t('homevall.bindReferError'), error);
+    showFailToast(t('homevall.bindFailed'));
+  } finally {
+    allshow.value = false;
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -355,6 +431,23 @@ function isrouter(i) {
   .title {
     font-size: 20px;
     line-height: 30px;
+  }
+
+  .refer-input-container {
+    width: 100%;
+    margin: 15px 0;
+  }
+
+  .refer-input {
+    width: 100%;
+    background-color: #292929;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
   }
 
   .sacaz {
