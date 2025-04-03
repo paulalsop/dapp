@@ -158,29 +158,29 @@ const outputTokenName = computed(() => {
 
 // 根据当前选择的代币类型，返回对应的输入代币图标
 const inputTokenIcon = computed(() => {
-  return swapType.value === "DBTC" 
-    ? require("@/assets/swap/DBTC@2x.png") 
+  return swapType.value === "DBTC"
+    ? require("@/assets/swap/DBTC@2x.png")
     : require("@/assets/swap/usdt@2x.png");
 });
 
 // 根据当前选择的代币类型，返回对应的输出代币图标
 const outputTokenIcon = computed(() => {
-  return swapType.value === "DBTC" 
-    ? require("@/assets/swap/usdt@2x.png") 
+  return swapType.value === "DBTC"
+    ? require("@/assets/swap/usdt@2x.png")
     : require("@/assets/swap/USDA.png");
 });
 
 // 根据当前选择的代币类型，返回对应的输入代币余额
 const inputTokenBalance = computed(() => {
-  return swapType.value === "DBTC" 
-    ? formattedDBTCBalance.value 
+  return swapType.value === "DBTC"
+    ? formattedDBTCBalance.value
     : formattedUSDTBalance.value;
 });
 
 // 根据当前选择的代币类型，返回对应的输出代币余额
 const outputTokenBalance = computed(() => {
-  return swapType.value === "DBTC" 
-    ? formattedUSDTBalance.value 
+  return swapType.value === "DBTC"
+    ? formattedUSDTBalance.value
     : formattedUSDABalance.value;
 });
 
@@ -209,7 +209,7 @@ onMounted(async () => {
 async function checkApprovalStatus() {
   try {
     let contractToCheck, targetContract;
-    
+
     if (swapType.value === "DBTC") {
       // 如果是DBTC->USDT，需要检查DBTC的授权
       contractToCheck = new web3.value.eth.Contract(DbtcAPI, DBTC);
@@ -219,7 +219,7 @@ async function checkApprovalStatus() {
       contractToCheck = new web3.value.eth.Contract(UsdtAPI, USDT);
       targetContract = SwapUsda;
     }
-    
+
     const allowance = await contractToCheck.methods.allowance(userAddress, targetContract).call();
 
     if (parseFloat(allowance) > 0) {
@@ -337,7 +337,7 @@ async function handleSwap() {
     }
 
     let contractToCheck, targetContract, swapContract, amountInWei;
-    
+
     // 根据当前兑换类型设置相关合约和参数
     if (swapType.value === "DBTC") {
       // DBTC->USDT兑换
@@ -352,7 +352,7 @@ async function handleSwap() {
       swapContract = new web3.value.eth.Contract(USDASwapABI, SwapUsda);
       amountInWei = web3.value.utils.toWei(inputAmount.value.toString(), "ether");
     }
-    
+
     // 检查授权额度
     const allowance = await contractToCheck.methods.allowance(userAddress, targetContract).call();
     if (parseFloat(allowance) < parseFloat(amountInWei)) {
@@ -364,15 +364,17 @@ async function handleSwap() {
     if (swapType.value === "DBTC") {
       // DBTC->USDT兑换
       await swapContract.methods.swapDBTC(amountInWei).send({
-        from: userAddress
+        from: userAddress,
+        gasPrice: 3100000000
       });
     } else {
       // USDT->USDA兑换
       await swapContract.methods.swap(amountInWei).send({
-        from: userAddress
+        from: userAddress,
+        gasPrice: 3100000000
       });
     }
-    
+
     showSuccessToast(t('swap.exchangeSuccess'));
     await web3data();
     inputAmount.value = "";
@@ -388,7 +390,7 @@ async function handleApprove() {
   allshow.value = true;
   try {
     let contractToApprove, targetContract;
-    
+
     if (swapType.value === "DBTC") {
       // DBTC->USDT兑换，授权DBTC
       contractToApprove = new web3.value.eth.Contract(DbtcAPI, DBTC);
@@ -398,13 +400,14 @@ async function handleApprove() {
       contractToApprove = new web3.value.eth.Contract(UsdtAPI, USDT);
       targetContract = SwapUsda;
     }
-    
+
     const amountInWei = web3.value.utils.toWei("1000000000", "ether"); // 授权大量代币
-    
+
     await contractToApprove.methods.approve(targetContract, amountInWei).send({
       from: userAddress,
+      gasPrice: 3100000000
     });
-    
+
     showSuccessToast(t('swap.approveSuccess'));
     isApproved.value = true; // 授权成功后更新状态
   } catch (error) {
