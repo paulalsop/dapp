@@ -160,6 +160,9 @@ const messages = {
     approveSuccess: "อนุมัติสำเร็จ",
     approveFail: "การอนุมัติล้มเหลว",
     bestPriceError: "การดึงราคาล้มเหลว",
+    fixedRate: "",
+    notEnoughAllowance: "วงเงินอนุมัติไม่เพียงพอ",
+    invalidAmount: "กรุณาป้อนจำนวนที่ถูกต้อง"
   }
 }
 

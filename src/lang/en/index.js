@@ -161,6 +161,9 @@ const messages = {
     approveSuccess: "Approval Successful",
     approveFail: "Approval Failed",
     bestPriceError: "Failed to get the price",
+    fixedRate: "",
+    notEnoughAllowance: "Insufficient allowance",
+    invalidAmount: "Please enter valid amount"
   }
 }
 

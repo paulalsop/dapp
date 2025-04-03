@@ -156,7 +156,10 @@ const messages = {
     exchangeFail: "교환 실패",
     approveSuccess: "승인 성공",
     approveFail: "승인 실패",
-    bestPriceError: "가격 가져오기 실패"
+    bestPriceError: "가격 가져오기 실패",
+    fixedRate: "",
+    notEnoughAllowance: "승인 한도 부족",
+    invalidAmount: "유효한 금액을 입력하세요"
   }
 }
 

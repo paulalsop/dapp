@@ -69,7 +69,8 @@
         <input
           type="text"
           class="input-field"
-          :value="calculatedToken"
+          :value="swapType === 'DBTC' ? calculatedToken : ''"
+          :placeholder="swapType === 'USDA' ? $t('swap.fixedRate') : ''"
           readonly
         />
       </div>

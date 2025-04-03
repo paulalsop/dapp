@@ -156,6 +156,9 @@ const messages = {
     approveSuccess: "授權成功",
     approveFail: "授權失敗",
     bestPriceError: "獲取價格失敗",
+    fixedRate: "",
+    notEnoughAllowance: "授權額度不足",
+    invalidAmount: "請輸入有效數量"
   }
 }
 
