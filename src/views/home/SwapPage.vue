@@ -76,7 +76,7 @@
     </div>
 
     <!-- 价格面板 -->
-    <div class="price-panel flex-col">
+    <div class="price-panel flex-col" v-show="swapType === 'DBTC'">
       <div class="price-info flex-row justify-between">
         <span class="price-label">{{ $t('swap.price') }}</span>
         <span class="price-value">{{ bestPrice }} {{ swapType === 'DBTC' ? 'USDT / DBTC' : 'USDT / USDA' }}</span>
@@ -282,8 +282,8 @@ function calculateToken() {
       calculatedToken.value = (dbtcAfterSlippage * bestPrice.value * 0.9975).toFixed(8);
     } else {
       // USDT->USDA兑换，比例为1:2
-      const usdtAfterSlippage = parseFloat(inputAmount.value) * (1 - parseFloat(slippage.value) / 100);
-      calculatedToken.value = (usdtAfterSlippage * 2 * 0.9975).toFixed(8);
+      // USDA兑换不考虑滑点
+      calculatedToken.value = (parseFloat(inputAmount.value) * 2).toFixed(8);
     }
   } else {
     calculatedToken.value = 0;
