@@ -25,6 +25,7 @@ export default createStore({
     BTL: '0x94833cf5fe10536f5a427ed265ff46b03f902100',
     USDA: '0xE70302FB21f61AEe47bC2D63E529870c728d4b5A',
     USDASwap: '0x00CB7aB4D29703468309f505Ee990C13a1BFfB23',
+    CGM: '0x4c59a80b01ea7254af34a1a11eea54a4ae918520',
     lianjeshow: false
   },
   getters: {

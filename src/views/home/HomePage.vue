@@ -148,7 +148,7 @@
         <td class="vina"><img :src="getImage(i.prc)" alt="" @click="copyAddress(i.address)">{{ i.name }}</td>
         <td>
           <div class="linkup" @click="afasww(i.id, i.checked)">{{ i.up }}% <img
-            src="@/assets/homepage/Frame22.png" alt=""></div>
+              src="@/assets/homepage/Frame22.png" alt=""></div>
         </td>
       </tr>
       </tbody>
@@ -156,48 +156,50 @@
     <div class="imgatutu">
       <a class="kkan" href="https://audit.cfg.ninja/dbt-coin" target="_blank">{{ $t('home.home32') }}</a>
       <a class="kkan" href="https://skynet.certik.com/zh-CN/projects/dbtc" target="_blank">{{ $t('home.home323') }}</a>
-<!--      <div class="asft">{{ $t('bazaar.bazaar11') }}</div>-->
+      <!--      <div class="asft">{{ $t('bazaar.bazaar11') }}</div>-->
     </div>
   </div>
 </template>
 
 <script setup>
-import {ref, onMounted, computed} from "vue"
-import {useStore} from "vuex";
-import {useWeb3} from '@/web3/index.js';
-import {MintdbtcAPI} from '@/components/MintDBTC_API.js'
-import {DpAPI} from '@/components/Dp_API.js'
-import {UsdtAPI} from '@/components/Usdt_API.js'
-import {WbnbAPI} from '@/components/Wbnb_API.js'
-import {DbtcAPI} from '@/components/Dbtc_API.js'
-import {useI18n} from "vue-i18n";
-import {showSuccessToast, showFailToast} from 'vant';
+import { ref, onMounted, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useWeb3 } from '@/web3/index.js'
+import { MintdbtcAPI } from '@/components/MintDBTC_API.js'
+import { DpAPI } from '@/components/Dp_API.js'
+import { UsdtAPI } from '@/components/Usdt_API.js'
+import { WbnbAPI } from '@/components/Wbnb_API.js'
+import { DbtcAPI } from '@/components/Dbtc_API.js'
+import { useI18n } from 'vue-i18n'
+import { showSuccessToast, showFailToast } from 'vant'
+
 let lianjeshow = computed(() => {
   return store.state.lianjeshow
 })//是否连接钱包
-const store = useStore();
-const {t} = useI18n();
-const wbnb = store.state.wbnb; // wbnb地址
-const DP = store.state.DP; // DP地址
-const DBTCoinNew = store.state.DBTCoinNew; // DBTCoinNew地址
-const MintDBTCPlus = store.state.MintDBTCPlus; // DBTCoinNew地址
-const USDT = store.state.USDT; // USDT地址
-const BTC = store.state.BTC; // BTC地址
-const ETH = store.state.ETH; // ETH地址
-const BCH = store.state.BCH; // BCH地址
-const SOL = store.state.SOL; // SOL地址
-const DOGE = store.state.DOGE; // DOGE地址
-const TON = store.state.TON; // TON地址
-const MS = store.state.MorningStar; // TON地址
-const MintDBTC = store.state.MintDBTC; // MintDBTC地址
-const FP = store.state.FP; // MintDBTC地址
-const USDP = store.state.USDP; // MintDBTC地址
-const Mars = store.state.Mars; // MintDBTC地址
-const EGA = store.state.EGA; // MintDBTC地址
-const C13 = store.state.C13; // MintDBTC地址
-const MIAO = store.state.MIAO; // MintDBTC地址
-const BTL = store.state.BTL; // MintDBTC地址
-const USDA = store.state.USDA; // MintDBTC地址
+const store = useStore()
+const { t } = useI18n()
+const wbnb = store.state.wbnb // wbnb地址
+const DP = store.state.DP // DP地址
+const DBTCoinNew = store.state.DBTCoinNew // DBTCoinNew地址
+const MintDBTCPlus = store.state.MintDBTCPlus // DBTCoinNew地址
+const USDT = store.state.USDT // USDT地址
+const BTC = store.state.BTC // BTC地址
+const ETH = store.state.ETH // ETH地址
+const BCH = store.state.BCH // BCH地址
+const SOL = store.state.SOL // SOL地址
+const DOGE = store.state.DOGE // DOGE地址
+const TON = store.state.TON // TON地址
+const MS = store.state.MorningStar // TON地址
+const MintDBTC = store.state.MintDBTC // MintDBTC地址
+const FP = store.state.FP // MintDBTC地址
+const USDP = store.state.USDP // MintDBTC地址
+const Mars = store.state.Mars // MintDBTC地址
+const EGA = store.state.EGA // MintDBTC地址
+const C13 = store.state.C13 // MintDBTC地址
+const MIAO = store.state.MIAO // MintDBTC地址
+const BTL = store.state.BTL // MintDBTC地址
+const USDA = store.state.USDA // MintDBTC地址
+const CGM = store.state.CGM // MintDBTC地址
 let rout = ref(45)
 let hashrate = ref(0)//计算算力
 let purchase = ref(0)//计算金额
@@ -222,7 +224,7 @@ let bontarr = ref([{
   address: wbnb,//地址
   api: WbnbAPI,//api
   morenum: '0'//用户余额
-},{
+}, {
   id: 2,
   checked: false,
   prc: 'dp',
@@ -240,7 +242,7 @@ let bontarr = ref([{
   address: DBTCoinNew,
   api: DbtcAPI,
   morenum: '0'
-},{
+}, {
   id: 4,
   checked: false,
   prc: 'MS',
@@ -250,24 +252,24 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 }, {
-    id: 5,
-    checked: false,
-    prc: 'FP',
-    up: '3000',
-    name: 'FP',
-    address: FP,
-    api: UsdtAPI,
-    morenum: '0'
-  }, {
-    id: 6,
-    checked: false,
-    prc: 'MIAO',
-    up: '3000',
-    name: 'MIAO',
-    address: MIAO,
-    api: UsdtAPI,
-    morenum: '0'
-  }, {
+  id: 5,
+  checked: false,
+  prc: 'FP',
+  up: '3000',
+  name: 'FP',
+  address: FP,
+  api: UsdtAPI,
+  morenum: '0'
+}, {
+  id: 6,
+  checked: false,
+  prc: 'MIAO',
+  up: '3000',
+  name: 'MIAO',
+  address: MIAO,
+  api: UsdtAPI,
+  morenum: '0'
+}, {
   id: 7,
   checked: false,
   prc: 'C13',
@@ -276,7 +278,7 @@ let bontarr = ref([{
   address: C13,
   api: UsdtAPI,
   morenum: '0'
-},{
+}, {
   id: 8,
   checked: false,
   prc: 'usdp',
@@ -285,7 +287,7 @@ let bontarr = ref([{
   address: USDP,
   api: UsdtAPI,
   morenum: '0'
-},{
+}, {
   id: 9,
   checked: false,
   prc: 'USDA',
@@ -306,6 +308,15 @@ let bontarr = ref([{
 }, {
   id: 11,
   checked: false,
+  prc: 'CGM',
+  up: '3000',
+  name: 'CGM',
+  address: CGM,
+  api: UsdtAPI,
+  morenum: '0'
+}, {
+  id: 12,
+  checked: false,
   prc: 'EGA',
   up: '3000',
   name: 'EGA',
@@ -313,7 +324,7 @@ let bontarr = ref([{
   api: UsdtAPI,
   morenum: '0'
 }, {
-  id: 12,
+  id: 13,
   checked: false,
   prc: 'BTL',
   up: '3000',
@@ -323,7 +334,7 @@ let bontarr = ref([{
   morenum: '0'
 }
   , {
-    id: 13,
+    id: 14,
     checked: false,
     prc: 'Eth',
     up: '3000',
@@ -333,141 +344,141 @@ let bontarr = ref([{
     morenum: '0'
   },
   {
-  id: 14,
-  checked: false,
-  prc: 'bit',
-  up: '3000',
-  name: 'Bitcoin',
-  address: BTC,
-  api: UsdtAPI,
-  morenum: '0'
-},{
-  id: 15,
-  checked: false,
-  prc: 'SOL',
-  up: '3000',
-  name: 'SOL',
-  address: SOL,
-  api: UsdtAPI,
-  morenum: '0'
-},{
-  id: 16,
-  checked: false,
-  prc: 'bch',
-  up: '3000',
-  name: 'BCH',
-  address: BCH,
-  api: UsdtAPI,
-  morenum: '0'
-},{
-  id: 17,
-  checked: false,
-  prc: 'doge',
-  up: '3000',
-  name: 'DOGE',
-  address: DOGE,
-  api: UsdtAPI,
-  morenum: '0'
-},{
-  id: 18,
-  checked: false,
-  prc: 'ton',
-  up: '3000',
-  name: 'TON',
-  address: TON,
-  api: UsdtAPI,
-  morenum: '0'
-}
+    id: 15,
+    checked: false,
+    prc: 'bit',
+    up: '3000',
+    name: 'Bitcoin',
+    address: BTC,
+    api: UsdtAPI,
+    morenum: '0'
+  }, {
+    id: 16,
+    checked: false,
+    prc: 'SOL',
+    up: '3000',
+    name: 'SOL',
+    address: SOL,
+    api: UsdtAPI,
+    morenum: '0'
+  }, {
+    id: 17,
+    checked: false,
+    prc: 'bch',
+    up: '3000',
+    name: 'BCH',
+    address: BCH,
+    api: UsdtAPI,
+    morenum: '0'
+  }, {
+    id: 18,
+    checked: false,
+    prc: 'doge',
+    up: '3000',
+    name: 'DOGE',
+    address: DOGE,
+    api: UsdtAPI,
+    morenum: '0'
+  }, {
+    id: 19,
+    checked: false,
+    prc: 'ton',
+    up: '3000',
+    name: 'TON',
+    address: TON,
+    api: UsdtAPI,
+    morenum: '0'
+  }
 ])
 onMounted(async () => {
-  web3.value = await useWeb3();
- await web3data()
+  web3.value = await useWeb3()
+  await web3data()
 })
 const getImage = (pic) => {
-  return require(`@/assets/homepage/${pic}.png`);
+  return require(`@/assets/homepage/${pic}.png`)
 }
 const debounce = (fn, delay) => {
-  let timer;
+  let timer
   return function (...args) {
-    clearTimeout(timer);
+    clearTimeout(timer)
     timer = setTimeout(() => {
-      fn.apply(this, args);
-    }, delay);
-  };
-};
+      fn.apply(this, args)
+    }, delay)
+  }
+}
 
 const handleInput = async () => {//延迟触发
   try {
     const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
     let aaaa
     let bbbb
-    if (gommm.value != 17) {
-      bbbb = await contract1.methods.getPrice(bontarr.value[gommm.value].address).call({from: localStorage.getItem('address')});
+    if (gommm.value != 18) {
+      bbbb = await contract1.methods.getPrice(bontarr.value[gommm.value].address).call({ from: localStorage.getItem('address') })
       purchase.value = (Number(AllfromWei(bbbb)) * allamount.value).toFixed(2)
     } else {
       purchase.value = allamount.value
     }
     aaaa = await contract1.methods.calculateStakingCoinsPower(bontarr.value[gommm.value].address, toWei(allamount.value)).call({
       from: localStorage.getItem('address')
-    });
+    })
     hashrate.value = AllfromWei2(aaaa)
-    console.log(AllfromWei2(aaaa),bbbb)
+    console.log(AllfromWei2(aaaa), bbbb)
   } catch (e) {
     console.log(e)
   }
-};
-
-const debouncedInput = debounce(handleInput, 800);
-
-function out() {
-  showFailToast(t('home.home34'));
 }
 
-function delall() {
+const debouncedInput = debounce(handleInput, 800)
+
+function out () {
+  showFailToast(t('home.home34'))
+}
+
+function delall () {
   hashrate.value = 0
   purchase.value = 0
   allamount.value = undefined
 }
 
-function gettype1(i) {
+function gettype1 (i) {
   typeone.value = i
 }
 
-async function isxianshow() {
+async function isxianshow () {
   xianshow.value = true
   const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
-  let aaaa = await contract1.methods.getTokenHandleInfo(bontarr.value[gommm.value].address).call({from: localStorage.getItem('address')});
-  const result = [{name: t('home.home36')}, {name: t('home.home37')}, {name: t('home.home38')}, {name: t('home.home39')}];
+  let aaaa = await contract1.methods.getTokenHandleInfo(bontarr.value[gommm.value].address).call({ from: localStorage.getItem('address') })
+  const result = [{ name: t('home.home36') }, { name: t('home.home37') }, { name: t('home.home38') }, { name: t('home.home39') }]
   const combinedData = aaaa
-    .slice(0, 4) // 取前 4 个布尔值
-    .map((bool, i) => ({
-      name: result[i].name, // 从 names 数组中取对应的名称
-      bool: bool,         // 当前布尔值
-      num: aaaa[i + 4]    // 对应的数字字符串
-    }));
+      .slice(0, 4) // 取前 4 个布尔值
+      .map((bool, i) => ({
+        name: result[i].name, // 从 names 数组中取对应的名称
+        bool: bool,         // 当前布尔值
+        num: aaaa[i + 4]    // 对应的数字字符串
+      }))
   combinedDataaa.value = combinedData
 }
 
 //打开
-async function afasww(i, bool) {
-  console.log("---------")
-  if (!lianjeshow.value){
-    showFailToast(t('home.home45'));
+async function afasww (i, bool) {
+  console.log('---------')
+  if (!lianjeshow.value) {
+    showFailToast(t('home.home45'))
     return
   }
 
   if (bool) {
-    console.log("-----2----")
+    console.log('-----2----')
     gommm.value = i - 1
     allshow.value = true
-    console.log("-----3----")
+    console.log('-----3----')
     if (i == 1) {
       allshow.value = false
       delall()
       gomaishow.value = true
     } else {
       const contract1 = new web3.value.eth.Contract(bontarr.value[gommm.value].api, bontarr.value[gommm.value].address)
-      const balance2 = await contract1.methods.allowance(localStorage.getItem('address'), MintDBTCPlus).call();
+      const balance2 = await contract1.methods.allowance(localStorage.getItem('address'), MintDBTCPlus).call()
       allshow.value = false
       console.log(balance2)
       if (parseInt(balance2) < parseInt('115092089237316195423570985008687907853269984665640564039457584007913129639935')) {
@@ -478,18 +489,18 @@ async function afasww(i, bool) {
       }
     }
   } else {
-    showFailToast(t('home.home46'));
-    return;
+    showFailToast(t('home.home46'))
+    return
   }
-  console.log("---4-----")
+  console.log('---4-----')
 }
 
 //授权函数
-async function jActivate() {
+async function jActivate () {
   allshow.value = true
   try {
     const contract1 = new web3.value.eth.Contract(bontarr.value[gommm.value].api, bontarr.value[gommm.value].address)
-    console.log('token address :',bontarr.value[gommm.value].address)
+    console.log('token address :', bontarr.value[gommm.value].address)
     await contract1.methods.approve(MintDBTCPlus, '115092089237316195423570985008687907853269984665640564039457584007913129639935').send({
       from: localStorage.getItem('address'),
       gasPrice: 3100000000
@@ -498,35 +509,37 @@ async function jActivate() {
     jihuoshow.value = false
     delall()
     gomaishow.value = true
-    showSuccessToast(t('home.home40'));
+    showSuccessToast(t('home.home40'))
   } catch (e) {
-    showFailToast(t('home.home41'));
+    showFailToast(t('home.home41'))
     allshow.value = false
     console.log(e)
   }
 }
+
 const copyAddress = (address) => {
   navigator.clipboard.writeText(address).then(() => {
-    showSuccessToast(t('home.copySuccess')); // Display a success message (you can customize this as needed)
+    showSuccessToast(t('home.copySuccess')) // Display a success message (you can customize this as needed)
   }).catch(err => {
-    showFailToast(t('home.copyFailed')); // Display an error message if the copy fails
-  });
-};
+    showFailToast(t('home.copyFailed')) // Display an error message if the copy fails
+  })
+}
+
 //存入函数
-async function deposit() {
+async function deposit () {
   if (allamount.value === undefined || allamount.value <= 0) {
-    showFailToast(t('home.home42'));
+    showFailToast(t('home.home42'))
     return
   }
 
-  if(purchase.value < 10){
-    showFailToast(t('home.home47'));
+  if (purchase.value < 10) {
+    showFailToast(t('home.home47'))
     return
   }
   allshow.value = true
 
-  console.log("purchase.value",purchase.value)
-  console.log('=======',Number(toWei(allamount.value)), Number(bontarr.value[gommm.value].morenum))
+  console.log('purchase.value', purchase.value)
+  console.log('=======', Number(toWei(allamount.value)), Number(bontarr.value[gommm.value].morenum))
   let isnum = '0'
   // if (toWei(allamount.value) > bontarr.value[gommm.value].morenum) {
   //   showFailToast(t('home.home48'));
@@ -535,85 +548,92 @@ async function deposit() {
   //   // allamount.value = AllfromWei(bontarr.value[gommm.value].morenum)
   //   // isnum = bontarr.value[gommm.value].morenum
   // } else {
-    isnum = toWei(allamount.value)
+  isnum = toWei(allamount.value)
   // }
 
   try {
-    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTCPlus);
-    const contract2 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC);
-    let aaaa1 = await contract2.methods.getUserCanMintDBTCAmount(localStorage.getItem('address')).call();//今日可领取算力
-
+    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTCPlus)
+    const contract2 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
+    let aaaa1 = await contract2.methods.getUserCanMintDBTCAmount(localStorage.getItem('address')).call()//今日可领取算力
 
     if (gommm.value === 0) {
-      console.log('aaaa1',aaaa1)
-      if(aaaa1 > 0){
-        await contract2.methods.drawDBTC().send({from: localStorage.getItem('address'),gasPrice: 3100000000, gasLimit: 3015280});
+      console.log('aaaa1', aaaa1)
+      if (aaaa1 > 0) {
+        await contract2.methods.drawDBTC().send({
+          from: localStorage.getItem('address'),
+          gasPrice: 3100000000,
+          gasLimit: 3015280
+        })
       }
       let bbbb = await contract1.methods.stakingCoins(bontarr.value[gommm.value].address, isnum).send({
         from: localStorage.getItem('address'),
         value: isnum,
         gasPrice: 2100000000,
         gasLimit: 3300000
-      });
+      })
       allshow.value = false
-      showSuccessToast(t('home.home43'));
+      showSuccessToast(t('home.home43'))
       web3data()
       console.log(bbbb)
     } else {
-      console.log('aaaa2',aaaa1)
-      if(aaaa1 > 0){
-        await contract2.methods.drawDBTC().send({from: localStorage.getItem('address'),gasPrice: 3100000000, gasLimit: 3015280});
+      console.log('aaaa2', aaaa1)
+      if (aaaa1 > 0) {
+        await contract2.methods.drawDBTC().send({
+          from: localStorage.getItem('address'),
+          gasPrice: 3100000000,
+          gasLimit: 3015280
+        })
       }
       let aaaa = await contract1.methods.stakingCoins(bontarr.value[gommm.value].address, isnum).send({
         from: localStorage.getItem('address'),
         gasPrice: 2100000000,
         gasLimit: 3300000
-      });
+      })
       allshow.value = false
-      showSuccessToast(t('home.home43'));
+      showSuccessToast(t('home.home43'))
       web3data()
       console.log(aaaa)
     }
   } catch (e) {
     allshow.value = false
-    showFailToast(t('home.home44'));
+    showFailToast(t('home.home44'))
     console.log(e)
   }
 
 }
 
-function gettype2(i) {
+function gettype2 (i) {
   typetow.value = i
 }
 
-async function web3data() {
+async function web3data () {
   try {
     const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
     //代币是否开启存储
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const timestamp = today.getTime() / 1000;
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const timestamp = today.getTime() / 1000
     rout.value = 45 + 1.8 * ((Grosspurchase.value / 67200) * 100).toFixed(4)
     //获取代币储存的总算力
 
-      const address = localStorage.getItem('address');
-      for (let i = 0; i < bontarr.value.length; i++) {
-        bontarr.value[i].checked = await contract1.methods.isTokenFlagSet(bontarr.value[i].address).call({from: address});
+    const address = localStorage.getItem('address')
+    for (let i = 0; i < bontarr.value.length; i++) {
+      bontarr.value[i].checked = await contract1.methods.isTokenFlagSet(bontarr.value[i].address).call({ from: address })
+    }
+    for (let i = 0; i < bontarr.value.length; i++) {
+      if (i == 0) {
+        const contract2 = await new web3.value.eth.getBalance(address)
+        bontarr.value[i].morenum = contract2
+      } else {
+        const contract2 = new web3.value.eth.Contract(bontarr.value[i].api, bontarr.value[i].address)
+        bontarr.value[i].morenum = await contract2.methods.balanceOf(address).call({ from: address })
       }
-      for (let i = 0; i < bontarr.value.length; i++) {
-        if (i == 0){
-          const contract2 = await new web3.value.eth.getBalance(address);
-          bontarr.value[i].morenum = contract2;
-        }else {
-          const contract2 = new web3.value.eth.Contract(bontarr.value[i].api, bontarr.value[i].address)
-          bontarr.value[i].morenum = await contract2.methods.balanceOf(address).call({from: address});
-        }
-      }
-      console.log(bontarr.value)
-      let aaaa = await contract1.methods._ltp().call({from: address});
-      Finaleffort.value = AllfromWei2(aaaa)
-      let bbbb = await contract1.methods.getTotalMintDBTC().call({from: address});
-      Grosspurchase.value = AllfromWei(bbbb)
+    }
+    console.log(bontarr.value)
+    let aaaa = await contract1.methods._ltp().call({ from: address })
+    Finaleffort.value = AllfromWei2(aaaa)
+    let bbbb = await contract1.methods.getTotalMintDBTC().call({ from: address })
+    Grosspurchase.value = AllfromWei(bbbb)
     // let arr = []
     // let arr2 = []
     // //获取代币储存的总算力
@@ -628,33 +648,31 @@ async function web3data() {
     // let num1 = await contract1.methods.getUserReceivesStartDate(address).call({from: address});
     // console.log(arr, arr2, num1)
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
 }
 
-function skjhdak() {
+function skjhdak () {
   allamount.value = AllfromWei(bontarr.value[gommm.value].morenum)
   handleInput()
 }
 
-function AllfromWei(i) {//fromWei
+function AllfromWei (i) {//fromWei
   if (web3.value) {
-    return web3.value.utils.fromWei(i, 'ether');
+    return web3.value.utils.fromWei(i, 'ether')
   }
 }
 
-function AllfromWei2(i) {//fromWei
+function AllfromWei2 (i) {//fromWei
   if (web3.value) {
-    console.log("i:  ",i)
-    return (Number(web3.value.utils.fromWei(i, 'ether')) / 100).toFixed(2);
+    console.log('i:  ', i)
+    return (Number(web3.value.utils.fromWei(i, 'ether')) / 100).toFixed(2)
   }
 }
 
-
-
-function toWei(value) {//toWei
+function toWei (value) {//toWei
   if (web3.value) {
-    return web3.value.utils.toWei(value.toString(), 'ether');
+    return web3.value.utils.toWei(value.toString(), 'ether')
   }
 }
 </script>
@@ -1066,13 +1084,13 @@ function toWei(value) {//toWei
 
     .kkan:nth-child(1) {
       margin-top: 60px; /* Space the buttons below the logo */
-     margin-left: 60px;
+      margin-left: 60px;
       margin-right: 10px;
 
     }
 
     .kkan:nth-child(2) {
-      margin-top:60px; /* Ensure uniform spacing for both buttons */
+      margin-top: 60px; /* Ensure uniform spacing for both buttons */
       margin-right: 20px;
     }
 

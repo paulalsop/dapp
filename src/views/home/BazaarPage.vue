@@ -60,34 +60,35 @@
 </template>
 
 <script setup>
-import {onMounted, ref,computed} from "vue"
-import {useWeb3} from '@/web3/index.js';
-import {MintdbtcAPI} from "@/components/MintDBTC_API";
-import {useStore} from "vuex";
+import { onMounted, ref, computed } from 'vue'
+import { useWeb3 } from '@/web3/index.js'
+import { MintdbtcAPI } from '@/components/MintDBTC_API'
+import { useStore } from 'vuex'
 
-const store = useStore();
-const MintDBTC = store.state.MintDBTC; // MintDBTC地址
-const wbnb = store.state.wbnb; // wbnb地址
-const DP = store.state.DP; // DP地址
-const DBTCoinNew = store.state.DBTCoinNew; // DBTCoinNew地址
-const USDT = store.state.USDT; // USDT地址
-const BTC = store.state.BTC; // BTC地址
-const ETH = store.state.ETH; // ETH地址
-const BCH = store.state.BCH; // BCH地址
-const SOL = store.state.SOL; // SOL地址
-const DOGE = store.state.DOGE; // DOGE地址
-const TON = store.state.TON; // TON地址
-const MS = store.state.MorningStar; // TON地址
-const FP = store.state.FP; // TON地址
-const USDP = store.state.USDP; // TON地址
-const Mars = store.state.Mars; // TON地址
-const EGA = store.state.EGA; // TON地址
-const C13 = store.state.C13; // C13地址
-const MIAO = store.state.MIAO; // C13地址
-const BTL = store.state.BTL; // C13地址
-const USDA = store.state.USDA; // C13地址
+const store = useStore()
+const MintDBTC = store.state.MintDBTC // MintDBTC地址
+const wbnb = store.state.wbnb // wbnb地址
+const DP = store.state.DP // DP地址
+const DBTCoinNew = store.state.DBTCoinNew // DBTCoinNew地址
+const USDT = store.state.USDT // USDT地址
+const BTC = store.state.BTC // BTC地址
+const ETH = store.state.ETH // ETH地址
+const BCH = store.state.BCH // BCH地址
+const SOL = store.state.SOL // SOL地址
+const DOGE = store.state.DOGE // DOGE地址
+const TON = store.state.TON // TON地址
+const MS = store.state.MorningStar // TON地址
+const FP = store.state.FP // TON地址
+const USDP = store.state.USDP // TON地址
+const Mars = store.state.Mars // TON地址
+const EGA = store.state.EGA // TON地址
+const C13 = store.state.C13 // C13地址
+const MIAO = store.state.MIAO // C13地址
+const BTL = store.state.BTL // C13地址
+const USDA = store.state.USDA // C13地址
+const CGM = store.state.CGM // C13地址
 const getImage = (pic) => {
-  return require(`@/assets/homepage/${pic}.png`);
+  return require(`@/assets/homepage/${pic}.png`)
 }
 let allamount = ref(0)
 let bontarr = ref([{
@@ -123,7 +124,7 @@ let bontarr = ref([{
   rate: 2,
   pledge: 3.65,
   address: DBTCoinNew//地址
-},{
+}, {
   id: 4,//id
   prc: 'MS',//图片位置
   money: 0,//金额
@@ -134,7 +135,7 @@ let bontarr = ref([{
   rate: 2,
   pledge: 3.65,
   address: MS//地址
-},{
+}, {
   id: 5,//id
   prc: 'MIAO',//图片位置
   money: 0,//金额
@@ -145,7 +146,7 @@ let bontarr = ref([{
   rate: 2,
   pledge: 3.65,
   address: MIAO//地址
-},{
+}, {
   id: 6,//id
   prc: 'FP',//图片位置
   money: 0,//金额
@@ -156,7 +157,7 @@ let bontarr = ref([{
   rate: 2,
   pledge: 3.65,
   address: FP//地址
-},{
+}, {
   id: 7,//id
   prc: 'C13',//图片位置
   money: 0,//金额
@@ -170,29 +171,29 @@ let bontarr = ref([{
 },
 
   {
-  id: 8,//id
-  prc: 'Eth',//图片位置
-  money: 0,//金额
-  name: 'ETH',//名字
-  deposit: 231,
-  probability: 0,//存款概率
-  mobility: 232,
-  rate: 2,
-  pledge: 3.65,
-  address: ETH//地址
-},{
-  id: 9,//id
-  prc: 'usdp',//图片位置
-  money: 0,//金额
-  name: 'USDP',//名字
-  deposit: 231,
-  probability: 0,//存款概率
-  mobility: 232,
-  rate: 2,
-  pledge: 3.65,
-  address: USDP//地址
-}
-  ,{
+    id: 8,//id
+    prc: 'Eth',//图片位置
+    money: 0,//金额
+    name: 'ETH',//名字
+    deposit: 231,
+    probability: 0,//存款概率
+    mobility: 232,
+    rate: 2,
+    pledge: 3.65,
+    address: ETH//地址
+  }, {
+    id: 9,//id
+    prc: 'usdp',//图片位置
+    money: 0,//金额
+    name: 'USDP',//名字
+    deposit: 231,
+    probability: 0,//存款概率
+    mobility: 232,
+    rate: 2,
+    pledge: 3.65,
+    address: USDP//地址
+  }
+  , {
     id: 10,//id
     prc: 'USDA',//图片位置
     money: 0,//金额
@@ -203,31 +204,42 @@ let bontarr = ref([{
     rate: 2,
     pledge: 3.65,
     address: USDA//地址
+  }, {
+    id: 11,//id
+    prc: 'Mars',//图片位置
+    money: 0,//金额
+    name: 'Mars',//名字
+    deposit: 231,
+    probability: 0,//存款概率
+    mobility: 232,
+    rate: 2,
+    pledge: 3.65,
+    address: Mars//地址
   },{
-  id: 11,//id
-  prc: 'Mars',//图片位置
-  money: 0,//金额
-  name: 'Mars',//名字
-  deposit: 231,
-  probability: 0,//存款概率
-  mobility: 232,
-  rate: 2,
-  pledge: 3.65,
-  address: Mars//地址
-},{
-  id: 12,//id
-  prc: 'EGA',//图片位置
-  money: 0,//金额
-  name: 'EGA',//名字
-  deposit: 231,
-  probability: 0,//存款概率
-  mobility: 232,
-  rate: 2,
-  pledge: 3.65,
-  address: EGA//地址
-},
-  {
+    id: 12,//id
+    prc: 'CGM',//图片位置
+    money: 0,//金额
+    name: 'CGM',//名字
+    deposit: 231,
+    probability: 0,//存款概率
+    mobility: 232,
+    rate: 2,
+    pledge: 3.65,
+    address: CGM//地址
+  }, {
     id: 13,//id
+    prc: 'EGA',//图片位置
+    money: 0,//金额
+    name: 'EGA',//名字
+    deposit: 231,
+    probability: 0,//存款概率
+    mobility: 232,
+    rate: 2,
+    pledge: 3.65,
+    address: EGA//地址
+  },
+  {
+    id: 14,//id
     prc: 'BTL',//图片位置
     money: 0,//金额
     name: 'BTL',//名字
@@ -239,167 +251,168 @@ let bontarr = ref([{
     address: BTL//地址
   },
   {
-  id: 14,//id
-  prc: 'bit',//图片位置
-  money: 0,//金额
-  name: 'Bitcoin',//名字
-  deposit: 231,
-  probability: 0,//存款概率
-  mobility: 232,
-  rate: 2,
-  pledge: 3.65,
-  address: BTC//地址
-},{
-  id: 15,//id
-  prc: 'SOL',//图片位置
-  money: 0,//金额
-  name: 'SOL',//名字
-  deposit: 231,
-  probability: 0,//存款概率
-  mobility: 232,
-  rate: 2,
-  pledge: 3.65,
-  address: SOL//地址
-},{
-  id: 16,//id
-  prc: 'bch',//图片位置
-  money: 0,//金额
-  name: 'BCH',//名字
-  deposit: 231,
-  probability: 0,//存款概率
-  mobility: 232,
-  rate: 2,
-  pledge: 3.65,
-  address: BCH//地址
-},{
-  id: 17,//id
-  prc: 'doge',//图片位置
-  money: 0,//金额
-  name: 'DOGE',//名字
-  deposit: 231,
-  probability: 0,//存款概率
-  mobility: 232,
-  rate: 2,
-  pledge: 3.65,
-  address: DOGE//地址
-},{
-  id: 18,//id
-  prc: 'ton',//图片位置
-  money: 0,//金额
-  name: 'TON',//名字
-  deposit: 231,
-  probability: 0,//存款概率
-  mobility: 232,
-  rate: 2,
-  pledge: 3.65,
-  address: TON//地址
-},{
-  id: 19,
-  prc: 'usdt',
-  money: 1,
-  name: 'USDT',
-  deposit: 231,
-  probability: 0,
-  mobility: 232,
-  rate: 2,
-  pledge: 3.65,
-  address: USDT//地址
-}
+    id: 15,//id
+    prc: 'bit',//图片位置
+    money: 0,//金额
+    name: 'Bitcoin',//名字
+    deposit: 231,
+    probability: 0,//存款概率
+    mobility: 232,
+    rate: 2,
+    pledge: 3.65,
+    address: BTC//地址
+  }, {
+    id: 16,//id
+    prc: 'SOL',//图片位置
+    money: 0,//金额
+    name: 'SOL',//名字
+    deposit: 231,
+    probability: 0,//存款概率
+    mobility: 232,
+    rate: 2,
+    pledge: 3.65,
+    address: SOL//地址
+  }, {
+    id: 17,//id
+    prc: 'bch',//图片位置
+    money: 0,//金额
+    name: 'BCH',//名字
+    deposit: 231,
+    probability: 0,//存款概率
+    mobility: 232,
+    rate: 2,
+    pledge: 3.65,
+    address: BCH//地址
+  }, {
+    id: 18,//id
+    prc: 'doge',//图片位置
+    money: 0,//金额
+    name: 'DOGE',//名字
+    deposit: 231,
+    probability: 0,//存款概率
+    mobility: 232,
+    rate: 2,
+    pledge: 3.65,
+    address: DOGE//地址
+  }, {
+    id: 19,//id
+    prc: 'ton',//图片位置
+    money: 0,//金额
+    name: 'TON',//名字
+    deposit: 231,
+    probability: 0,//存款概率
+    mobility: 232,
+    rate: 2,
+    pledge: 3.65,
+    address: TON//地址
+  }, {
+    id: 20,
+    prc: 'usdt',
+    money: 1,
+    name: 'USDT',
+    deposit: 231,
+    probability: 0,
+    mobility: 232,
+    rate: 2,
+    pledge: 3.65,
+    address: USDT//地址
+  }
 ])
 let paiarr = computed(() => {
-  return bontarr.value.slice().sort((a, b) => b.probability - a.probability);
-});
+  return bontarr.value.slice().sort((a, b) => b.probability - a.probability)
+})
 onMounted(async () => {
-  web3.value = await useWeb3();
+  web3.value = await useWeb3()
   web3data()
 })
 
-
-async function web3data() {
+async function web3data () {
   try {
-    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC);
-    const address = localStorage.getItem('address');
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const timestamp = today.getTime() / 1000;
-    
+    const contract1 = new web3.value.eth.Contract(MintdbtcAPI, MintDBTC)
+    const address = localStorage.getItem('address')
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const timestamp = today.getTime() / 1000
+
     // 获取总量，如果出错则设为0
-    let totalNCPower = "0";
+    let totalNCPower = '0'
     try {
-      totalNCPower = await contract1.methods.getTotalNCPowerFromEveryDay(timestamp).call({from: address});
-      allamount.value = Number(AllfromWei2(totalNCPower)).toFixed(4);
+      totalNCPower = await contract1.methods.getTotalNCPowerFromEveryDay(timestamp).call({ from: address })
+      allamount.value = Number(AllfromWei2(totalNCPower)).toFixed(4)
     } catch (error) {
-      console.error("获取总量失败:", error);
-      allamount.value = "0";
+      console.error('获取总量失败:', error)
+      allamount.value = '0'
     }
-    
-    let others = 0;
-    
+
+    let others = 0
+
     // 循环获取每个代币的数据
     for (let i = 0; i < bontarr.value.length; i++) {
       try {
-        if (i !== 18) {
+        if (i !== 19) {
           // 获取代币价格
           try {
-            const price = await contract1.methods.getPrice(bontarr.value[i].address).call({from: address});
-            bontarr.value[i].money = Number(AllfromWei(price)).toFixed(8);
+            const price = await contract1.methods.getPrice(bontarr.value[i].address).call({ from: address })
+            bontarr.value[i].money = Number(AllfromWei(price)).toFixed(8)
           } catch (priceError) {
-            console.error(`获取 ${bontarr.value[i].name} 价格失败:`, priceError);
-            bontarr.value[i].money = "0";
+            console.error(`获取 ${bontarr.value[i].name} 价格失败:`, priceError)
+            bontarr.value[i].money = '0'
           }
-          
+
           // 获取代币占比
           try {
-            const tokenPercent = await contract1.methods.getTokenPowerByAllPowerPercent(bontarr.value[i].address).call({from: address});
-            
+            const tokenPercent = await contract1.methods.getTokenPowerByAllPowerPercent(bontarr.value[i].address).call({ from: address })
+
             if (i == 1) {
               // DP 代币特殊处理
-              const adjustedPercent = Number(tokenPercent) + 1;
-              others += adjustedPercent;
-              bontarr.value[i].probability = adjustedPercent;
+              const adjustedPercent = Number(tokenPercent) + 1
+              others += adjustedPercent
+              bontarr.value[i].probability = adjustedPercent
             } else {
-              others += Number(tokenPercent);
-              bontarr.value[i].probability = tokenPercent;
+              others += Number(tokenPercent)
+              bontarr.value[i].probability = tokenPercent
             }
           } catch (percentError) {
-            console.error(`获取 ${bontarr.value[i].name} 占比失败:`, percentError);
-            bontarr.value[i].probability = 0;
+            console.error(`获取 ${bontarr.value[i].name} 占比失败:`, percentError)
+            bontarr.value[i].probability = 0
           }
         } else {
           // USDT 特殊处理
-          bontarr.value[i].money = 1;
+          bontarr.value[i].money = 1
           if (allamount.value > 0) {
-            bontarr.value[i].probability = Number(100 - others);
+            bontarr.value[i].probability = Number(100 - others)
           } else {
-            bontarr.value[i].probability = 0;
+            bontarr.value[i].probability = 0
           }
         }
       } catch (tokenError) {
-        console.error(`处理 ${bontarr.value[i].name} 时发生错误:`, tokenError);
+        console.error(`处理 ${bontarr.value[i].name} 时发生错误:`, tokenError)
         // 设置默认值
-        bontarr.value[i].money = "0";
-        bontarr.value[i].probability = 0;
+        bontarr.value[i].money = '0'
+        bontarr.value[i].probability = 0
       }
     }
-    
+
   } catch (error) {
-    console.error("获取数据失败:", error);
+    console.error('获取数据失败:', error)
     // 全局错误，设置所有代币为默认值
-    allamount.value = "0";
+    allamount.value = '0'
     bontarr.value.forEach(item => {
-      item.money = "0";
-      item.probability = 0;
-    });
+      item.money = '0'
+      item.probability = 0
+    })
   }
 }
-function AllfromWei(i) {//fromWei
+
+function AllfromWei (i) {//fromWei
   if (web3.value) {
-    return web3.value.utils.fromWei(i, 'ether');
+    return web3.value.utils.fromWei(i, 'ether')
   }
 }
-function AllfromWei2(i) {//fromWei
+
+function AllfromWei2 (i) {//fromWei
   if (web3.value) {
-    return (Number(web3.value.utils.fromWei(i, 'ether')) / 100).toFixed(2);
+    return (Number(web3.value.utils.fromWei(i, 'ether')) / 100).toFixed(2)
   }
 }
 </script>
