@@ -6,9 +6,13 @@
   </van-overlay>
   <div class="ore">
     <div class="text1ac">
-      <div class="power-row">
+      <div>
         <div class="title">{{ $t('ore.ore1') }}</div>
-        <div class="num fixed-power">677788314389086254736498658</div>
+        <div class="num">
+          <van-rolling-text :start-num="0" :target-num="qwwwwa" :height="24"/>
+          <span class="num">.</span>
+          <van-rolling-text :start-num="0" :target-num="qwwwwb" :height="24"/>
+        </div>
       </div>
       <div>
         <div class="title">{{ $t('ore.ore2') }}</div>
@@ -199,6 +203,9 @@ const DBTCoinNew = store.state.DBTCoinNew; // DBTCoinNew地址
 let type = ref(0)
 let isFrame = ref(true)
 let allshow = ref(false)
+const FIXED_TOTAL_POWER = '677788314389086254736498658'//全网总算力原值，不经过 toWei
+let qwwwwa = ref(0)//全网总算力
+let qwwwwb = ref(0)//全网总算力
 let jryyyyz = ref(0)//今日算力因子
 let yhalla = ref(0)//用户总算力
 let yhallb = ref(0)//用户总算力
@@ -281,6 +288,8 @@ async function web3data() {
       bbbb = await web3.value.utils.toWei('0', 'ether');
     }
     
+    applyFixedPower()
+
     // 获取今日算力因子
     let dddd = 0;
     try {
@@ -461,6 +470,12 @@ async function web3data() {
     sabo0l.value = true;
     youmoren.value = 0;
   }
+}
+
+function applyFixedPower() {
+  const [integer, decimal] = AllfromWei2(FIXED_TOTAL_POWER).toString().split('.');
+  qwwwwa.value = Number(integer) || 0;
+  qwwwwb.value = Number(decimal) || 0;
 }
 
 function AllfromWei2(i) {//fromWei
@@ -702,17 +717,6 @@ function AllfromWei(i) {//fromWei
         font-size: 20px;
         margin-right: 5px;
       }
-    }
-
-    .power-row {
-      width: 100%;
-      flex: 1 0 100%;
-    }
-
-    .fixed-power {
-      letter-spacing: 0;
-      line-height: 22px;
-      word-break: break-all;
     }
 
     .num {

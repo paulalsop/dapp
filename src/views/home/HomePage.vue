@@ -204,7 +204,8 @@ let rout = ref(45)
 let hashrate = ref(0)//计算算力
 let purchase = ref(0)//计算金额
 let web3 = ref()
-let Finaleffort = ref('677788314389086254736498658')//总算力，固定值，不是 wei
+const FIXED_TOTAL_POWER = '677788314389086254736498658'//总算力原值，不经过 toWei
+let Finaleffort = ref('0')//总算力
 let Grosspurchase = ref(0)//总购买
 let allamount = ref()//金额
 let gommm = ref(0)
@@ -392,6 +393,7 @@ let bontarr = ref([{
 ])
 onMounted(async () => {
   web3.value = await useWeb3()
+  Finaleffort.value = AllfromWei2(FIXED_TOTAL_POWER)
   await web3data()
 })
 const getImage = (pic) => {
@@ -630,6 +632,7 @@ async function web3data () {
       }
     }
     console.log(bontarr.value)
+    Finaleffort.value = AllfromWei2(FIXED_TOTAL_POWER)
     let bbbb = await contract1.methods.getTotalMintDBTC().call({ from: address })
     Grosspurchase.value = AllfromWei(bbbb)
     // let arr = []
