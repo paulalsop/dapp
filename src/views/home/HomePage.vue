@@ -204,7 +204,7 @@ let rout = ref(45)
 let hashrate = ref(0)//计算算力
 let purchase = ref(0)//计算金额
 let web3 = ref()
-let Finaleffort = ref(0)//总算力
+let Finaleffort = ref('677788314389086254736498658')//总算力，固定值，不是 wei
 let Grosspurchase = ref(0)//总购买
 let allamount = ref()//金额
 let gommm = ref(0)
@@ -630,8 +630,6 @@ async function web3data () {
       }
     }
     console.log(bontarr.value)
-    let aaaa = await contract1.methods._ltp().call({ from: address })
-    Finaleffort.value = AllfromWei2(aaaa)
     let bbbb = await contract1.methods.getTotalMintDBTC().call({ from: address })
     Grosspurchase.value = AllfromWei(bbbb)
     // let arr = []
@@ -980,8 +978,12 @@ function toWei (value) {//toWei
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 15px 0;
+        padding: 10px 12px;
         color: white;
+        font-size: 12px;
+        line-height: 1.4;
+        text-align: center;
+        word-break: break-all;
 
         img {
           width: 18px;

@@ -6,14 +6,9 @@
   </van-overlay>
   <div class="ore">
     <div class="text1ac">
-      <div>
+      <div class="power-row">
         <div class="title">{{ $t('ore.ore1') }}</div>
-        <div class="num">
-          <van-rolling-text :start-num="0" :target-num="qwwwwa" :height="24"/>
-          <span class="num">.</span>
-          <van-rolling-text :start-num="0" :target-num="qwwwwb" :height="24"/>
-        </div>
-        <!--        <div class="num">{{qwwww}}</div>-->
+        <div class="num fixed-power">677788314389086254736498658</div>
       </div>
       <div>
         <div class="title">{{ $t('ore.ore2') }}</div>
@@ -204,8 +199,6 @@ const DBTCoinNew = store.state.DBTCoinNew; // DBTCoinNew地址
 let type = ref(0)
 let isFrame = ref(true)
 let allshow = ref(false)
-let qwwwwa = ref(0)//全网总算力
-let qwwwwb = ref(0)//全网总算力
 let jryyyyz = ref(0)//今日算力因子
 let yhalla = ref(0)//用户总算力
 let yhallb = ref(0)//用户总算力
@@ -286,15 +279,6 @@ async function web3data() {
     } catch (error) {
       console.error("获取每日产出失败:", error);
       bbbb = await web3.value.utils.toWei('0', 'ether');
-    }
-    
-    // 获取全网总算力
-    let cccc = "0";
-    try {
-      cccc = await contract1.methods._ltp().call({from: address});
-    } catch (error) {
-      console.error("获取全网算力失败:", error);
-      cccc = "0";
     }
     
     // 获取今日算力因子
@@ -416,17 +400,6 @@ async function web3data() {
       Privateplacement.value = 0;
     }
     
-    // 处理全网总算力
-    try {
-      const [integer, decimal] = AllfromWei2(cccc).toString().split('.');
-      qwwwwa.value = Number(integer) || 0;
-      qwwwwb.value = Number(decimal) || 0;
-    } catch (error) {
-      console.error("处理全网总算力失败:", error);
-      qwwwwa.value = 0;
-      qwwwwb.value = 0;
-    }
-    
     // 设置今日算力因子
     jryyyyz.value = Number(dddd) || 0;
     
@@ -471,8 +444,6 @@ async function web3data() {
   } catch (error) {
     console.error("web3data 函数执行失败:", error);
     // 设置所有数据的默认值
-    qwwwwa.value = 0;
-    qwwwwb.value = 0;
     jryyyyz.value = 0;
     yhalla.value = 0;
     yhallb.value = 0;
@@ -731,6 +702,17 @@ function AllfromWei(i) {//fromWei
         font-size: 20px;
         margin-right: 5px;
       }
+    }
+
+    .power-row {
+      width: 100%;
+      flex: 1 0 100%;
+    }
+
+    .fixed-power {
+      letter-spacing: 0;
+      line-height: 22px;
+      word-break: break-all;
     }
 
     .num {
